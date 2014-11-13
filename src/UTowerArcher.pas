@@ -8,8 +8,6 @@ uses
 
 type
   TApplication = class(TW3CustomGameApplication)
-  private
-    { Private fields and methods }
   protected
     procedure ApplicationStarting; override;
     procedure ApplicationClosing; override;
@@ -17,8 +15,6 @@ type
   end;
 
 implementation
-
-{ TApplication }
 
 procedure TApplication.ApplicationStarting;
 begin
@@ -28,11 +24,11 @@ begin
   GameView.OnMouseUp := MouseUpHandler;
   GameView.OnMouseMove := MouseMoveHandler;
 
-  // Initialize refresh interval, set this to 1 for optimal speed
+  // Initialize refresh interval
   GameView.Delay := 20;
 
-  // Start the redraw-cycle with framecounter active
-  GameView.StartSession(True);
+  // Start the redraw-cycle with framecounter inactive
+  GameView.StartSession(False);
 end;
 
 procedure TApplication.ApplicationClosing;
@@ -46,11 +42,6 @@ begin
   // Clear background
   Canvas.FillStyle := 'rgb(255, 255, 255)';
   Canvas.FillRectF(0, 0, GameView.Width, GameView.Height);
-
-  // Draw our framerate on the screen
-  // Canvas.Font := '10pt verdana';
-  // Canvas.FillStyle := 'rgb(255, 255, 255)';
-  // Canvas.FillTextF('FPS:' + IntToStr(GameView.FrameRate), 10, 20, MAX_INT);
 end;
 
 
