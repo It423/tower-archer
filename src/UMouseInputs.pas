@@ -15,19 +15,19 @@ var
 
 implementation
 
-procedure MouseDownHandler(o : TObject; b : TMouseButton; t : TShiftState; x, y : integer)
+procedure MouseDownHandler(o : TObject; b : TMouseButton; t : TShiftState; x, y : integer);
 begin
   MouseDown := true;
   MouseDownX := x;
   MouseDownY := y;
 end;
 
-procedure MouseUpHandler(o : TObject; b : TMouseButton; t : TShiftState; x, y : integer)
+procedure MouseUpHandler(o : TObject; b : TMouseButton; t : TShiftState; x, y : integer);
 begin
   MouseDown := false;
 end;
 
-procedure MouseMoveHandler(o : TObject; ss : TShiftState; x, y : integer)
+procedure MouseMoveHandler(o : TObject; ss : TShiftState; x, y : integer);
 begin
  CurrentMouseX := x;
  CurrentMouseY := y;
