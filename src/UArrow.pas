@@ -46,7 +46,7 @@ begin
   YVol += GRAVITY;
 
   // Make the bullet inactive if out off screen
-  if (MaxX < 0) or (MinX > GameWidth) or (MinY > GameHeight) then
+  if (MaxX() < 0) or (MinX() > GameWidth) or (MinY() > GameHeight) then
     begin
       Active := false;
     end;
@@ -76,11 +76,11 @@ begin
   // Work out the max x value
   if (currAng <= 90) or ((currAng > 180) and (currAng <= 270)) then
     begin
-      exit(X + Sin(currAng mod 90) * ArrowTexture.Handle.Width + Cos(currAng mod 90) * ArrowTexture.Handle.Height);
+      exit(X + Sin((currAng mod 90) * Pi() / 180) * ArrowTexture.Handle.width);
     end
   else
     begin
-      exit(X + Sin(currAng mod 90) * ArrowTexture.Handle.Width);
+      exit(X + Sin((currAng mod 90) * Pi() / 180) * ArrowTexture.Handle.width + Cos((currAng mod 90) * Pi() / 180) * ArrowTexture.Handle.height);
     end;
 end;
 
@@ -92,11 +92,11 @@ begin
   // Work out the min x value
   if (currAng <= 90) or ((currAng > 180) and (currAng <= 270)) then
     begin
-      exit(X);
+      exit(X - Sin((currAng mod 90) * Pi() / 180) * ArrowTexture.Handle.height);
     end
   else
     begin
-      exit(X - Sin(currAng mod 90) * ArrowTexture.Handle.Height);
+      exit(X);
     end;
 end;
 
@@ -108,11 +108,11 @@ begin
   // Work out the max y value
   if (currAng <= 90) or ((currAng > 180) and (currAng <= 270)) then
     begin
-      exit(Y + Sin(currAng mod 90) * ArrowTexture.Height);
+      exit(Y + Cos((currAng mod 90) * Pi() / 180) * ArrowTexture.Handle.height + Sin((currAng mod 90) * Pi() / 180) * ArrowTexture.Handle.width);
     end
   else
     begin
-      exit(Y + Cos(currAng mod 90) * ArrowTexture.Height + Sin(currAng mod 90) * ArrowTexture.Width);
+      exit(Y + Sin((currAng mod 90) * Pi() / 180) * ArrowTexture.Handle.height);
     end;
 end;
 
@@ -124,11 +124,11 @@ begin
   // Work out the min y value
   if (currAng <= 90) or ((currAng > 180) and (currAng <= 270)) then
     begin
-      exit(Y - Cos(currAng mod 90) * ArrowTexture.Handle.Width);
+      exit(Y);
     end
   else
     begin
-      exit(Y);
+      exit(Y - Cos((currAng mod 90) * Pi() / 180) * ArrowTexture.Handle.width);
     end;
 end;
 
