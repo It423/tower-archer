@@ -3,7 +3,8 @@ unit UMouseInputs;
 interface
 
 uses 
-  W3System, W3Components;
+  W3System, W3Components,
+  USpawner;
 
 procedure MouseDownHandler(o : TObject; b : TMouseButton; t : TShiftState; x, y : integer);
 procedure MouseUpHandler(o : TObject; b : TMouseButton; t : TShiftState; x, y : integer);
@@ -25,6 +26,8 @@ end;
 procedure MouseUpHandler(o : TObject; b : TMouseButton; t : TShiftState; x, y : integer);
 begin
   MouseDown := false;
+
+  SpawnArrow(MouseDownX, MouseDownY, CurrentMouseX, CurrentMouseY);
 end;
 
 procedure MouseMoveHandler(o : TObject; ss : TShiftState; x, y : integer);
