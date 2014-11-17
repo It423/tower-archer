@@ -60,7 +60,10 @@ begin
   // Update arrows
   for var i := 0 to High(Arrows) do
     begin
-      Arrows[i].Move();
+      if (Arrows[i].Active) then
+        begin
+          Arrows[i].Move();
+        end;
     end;
 
   // Draw game items
