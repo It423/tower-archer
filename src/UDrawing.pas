@@ -6,21 +6,30 @@ uses
   W3System, W3Graphics,
   UArrow;
 
-procedure DrawArrow(arrow : TArrow; canvas : TW3Canvas);
+procedure DrawArrow(arrows : array of TArrow; canvas : TW3Canvas); overload;
+procedure DrawArrow(arrow : TArrow; canvas : TW3Canvas); overload;
 procedure RotateCanvas(angle, xChange, yChange : float; canvas : TW3Canvas);
 
 implementation
 
+procedure DrawArrow(arrows : array of TArrow; canvas : TW3Canvas);
+begin
+  for var i := 0 to High(arrows) do
+    begin
+      DrawArrow(arrows[i], canvas);
+    end;
+end;
+
 procedure DrawArrow(arrow : TArrow; canvas : TW3Canvas);
 begin
   // Rotate the canvas correctly
-  RotateCanvas(arrow.GetAngle(), arrow.X + ArrowTexture.Handle.width / 2, arrow.Y + ArrowTexture.Handle.height / 2, canvas);
+  RotateCanvas(arrow.GetAngle(), arrow.X, arrow.Y, canvas);
 
   // Draw the arrow
   canvas.DrawImageF(ArrowTexture.Handle, arrow.X, arrow.Y);
 
   // Rotate the canvas back
-  RotateCanvas(-arrow.GetAngle(), arrow.X + ArrowTexture.Handle.width / 2, arrow.Y + ArrowTexture.Handle.height / 2, canvas);
+  RotateCanvas(-arrow.GetAngle(), arrow.X, arrow.Y, canvas);
 end;
 
 procedure RotateCanvas(angle, xChange, yChange : float; canvas : TW3Canvas);
