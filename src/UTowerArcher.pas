@@ -4,7 +4,7 @@ interface
 
 uses
   W3System, W3Components, W3Application, W3Game, W3GameApp, W3Graphics, W3Image,
-  UMouseInputs, UArrow, UDrawing;
+  UMouseInputs, UArrow, UDrawing, UGameVariables, UGameItems;
 
 type
   TApplication = class(TW3CustomGameApplication)
@@ -23,13 +23,19 @@ begin
   ArrowTexture := TW3Image.Create(nil);
   ArrowTexture.LoadFromURL("res/Arrow.png");
 
+  // Initialize the variables
+  ArrowSpawnX := 100;
+  ArrowSpawnY := 100;
+  PixelToPowerRatio := 10;
+  MaxPower := 30;
+
   // Add the mouse input handlers
   GameView.OnMouseDown := MouseDownHandler;
   GameView.OnMouseUp := MouseUpHandler;
   GameView.OnMouseMove := MouseMoveHandler;
 
   // Initialize refresh interval
-  GameView.Delay := 100;
+  GameView.Delay := 20;
 
   // Start the redraw-cycle with framecounter inactive
   GameView.StartSession(False);
@@ -43,9 +49,22 @@ end;
 
 procedure TApplication.PaintView(Canvas: TW3Canvas);
 begin
+  // Update the game width and height
+  GameWidth := GameView.Width;
+  GameHeight := GameView.Height;
+
   // Clear background
   Canvas.FillStyle := 'rgb(255, 255, 255)';
   Canvas.FillRectF(0, 0, GameView.Width, GameView.Height);
+
+  // Update arrows
+  for var i := 0 to High(Arrows) do
+    begin
+      Arrows[i].Move();
+    end;
+
+  // Draw game items
+  DrawArrow(Arrows, Canvas);
 end;
 
 end.
