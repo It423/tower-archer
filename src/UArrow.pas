@@ -3,7 +3,8 @@ unit UArrow;
 interface
 
 uses 
-  W3System, W3Image;
+  W3System, W3Image,
+  UGameVariables;
 
 type TArrow = class(TObject)
   X, Y, XVol, YVol : float;
@@ -43,6 +44,12 @@ begin
 
   // Add gravity affect
   YVol += GRAVITY;
+
+  // Make the bullet inactive if out off screen
+  if (MaxX < 0) or (MinX > GameWidth) or (MinY > GameHeight) then
+    begin
+      Active := false;
+    end;
 end;
 
 function TArrow.GetAngle(deg : boolean = false) : float;
@@ -61,13 +68,13 @@ begin
   exit(retVal);
 end;
 
-function MaxX() : float;
+function TArrow.MaxX() : float;
 begin
   // Get the current angle (stops us running the same method over and over angin
-  var currAng := GetAngle(true) mod 360;
+  var currAng := FloatMod(GetAngle(true), 360);
 
   // Work out the max x value
-  if (currAng <= 90) or ((currAng > 180) and (currAngle <= 270)) then
+  if (currAng <= 90) or ((currAng > 180) and (currAng <= 270)) then
     begin
       exit(X + Sin(currAng mod 90) * ArrowTexture.Handle.Width + Cos(currAng mod 90) * ArrowTexture.Handle.Height);
     end
@@ -77,13 +84,13 @@ begin
     end;
 end;
 
-function MinX() : float;
+function TArrow.MinX() : float;
 begin
   // Get the current angle (stops us running the same method over and over angin
-  var currAng := GetAngle(true) mod 360;
+  var currAng := FloatMod(GetAngle(true), 360);
 
   // Work out the min x value
-  if (currAng <= 90) or ((currAng > 180) and (currAngle <= 270)) then
+  if (currAng <= 90) or ((currAng > 180) and (currAng <= 270)) then
     begin
       exit(X);
     end
@@ -93,13 +100,13 @@ begin
     end;
 end;
 
-function MaxY() : float;
+function TArrow.MaxY() : float;
 begin
   // Get the current angle (stops us running the same method over and over angin
-  var currAng := GetAngle(true) mod 360;
+  var currAng := FloatMod(GetAngle(true), 360);
 
   // Work out the max y value
-  if (currAng <= 90) or ((currAng > 180) and (currAngle <= 270)) then
+  if (currAng <= 90) or ((currAng > 180) and (currAng <= 270)) then
     begin
       exit(Y + Sin(currAng mod 90) * ArrowTexture.Height);
     end
@@ -109,13 +116,13 @@ begin
     end;
 end;
 
-function MinY() : float;
+function TArrow.MinY() : float;
 begin
   // Get the current angle (stops us running the same method over and over angin
-  var currAng := GetAngle(true) mod 360;
+  var currAng := FloatMod(GetAngle(true), 360);
 
   // Work out the min y value
-  if (currAng <= 90) or ((currAng > 180) and (currAngle <= 270)) then
+  if (currAng <= 90) or ((currAng > 180) and (currAng <= 270)) then
     begin
       exit(Y - Cos(currAng mod 90) * ArrowTexture.Handle.Width);
     end
