@@ -7,6 +7,7 @@ uses
 
 type TArrow = class(TObject)
   X, Y, XVol, YVol : float;
+  Active : boolean;
   constructor Create(newX, newY, newXVol, newYVol : float);
   procedure Move();
   function GetAngle(deg : boolean = false) : float;
@@ -17,6 +18,7 @@ const
 
 var
   ArrowTexture : TW3Image;
+  MaxPower : float;
 
 implementation
 
@@ -26,13 +28,16 @@ begin
   Y := newY;
   XVol := newXVol;
   YVol := newYVol;
+  Active := true;
 end;
 
 procedure TArrow.Move();
 begin
+  // Update x and y coordinates
   X += XVol;
   Y += YVol;
 
+  // Add gravity affect
   YVol += GRAVITY;
 end;
 
@@ -41,7 +46,7 @@ var
   retVal : float;
 begin
   // Get the angle from the velocity
-  retVal := ArcTan(YVol / XVol);
+  retVal := ArcTan2(YVol, XVol);
 
   // Convert to degreese if ordered to
   if deg then
