@@ -76,7 +76,7 @@ begin
   // Work out the max x value
   if (currAng <= 90) or ((currAng > 180) and (currAng <= 270)) then
     begin
-      exit(X + Sin((currAng mod 90) * Pi() / 180) * ArrowTexture.Handle.width);
+      exit(X + Cos((currAng mod 90) * Pi() / 180) * ArrowTexture.Handle.width);
     end
   else
     begin
