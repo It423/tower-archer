@@ -4,13 +4,19 @@ interface
 
 uses 
   W3System, W3Graphics,
-  UArrow;
+  UArrow, UArcher;
 
+procedure DrawArcher(archer : TArcher; canvas : TW3Canvas);
 procedure DrawArrow(arrows : array of TArrow; canvas : TW3Canvas); overload;
 procedure DrawArrow(arrow : TArrow; canvas : TW3Canvas); overload;
 procedure RotateCanvas(angle, xChange, yChange : float; canvas : TW3Canvas);
 
 implementation
+
+procedure DrawArcher(archer : TArcher; canvas : TW3Canvas);
+begin
+
+end;
 
 procedure DrawArrow(arrows : array of TArrow; canvas : TW3Canvas);
 begin
