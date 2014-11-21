@@ -4,7 +4,7 @@ interface
 
 uses 
   W3System, W3Components,
-  USpawner;
+  UPlayerData;
 
 procedure MouseDownHandler(o : TObject; b : TMouseButton; t : TShiftState; x, y : integer);
 procedure MouseUpHandler(o : TObject; b : TMouseButton; t : TShiftState; x, y : integer);
@@ -27,13 +27,15 @@ procedure MouseUpHandler(o : TObject; b : TMouseButton; t : TShiftState; x, y : 
 begin
   MouseDown := false;
 
-  SpawnArrow(MouseDownX, MouseDownY, CurrentMouseX, CurrentMouseY);
+  Player.Fire();
 end;
 
 procedure MouseMoveHandler(o : TObject; ss : TShiftState; x, y : integer);
 begin
  CurrentMouseX := x;
  CurrentMouseY := y;
+
+ Player.UpdateInformation(MouseDownX, MouseDownY, CurrentMouseX, CurrentMouseY);
 end;
 
 end.

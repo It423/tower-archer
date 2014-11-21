@@ -4,7 +4,7 @@ interface
 
 uses
   W3System, W3Components, W3Application, W3Game, W3GameApp, W3Graphics, W3Image,
-  UMouseInputs, UArrow, UDrawing, UGameVariables, UGameItems;
+  UMouseInputs, UArrow, UArcher, UDrawing, UGameVariables, UGameItems, UPlayerData;
 
 type
   TApplication = class(TW3CustomGameApplication)
@@ -22,12 +22,15 @@ begin
   // Initialize textures
   ArrowTexture := TW3Image.Create(nil);
   ArrowTexture.LoadFromURL("res/Arrow.png");
+  BowTexture := TW3Image.Create(nil);
+  BowTexture.LoadFromURL("res/Bow.png");
 
   // Initialize the variables
-  ArrowSpawnX := 100;
-  ArrowSpawnY := 100;
   PixelToPowerRatio := 10;
   MaxPower := 30;
+
+  // Initialize the player
+  Player := TArcher.Create(100,100);
 
   // Add the mouse input handlers
   GameView.OnMouseDown := MouseDownHandler;
@@ -68,6 +71,7 @@ begin
 
   // Draw game items
   DrawArrow(Arrows, Canvas);
+  DrawArcher(Player, Canvas);
 end;
 
 end.
