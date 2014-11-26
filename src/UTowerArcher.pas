@@ -30,7 +30,7 @@ begin
   MaxPower := 30;
 
   // Initialize the player
-  Player := TArcher.Create(100,100);
+  Player := TArcher.Create(200,100);
 
   // Add the mouse input handlers
   GameView.OnMouseDown := MouseDownHandler;
@@ -38,7 +38,7 @@ begin
   GameView.OnMouseMove := MouseMoveHandler;
 
   // Initialize refresh interval
-  GameView.Delay := 20;
+  GameView.Delay := 1;
 
   // Start the redraw-cycle with framecounter inactive
   GameView.StartSession(False);
