@@ -4,22 +4,29 @@ interface
 
 uses 
   W3System, W3Image,
-  UGameVariables;
+  UGameVariables, UEnemy;
 
 type TArrow = class(TObject)
-  X, Y, XVol, YVol : float;
-  Active : boolean;
-  constructor Create(newX, newY, newXVol, newYVol : float);
-  procedure Move();
-  function GetAngle(deg : boolean = false) : float;
-  function MaxX() : float;
-  function MinX() : float;
-  function MaxY() : float;
-  function MinY() : float;
+  public
+    X, Y, XVol, YVol : float;
+    Active : boolean;
+    constructor Create(newX, newY, newXVol, newYVol : float);
+    procedure Move();
+    function GetAngle(deg : boolean = false) : float;
+    function MaxX() : float;
+    function MinX() : float;
+    function MaxY() : float;
+    function MinY() : float;
+    function GetRect() : TRectF;
+    function CheckCollisions(enemys : array of TEnemy; prevX, prevY : float) : array of TEnemy;
+
+  private
+    function CheckCollision(enemy : TEnemy; prevX, prevY : float) : boolean; overload;
 end;
 
 const
   GRAVITY = 1.5;
+  DAMAGE = 10;
 
 var
   ArrowTexture : TW3Image;
@@ -130,6 +137,75 @@ begin
     begin
       exit(Y - Cos((currAng mod 90) * Pi() / 180) * ArrowTexture.Handle.width);
     end;
+end;
+
+function TArrow.GetRect() : TRectF;
+begin
+  exit(TRectF.Create(MinX(), MinY(), MaxX(), MaxY()));
+end;
+
+function TArrow.CheckCollisions(enemys : array of TEnemy; prevX, prevY : float) : array of TEnemy;
+var
+  pathRect : TRectF; // The rectangle of which the arrow has moved
+  intersection : TRectF; // The intersection between objects
+begin
+  // Get the path rectangle
+  pathRect := TRectF.Create(prevX, prevY, MaxX(), MaxY());
+
+  // Check over each enemy
+  for var i := 0 to High(enemys) do
+    begin
+      // If the enemy was in the flight path of the arrow perform more detailed analysis
+      if pathRect.Intersect(enemys[i].GetRect(), intersection) then
+        begin
+          if CheckCollision(enemys[i], prevX, prevY) then
+            begin
+              // If the arrow did actually hit the enemy run the hit procedure on it and exit the loop
+              enemys[i].Hit(DAMAGE);
+              break;
+            end;
+        end;
+    end;
+
+  // Return back the list of enemys which could have been altered
+  exit(enemys);
+end;
+
+function TArrow.CheckCollision(enemy : TEnemy; prevX, prevY : float) : boolean;
+var
+  distance : integer; // The distance the arrow traveled
+  xChangePerLoop, yChangePerLoop : float; // How much to move the arrow per test
+  testArrow : TArrow; // The arrow to test with
+  intersection : TRectF; // The intersection between objects
+begin
+  // Get the distance the arrow has traveled
+  distance := Ceil(Sqrt(Sqr(MaxX() - prevX) + Sqr(MaxY - prevY)));
+
+  // Use the distance as the divider
+  xChangePerLoop := (MaxX() - prevX) / distance;
+  yChangePerLoop := (MaxY() - prevY) / distance;
+
+  // Create an arrow in the original position with the previous velocity
+  testArrow := TArrow.Create(prevX, prevY, XVol, YVol - GRAVITY);
+
+  // Move the arrow in small steps to see if it hits the enemy
+  for var i := 0 to distance do
+    begin
+      // Test to see if it has collided
+      if testArrow.GetRect().Intersect(enemy.GetRect(), intersection) then
+        begin
+          exit(true);
+        end
+      else
+        begin
+          // If it did not move the arrow by a small amout
+          testArrow.X += xChangePerLoop;
+          testArrow.Y += yChangePerLoop;
+        end
+    end;
+
+  // If the arrow did not in fact hit return false
+  exit(false);
 end;
 
 end.
