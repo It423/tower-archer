@@ -6,15 +6,22 @@ uses
   W3System,
   UArrow, UGameVariables, UGameItems;
 
-procedure SpawnArrow(power, angle, x, y : float);
+procedure SpawnArrow(xVol, yVol, x, y : float);
 
 implementation
 
-procedure SpawnArrow(power, angle, x, y : float);
+procedure SpawnArrow(xVol, yVol, x, y : float);
 begin
-  // Work out the x and y velocitys
-  var xVol := Cos(angle) * power;
-  var yVol := Sin(angle) * power;
+  // Change the x and y velocity if they exceed the max power
+  if (Sqrt(Sqr(xVol) + Sqr(yVol)) > MaxPower) then
+    begin
+      // Work out the angle
+      var ang := ArcTan2(yVol, xVol);
+
+      // Change the velocites to match the angle at max power
+      xVol := Cos(ang) * MaxPower;
+      yVol := Sin(ang) * MaxPower;
+    end;
 
   for var i := 0 to High(Arrows) do
     begin

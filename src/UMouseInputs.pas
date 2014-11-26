@@ -32,10 +32,13 @@ end;
 
 procedure MouseMoveHandler(o : TObject; ss : TShiftState; x, y : integer);
 begin
- CurrentMouseX := x;
- CurrentMouseY := y;
+  CurrentMouseX := x;
+  CurrentMouseY := y;
 
- Player.UpdateInformation(MouseDownX, MouseDownY, CurrentMouseX, CurrentMouseY);
+  if MouseDown then
+    begin
+      Player.UpdateInformation(MouseDownX, MouseDownY, CurrentMouseX, CurrentMouseY);
+    end;
 end;
 
 end.

@@ -4,15 +4,18 @@ interface
 
 uses 
   W3System, W3Image,
-  UGameVariables, USpawner;
+  UGameVariables, USpawner, UArrow;
 
 type TArcher = class(TObject)
-  Power, Angle : float;
-  X, Y : float;
-  ArrowSpawnX, ArrowSpawnY : float;
-  constructor Create(newX, newY : float);
-  procedure UpdateInformation(origX, origY, currX, currY : float);
-  procedure Fire();
+  public
+    X, Y : float;
+    XVol, YVol : float; // The predicted x and y velocities of shots
+    constructor Create(newX, newY : float);
+    procedure UpdateInformation(origX, origY, currX, currY : float);
+    procedure Fire();
+    function GetSpawnPoint() : array [0 .. 1] of float;
+//  function GetAngle() : float;
+//  function GetPower() : float;
 end;
 
 var
@@ -22,48 +25,54 @@ implementation
 
 constructor TArcher.Create(newX, newY : float);
 begin
-  Power := 0;
-  Angle := 0;
   X := newX;
   Y := newY;
-  ArrowSpawnX := X + BowTexture.Handle.width;
-  ArrowSpawnY := Y + BowTexture.Handle.height / 2;
 end;
 
 procedure TArcher.UpdateInformation(origX, origY, currX, currY : float);
 begin
   // Work out the x and y velocitys
-  var xVol := (origX - currX) / PixelToPowerRatio;
-  var yVol := (origY - currY) / PixelToPowerRatio;
-
-  // Change the x and y velocity if they exceed the max power
-  if (Sqrt(Sqr(xVol) + Sqr(yVol)) > MaxPower) then
-    begin
-      // Work out the angle
-      var ang := ArcTan2(yVol, xVol);
-
-      // Change the velocites to match the angle at max power
-      xVol := Cos(ang) * MaxPower;
-      yVol := Sin(ang) * MaxPower;
-    end;
-
-  // Get the power and angle from the velocities
-  Angle := Tan((yVol * -1) / (xVol * -1));
-  Power := Sqrt(Sqr(xVol) + Sqr(yVol));
-
-  // Make the power negative (to the left) if its meant to shoot left
-  if (xVol < 0) then
-    begin
-      Power := -Power;
-    end;
+  XVol := (origX - currX) / PixelToPowerRatio;
+  YVol := (origY - currY) / PixelToPowerRatio;
 end;
 
 procedure TArcher.Fire();
 begin
-  SpawnArrow(Power, Angle, ArrowSpawnX, ArrowSpawnY);
+  SpawnArrow(XVol, YVol, GetSpawnPoint()[0], GetSpawnPoint()[1]);
 
-  // Reset the power
-  Power := 0;
+  XVol := 0;
+  YVol := 0;
 end;
+
+function TArcher.GetSpawnPoint() : array [0 .. 1] of float;
+begin
+  // Get x and y points
+  var yPoint := Y + BowTexture.Handle.height / 2;
+  var xPoint := X + BowTexture.Handle.width;
+
+  if XVol < 0 then
+    begin
+      xPoint := X - BowTexture.Handle.width;
+    end;
+
+  exit([xPoint, yPoint]);
+end;
+
+//function TArcher.GetAngle() : float;
+//begin
+//  if XVol < 0 then
+//    begin
+//      exit(Tan((YVol) / XVol));
+//    end
+//  else
+//    begin
+//      exit(Tan((YVol * -1) / (XVol * -1)));
+//    end;
+//end;
+
+//function TArcher.GetPower() : float;
+//begin
+//
+//end;
 
 end.
