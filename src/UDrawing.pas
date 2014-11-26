@@ -28,7 +28,7 @@ end;
 
 procedure DrawArrow(arrow : TArrow; canvas : TW3Canvas);
 begin
-  // Rotate the canvas correctly
+  // Rotate the canvas
   RotateCanvas(arrow.GetAngle(), arrow.X, arrow.Y, canvas);
 
   // Draw the arrow
@@ -41,13 +41,13 @@ end;
 procedure RotateCanvas(angle, xChange, yChange : float; canvas : TW3Canvas);
 begin
   // Trasnlate the canvas so the 0,0 point is the center of the object being rotated
-  Canvas.Translate(xChange, yChange);
+  canvas.Translate(xChange, yChange);
 
   // Rotate the canvas
-  Canvas.Rotate(angle);
+  canvas.Rotate(angle);
 
   // Detranslate the canvas so the 0,0 point is the normal one
-  Canvas.Translate(-xChange, -yChange);
+  canvas.Translate(-xChange, -yChange);
 end;
 
 end.
