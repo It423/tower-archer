@@ -3,19 +3,17 @@ unit UGroundUnit;
 interface
 
 uses 
-  W3System, W3Image,
-  UEnemy;
+  W3System,
+  UEnemy, UTextures;
 
 type TGroundUnit = class(TEnemy)
   public
     Speed : float;
     constructor Create(newX, newY, newSpeed : float; newHealth : integer);
+    procedure Move(); override;
     function GetRect() : TRectF; override;
     procedure Hit(damage : integer); override;
 end;
-
-var
-  GroundUnitTexture : TW3Image;
 
 implementation
 
@@ -25,6 +23,11 @@ begin
   Y := newY;
   Speed := newSpeed;
   Health := newHealth;
+end;
+
+procedure TGroundUnit.Move();
+begin
+  X -= Speed;
 end;
 
 function TGroundUnit.GetRect() : TRectF;
