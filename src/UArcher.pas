@@ -3,8 +3,8 @@ unit UArcher;
 interface
 
 uses 
-  W3System, W3Image,
-  UGameVariables, USpawner, UArrow;
+  W3System,
+  UGameVariables, USpawner, UArrow, UTextures;
 
 type TArcher = class(TObject)
   public
@@ -17,9 +17,6 @@ type TArcher = class(TObject)
 //  function GetAngle() : float;
 //  function GetPower() : float;
 end;
-
-var
-  BowTexture : TW3Image;
 
 implementation
 
