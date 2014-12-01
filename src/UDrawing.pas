@@ -4,11 +4,13 @@ interface
 
 uses 
   W3System, W3Graphics,
-  UArrow, UArcher;
+  UTextures, UArrow, UArcher, UEnemy, UGroundUnit;
 
 procedure DrawArcher(archer : TArcher; canvas : TW3Canvas);
 procedure DrawArrow(arrows : array of TArrow; canvas : TW3Canvas); overload;
 procedure DrawArrow(arrow : TArrow; canvas : TW3Canvas); overload;
+procedure DrawEnemy(enemy : array of TEnemy; canvas : TW3Canvas); overload;
+procedure DrawEnemy(enemy : TEnemy; canvas : TW3Canvas); overload;
 procedure RotateCanvas(angle, xChange, yChange : float; canvas : TW3Canvas);
 
 implementation
@@ -36,6 +38,22 @@ begin
 
   // Rotate the canvas back
   RotateCanvas(-arrow.GetAngle(), arrow.X, arrow.Y, canvas);
+end;
+
+procedure DrawEnemy(enemy : array of TEnemy; canvas : TW3Canvas); overload;
+begin
+  for var i := 0 to High(enemy) do
+    begin
+      DrawEnemy(enemy[i], canvas);
+    end;
+end;
+
+procedure DrawEnemy(enemy : TEnemy; canvas : TW3Canvas); overload;
+begin
+  if (enemy is TGroundUnit) then
+    begin
+      canvas.DrawImageF(GroundUnitTexture.Handle, enemy.X, enemy.Y);
+    end;
 end;
 
 procedure RotateCanvas(angle, xChange, yChange : float; canvas : TW3Canvas);
