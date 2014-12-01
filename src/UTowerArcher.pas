@@ -44,12 +44,6 @@ begin
 
   // Start the redraw-cycle with framecounter inactive
   GameView.StartSession(False);
-
-
-  // Initialize a few enemies
-  Enemies[0] := TGroundUnit.Create(250, 250, 0, 5);
-  Enemies[1] := TGroundUnit.Create(300, 300, 0, 5);
-  Enemies[2] := TGroundUnit.Create(300, 500, 0, 5);
 end;
 
 procedure TApplication.ApplicationClosing;
@@ -68,6 +62,9 @@ begin
   Canvas.FillStyle := 'rgb(255, 255, 255)';
   Canvas.FillRectF(0, 0, GameView.Width, GameView.Height);
 
+  // Draw the player
+  DrawArcher(Player, Canvas);
+
   // Update arrows
   for var i := 0 to High(Arrows) do
     begin
@@ -84,7 +81,7 @@ begin
           Arrows[i].CheckCollisions(Enemies, prevX, prevY);
 
           // Draw the active arrow
-          DrawArrow(Arrows[i], canvas);
+          DrawArrow(Arrows[i], Canvas);
         end;
     end;
 
@@ -100,9 +97,6 @@ begin
           DrawEnemy(Enemies[i], Canvas);
         end;
     end;
-
-  // Draw the player
-  DrawArcher(Player, Canvas);
 end;
 
 end.
