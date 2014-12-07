@@ -17,7 +17,28 @@ implementation
 
 procedure DrawArcher(archer : TArcher; canvas : TW3Canvas);
 begin
+  // Draw the body of the archer
+  canvas.DrawImageF(ArcherTexture.Handle, archer.X, archer.Y);
 
+  // Rotate the canvas for the bow
+  RotateCanvas(archer.Angle(), archer.X + ArcherTexture.Handle.width / 2, archer.Y + ArcherTexture.Handle.height / 3, canvas);
+
+  // Draw the bow
+  canvas.DrawImageF(BowTexture.Handle, archer.X + ArcherTexture.Handle.width / 2, archer.Y + ArcherTexture.Handle.height / 3 - BowTexture.Handle.height / 2);
+
+  // Draw the string drawback
+  canvas.StrokeStyle := 'rgb(0, 0, 0)';
+  canvas.LineWidth := 0.1;
+  canvas.BeginPath();
+  canvas.MoveToF(archer.X + ArcherTexture.Handle.width / 2 + BowTexture.Handle.width * 3 / 5, archer.Y + ArcherTexture.Handle.height / 3 - BowTexture.Handle.height / 2);
+  canvas.LineToF(archer.X + ArcherTexture.Handle.width / 2 + BowTexture.Handle.width * 3 / 5 - archer.Power() / 3, archer.Y + ArcherTexture.Handle.height / 3);
+  canvas.MoveToF(archer.X + ArcherTexture.Handle.width / 2 + BowTexture.Handle.width * 3 / 5, archer.Y + ArcherTexture.Handle.height / 3 + BowTexture.Handle.height / 2);
+  canvas.LineToF(archer.X + ArcherTexture.Handle.width / 2 + BowTexture.Handle.width * 3 / 5 - archer.Power() / 3, archer.Y + ArcherTexture.Handle.height / 3);
+  canvas.ClosePath();
+  canvas.Stroke();
+
+  // Unrotate the canvas
+  RotateCanvas(-archer.Angle(), archer.X + ArcherTexture.Handle.width / 2, archer.Y + ArcherTexture.Handle.height / 3, canvas);
 end;
 
 procedure DrawArrow(arrows : array of TArrow; canvas : TW3Canvas);
@@ -50,6 +71,7 @@ end;
 
 procedure DrawEnemy(enemy : TEnemy; canvas : TW3Canvas); overload;
 begin
+  // Draw the ground unit if it is one
   if (enemy is TGroundUnit) then
     begin
       canvas.DrawImageF(GroundUnitTexture.Handle, enemy.X, enemy.Y);
