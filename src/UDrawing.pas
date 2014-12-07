@@ -4,7 +4,7 @@ interface
 
 uses 
   W3System, W3Graphics,
-  UTextures, UArrow, UArcher, UEnemy, UGroundUnit;
+  UTextures, UArrow, UArcher, UEnemy, UGroundUnit, UAirUnit;
 
 procedure DrawArcher(archer : TArcher; canvas : TW3Canvas);
 procedure DrawArrow(arrows : array of TArrow; canvas : TW3Canvas); overload;
@@ -71,10 +71,15 @@ end;
 
 procedure DrawEnemy(enemy : TEnemy; canvas : TW3Canvas); overload;
 begin
-  // Draw the ground unit if it is one
   if (enemy is TGroundUnit) then
     begin
+      // Draw the ground unit if it is one
       canvas.DrawImageF(GroundUnitTexture.Handle, enemy.X, enemy.Y);
+    end
+  else if (enemy is TAirUnit) then
+    begin
+      // Draw the air unit if it is one
+      canvas.DrawImageF(AirUnitTexture.Handle, enemy.X, enemy.Y);
     end;
 end;
 
