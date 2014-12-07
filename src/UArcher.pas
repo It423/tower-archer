@@ -13,9 +13,9 @@ type TArcher = class(TObject)
     constructor Create(newX, newY : float);
     procedure UpdateInformation(origX, origY, currX, currY : float);
     procedure Fire();
-    function GetSpawnPoint() : array [0 .. 1] of float;
-//  function GetAngle() : float;
-//  function GetPower() : float;
+    function ArrowSpawnPoint() : array [0 .. 1] of float;
+    function Angle() : float;
+    function Power() : float;
 end;
 
 implementation
@@ -35,13 +35,13 @@ end;
 
 procedure TArcher.Fire();
 begin
-  SpawnArrow(XVol, YVol, GetSpawnPoint()[0], GetSpawnPoint()[1]);
+  SpawnArrow(XVol, YVol, ArrowSpawnPoint()[0], ArrowSpawnPoint()[1]);
 
   XVol := 0;
   YVol := 0;
 end;
 
-function TArcher.GetSpawnPoint() : array [0 .. 1] of float;
+function TArcher.ArrowSpawnPoint() : array [0 .. 1] of float;
 begin
   // Get x and y points
   var yPoint := Y + BowTexture.Handle.height / 2;
@@ -55,21 +55,27 @@ begin
   exit([xPoint, yPoint]);
 end;
 
-//function TArcher.GetAngle() : float;
-//begin
-//  if XVol < 0 then
-//    begin
-//      exit(Tan((YVol) / XVol));
-//    end
-//  else
-//    begin
-//      exit(Tan((YVol * -1) / (XVol * -1)));
-//    end;
-//end;
+function TArcher.Angle() : float;
+begin
+  exit(ArcTan2(YVol, XVol));
+end;
 
-//function TArcher.GetPower() : float;
-//begin
-//
-//end;
+function TArcher.Power() : float;
+var
+  retVal : float;
+begin
+  // Get the power
+  retVal := Sqrt(Sqr(XVol) + Sqr(YVol));
+
+  // Return max power if above max power, otherwise return the calculated power
+  if retVal > MaxPower then
+    begin
+      exit(MaxPower);
+    end
+  else
+    begin
+      exit(retVal);
+    end;
+end;
 
 end.
