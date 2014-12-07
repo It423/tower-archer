@@ -26,6 +26,8 @@ begin
   BowTexture.LoadFromURL("res/Bow.png");
   GroundUnitTexture := TW3Image.Create(nil);
   GroundUnitTexture.LoadFromURL("res/GroundEnemy.png");
+  ArcherTexture := TW3Image.Create(nil);
+  ArcherTexture.LoadFromURL("res/Archer.png");
 
   // Initialize the variables
   PixelToPowerRatio := 10;
@@ -40,10 +42,10 @@ begin
   GameView.OnMouseMove := MouseMoveHandler;
 
   // Initialize refresh interval
-  GameView.Delay := 1;
+  GameView.Delay := 20;
 
   // Start the redraw-cycle with framecounter inactive
-  GameView.StartSession(False);
+  GameView.StartSession(True);
 end;
 
 procedure TApplication.ApplicationClosing;
@@ -61,6 +63,18 @@ begin
   // Clear background
   Canvas.FillStyle := 'rgb(255, 255, 255)';
   Canvas.FillRectF(0, 0, GameView.Width, GameView.Height);
+
+  // Draw the mouse to origin line if prepearing to fire
+  if MouseDown then
+    begin
+      Canvas.StrokeStyle := 'rgba(0, 0, 0, 0.5)';
+      Canvas.LineWidth := 0.3;
+      Canvas.BeginPath();
+      Canvas.MoveToF(MouseDownX, MouseDownY);
+      Canvas.LineToF(CurrentMouseX, CurrentMouseY);
+      Canvas.ClosePath();
+      Canvas.Stroke();
+    end;
 
   // Draw the player
   DrawArcher(Player, Canvas);
