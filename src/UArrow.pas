@@ -156,7 +156,7 @@ begin
               if CheckCollision(enemies[i], prevX, prevY) then
                 begin
                   // If the arrow did actually hit the enemy run the hit procedure on it and exit the loop
-                  enemies[i].Hit(ARROW_DAMAGE);
+                  enemies[i].Hit(ARROW_DAMAGE, XVol, YVol);
                   Active := false;
                   break;
                 end;
@@ -176,8 +176,8 @@ begin
   // Get the distance the arrow has traveled
   distance := Ceil(Sqrt(Sqr(MaxX() - prevX) + Sqr(MaxY - prevY)));
 
-  // Get how many arrows fit in the distance
-  arrowsInDistance := Ceil(distance / ArrowTexture.Handle.width);
+  // Get how many arrows fit in the distance (add 1 so it does at least 2 arrows)
+  arrowsInDistance := Ceil(distance / ArrowTexture.Handle.width) + 1;
 
   // Use the distance as the divider
   xChangePerLoop := (MaxX() - prevX) / arrowsInDistance;
