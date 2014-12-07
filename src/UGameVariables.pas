@@ -8,6 +8,8 @@ uses
 const
   GRAVITY = 1.5;
   ARROW_DAMAGE = 10;
+  FLYING_SPEED_CHANGE = 0.1;
+  FLYING_SPEED_MAX = 3;
 
 var
   PixelToPowerRatio : float;
