@@ -11,5 +11,5 @@ type TEnemy = class(TObject)
     Health, MaxHealth : integer;
     procedure Move(); virtual; abstract;
     function GetRect() : TRectF; virtual; abstract;
-    procedure Hit(damage : integer); virtual; abstract;
+    procedure Hit(damage : integer; xSpeed, ySpeed : float); virtual; abstract;
 end;

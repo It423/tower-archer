@@ -12,7 +12,7 @@ type TGroundUnit = class(TEnemy)
     constructor Create(newX, newY, newSpeed : float; newHealth : integer);
     procedure Move(); override;
     function GetRect() : TRectF; override;
-    procedure Hit(damage : integer); override;
+    procedure Hit(damage : integer; xArrowSpeed, yArrowSpeed : float); override;
 end;
 
 implementation
@@ -35,8 +35,12 @@ begin
   exit(TRectF.Create(X, Y, X + GroundUnitTexture.Handle.width, Y + GroundUnitTexture.Handle.height));
 end;
 
-procedure TGroundUnit.Hit(damage : integer);
+procedure TGroundUnit.Hit(damage : integer; xArrowSpeed, yArrowSpeed : float);
 begin
+  // Times the speed of the arrow by the damage multiplyer
+  damage *= Sqrt(Sqr(xArrowSpeed) + Sqr(yArrowSpeed));
+
+  // Take the damage from the health
   Health -= damage;
 end;
 
