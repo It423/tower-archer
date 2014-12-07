@@ -42,15 +42,12 @@ begin
 end;
 
 function TArcher.ArrowSpawnPoint() : array [0 .. 1] of float;
+var
+  xPoint, yPoint : float;
 begin
-  // Get x and y points
-  var yPoint := Y + BowTexture.Handle.height / 2;
-  var xPoint := X + BowTexture.Handle.width;
-
-  if XVol < 0 then
-    begin
-      xPoint := X - BowTexture.Handle.width;
-    end;
+  // Get the x and y points using trigonometry
+  xPoint := X + ArcherTexture.Handle.width / 2 + Cos(Angle()) * BowTexture.Handle.width;
+  yPoint := Y + ArcherTexture.Handle.height / 3 + Sin(Angle()) * BowTexture.Handle.width;
 
   exit([xPoint, yPoint]);
 end;
