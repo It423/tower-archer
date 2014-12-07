@@ -4,7 +4,7 @@ interface
 
 uses
   W3System, W3Components, W3Application, W3Game, W3GameApp, W3Graphics, W3Image,
-  UMouseInputs, UArrow, UArcher, UDrawing, UGameVariables, UGameItems, UPlayerData, UTextures, UGroundUnit;
+  UMouseInputs, UArrow, UArcher, UDrawing, UGameVariables, UGameItems, UPlayerData, UTextures, UGroundUnit, UAirUnit;
 
 type
   TApplication = class(TW3CustomGameApplication)
@@ -26,6 +26,8 @@ begin
   BowTexture.LoadFromURL("res/Bow.png");
   GroundUnitTexture := TW3Image.Create(nil);
   GroundUnitTexture.LoadFromURL("res/GroundEnemy.png");
+  AirUnitTexture := TW3Image.Create(nil);
+  AirUnitTexture.LoadFromURL("res/AirEnemy.png");
   ArcherTexture := TW3Image.Create(nil);
   ArcherTexture.LoadFromURL("res/Archer.png");
 

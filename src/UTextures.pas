@@ -7,6 +7,7 @@ uses
 
 var
   GroundUnitTexture : TW3Image;
+  AirUnitTexture : TW3Image;
   BowTexture : TW3Image;
   ArrowTexture : TW3Image;
   ArcherTexture : TW3Image;
