@@ -24,13 +24,6 @@ type TArrow = class(TObject)
     function CheckCollision(enemy : TEnemy; prevX, prevY : float) : boolean; overload;
 end;
 
-const
-  GRAVITY = 1.5;
-  DAMAGE = 10;
-
-var
-  MaxPower : float;
-
 implementation
 
 constructor TArrow.Create(newX, newY, newXVol, newYVol : float);
@@ -163,7 +156,7 @@ begin
               if CheckCollision(enemies[i], prevX, prevY) then
                 begin
                   // If the arrow did actually hit the enemy run the hit procedure on it and exit the loop
-                  enemies[i].Hit(DAMAGE);
+                  enemies[i].Hit(ARROW_DAMAGE);
                   Active := false;
                   break;
                 end;

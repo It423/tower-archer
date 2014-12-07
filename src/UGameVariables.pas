@@ -5,6 +5,10 @@ interface
 uses 
   W3System;
 
+const
+  GRAVITY = 1.5;
+  ARROW_DAMAGE = 10;
+
 var
   PixelToPowerRatio : float;
   MaxPower : float;
