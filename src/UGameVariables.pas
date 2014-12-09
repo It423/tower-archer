@@ -10,6 +10,7 @@ const
   ARROW_DAMAGE = 10;
   FLYING_SPEED_CHANGE = 0.1;
   FLYING_SPEED_MAX = 3;
+  TIME_BETWEEN_SHOTS = 2000;
 
 var
   PixelToPowerRatio : float;

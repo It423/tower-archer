@@ -28,6 +28,10 @@ begin
   MouseDown := false;
 
   Player.Fire();
+
+  // Set the player's velocities to 0 avoid display issues from the timer
+  Player.XVol := 0;
+  Player.YVol := 0;
 end;
 
 procedure MouseMoveHandler(o : TObject; ss : TShiftState; x, y : integer);

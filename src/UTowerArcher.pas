@@ -100,7 +100,7 @@ end;
 
 procedure DrawMouseDragLine(canvas : TW3Canvas);
 begin
-  if MouseDown then
+  if MouseDown and Player.CanShoot then
     begin
       canvas.StrokeStyle := 'rgba(0, 0, 0, 0.5)';
       canvas.LineWidth := 0.3;
