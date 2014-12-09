@@ -4,8 +4,9 @@ interface
 
 uses 
   W3System, W3Graphics,
-  UTextures, UArrow, UArcher, UEnemy, UGroundUnit, UAirUnit;
+  UTextures, UGameVariables, UArrow, UArcher, UEnemy, UGroundUnit, UAirUnit;
 
+procedure DrawLoadingScreen(canvas : TW3Canvas);
 procedure DrawArcher(archer : TArcher; canvas : TW3Canvas);
 procedure DrawArrow(arrows : array of TArrow; canvas : TW3Canvas); overload;
 procedure DrawArrow(arrow : TArrow; canvas : TW3Canvas); overload;
@@ -14,6 +15,13 @@ procedure DrawEnemy(enemy : TEnemy; canvas : TW3Canvas); overload;
 procedure RotateCanvas(angle, xChange, yChange : float; canvas : TW3Canvas);
 
 implementation
+
+procedure DrawLoadingScreen(canvas : TW3Canvas);
+begin
+  canvas.FillStyle := "blue";
+  canvas.Font := "24pt verdana";
+  canvas.FillTextF("Loading Content...", GameWidth / 2 - 137.5, GameHeight / 2 - 12, 275);
+end;
 
 procedure DrawArcher(archer : TArcher; canvas : TW3Canvas);
 begin
@@ -27,7 +35,7 @@ begin
   canvas.DrawImageF(BowTexture.Handle, archer.X + ArcherTexture.Handle.width / 2, archer.Y + ArcherTexture.Handle.height / 3 - BowTexture.Handle.height / 2);
 
   // Draw the string drawback
-  canvas.StrokeStyle := 'rgb(0, 0, 0)';
+  canvas.StrokeStyle := "rgb(0, 0, 0)";
   canvas.LineWidth := 0.1;
   canvas.BeginPath();
   canvas.MoveToF(archer.X + ArcherTexture.Handle.width / 2 + BowTexture.Handle.width * 3 / 5, archer.Y + ArcherTexture.Handle.height / 3 - BowTexture.Handle.height / 2);

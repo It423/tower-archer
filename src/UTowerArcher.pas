@@ -14,6 +14,15 @@ type
     procedure PaintView(Canvas: TW3Canvas); override;
   end;
 
+procedure DrawMouseDragLine(canvas : TW3Canvas);
+procedure UpdateArrows(canvas : TW3Canvas);
+procedure UpdateEnemies(canvas : TW3Canvas);
+procedure EvaluateLoadedContent();
+
+var
+  ContentLoaded : boolean;
+  Loaded : array of boolean;
+
 implementation
 
 procedure TApplication.ApplicationStarting;
@@ -30,6 +39,10 @@ begin
   AirUnitTexture.LoadFromURL("res/AirEnemy.png");
   ArcherTexture := TW3Image.Create(nil);
   ArcherTexture.LoadFromURL("res/Archer.png");
+
+  // Tell the program the content has not loaded
+  ContentLoaded := false;
+  Loaded := [ false, false, false, false, false ];
 
   // Initialize the variables
   PixelToPowerRatio := 10;
@@ -63,25 +76,44 @@ begin
   GameHeight := GameView.Height;
 
   // Clear background
-  Canvas.FillStyle := 'rgb(255, 255, 255)';
+  Canvas.FillStyle := "rgb(255, 255, 255)";
   Canvas.FillRectF(0, 0, GameView.Width, GameView.Height);
 
-  // Draw the mouse to origin line if prepearing to fire
+  if ContentLoaded then
+    begin
+      // Draw the mouse to origin line if prepearing to fire
+      DrawMouseDragLine(Canvas);
+
+      DrawArcher(Player, Canvas);
+
+      UpdateArrows(Canvas);
+
+      UpdateEnemies(Canvas);
+    end
+  else
+    begin
+      EvaluateLoadedContent();
+
+      DrawLoadingScreen(Canvas);
+    end;
+end;
+
+procedure DrawMouseDragLine(canvas : TW3Canvas);
+begin
   if MouseDown then
     begin
-      Canvas.StrokeStyle := 'rgba(0, 0, 0, 0.5)';
-      Canvas.LineWidth := 0.3;
-      Canvas.BeginPath();
-      Canvas.MoveToF(MouseDownX, MouseDownY);
-      Canvas.LineToF(CurrentMouseX, CurrentMouseY);
-      Canvas.ClosePath();
-      Canvas.Stroke();
+      canvas.StrokeStyle := 'rgba(0, 0, 0, 0.5)';
+      canvas.LineWidth := 0.3;
+      canvas.BeginPath();
+      canvas.MoveToF(MouseDownX, MouseDownY);
+      canvas.LineToF(CurrentMouseX, CurrentMouseY);
+      canvas.ClosePath();
+      canvas.Stroke();
     end;
+end;
 
-  // Draw the player
-  DrawArcher(Player, Canvas);
-
-  // Update arrows
+procedure UpdateArrows(canvas : TW3Canvas);
+begin
   for var i := 0 to High(Arrows) do
     begin
       if (Arrows[i].Active) then
@@ -97,11 +129,13 @@ begin
           Arrows[i].CheckCollisions(Enemies, prevX, prevY);
 
           // Draw the active arrow
-          DrawArrow(Arrows[i], Canvas);
+          DrawArrow(Arrows[i], canvas);
         end;
     end;
+end;
 
-  // Update enemies
+procedure UpdateEnemies(canvas : TW3Canvas);
+begin
   for var i := 0 to High(Enemies) do
     begin
       if (Enemies[i].Health > 0) then
@@ -110,9 +144,51 @@ begin
           Enemies[i].Move();
 
           // Draw the enemy
-          DrawEnemy(Enemies[i], Canvas);
+          DrawEnemy(Enemies[i], canvas);
         end;
     end;
+end;
+
+procedure EvaluateLoadedContent();
+begin
+  // Check which content is loaded
+  if ArrowTexture.Ready then
+    begin
+      Loaded[0] := true;
+    end;
+
+  if ArcherTexture.Ready then
+    begin
+      Loaded[1] := true;
+    end;
+
+  if BowTexture.Ready then
+    begin
+      Loaded[2] := true;
+    end;
+
+  if GroundUnitTexture.Ready then
+    begin
+      Loaded[3] := true;
+    end;
+
+  if AirUnitTexture.Ready then
+    begin
+      Loaded[4] := true;
+    end;
+
+  // Evaluate if everything is loaded
+  for var i := 0 to High(Loaded) do
+    begin
+      // Break the procedure if the content is not loaded
+      if not Loaded[i] then
+        begin
+          exit;
+        end;
+    end;
+
+  // If the procedure has not ended the content is fully loaded
+  ContentLoaded := true;
 end;
 
 end.
