@@ -140,8 +140,11 @@ begin
     begin
       if (Enemies[i].Health > 0) then
         begin
-          // Move the enemy
-          Enemies[i].Move();
+          // Only move the enemy if its not frozen
+          if not Enemies[i].Frozen then
+            begin
+              Enemies[i].Move();
+            end;
 
           // Draw the enemy
           DrawEnemy(Enemies[i], canvas);
