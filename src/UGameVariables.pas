@@ -11,11 +11,14 @@ const
   FLYING_SPEED_CHANGE = 0.1;
   FLYING_SPEED_MAX = 3;
   TIME_BETWEEN_SHOTS = 2000;
+  ARROW_FREEZE_DURATION_RANGE = 2000;
 
 var
   PixelToPowerRatio : float;
   MaxPower : float;
   GameWidth, GameHeight : integer;
+  ArrowsFreeze : boolean;
+  ArrowFreezeDuration : integer;
 
 // A function to perform moding operations on floats
 function FloatMod(a, b : float) : integer;

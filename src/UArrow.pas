@@ -157,6 +157,14 @@ begin
                 begin
                   // If the arrow did actually hit the enemy run the hit procedure on it and exit the loop
                   enemies[i].Hit(ARROW_DAMAGE, XVol, YVol);
+
+                  // Freeze the enemy if the arrows freeze enemies
+                  if ArrowsFreeze then
+                    begin
+                      enemies[i].Freeze(ArrowFreezeDuration, ArrowFreezeDuration + ARROW_FREEZE_DURATION_RANGE);
+                    end;
+
+                  // Tell the arrow it is inactive now
                   Active := false;
                   break;
                 end;
