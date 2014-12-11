@@ -14,6 +14,7 @@ type
     procedure PaintView(Canvas: TW3Canvas); override;
   end;
 
+procedure InitializeVariables();
 procedure DrawMouseDragLine(canvas : TW3Canvas);
 procedure UpdateArrows(canvas : TW3Canvas);
 procedure UpdateEnemies(canvas : TW3Canvas);
@@ -47,13 +48,6 @@ begin
   // Tell the program the content has not loaded
   ContentLoaded := false;
   Loaded := [ false, false, false, false, false, false, false ];
-
-  // Initialize the variables
-  PixelToPowerRatio := 10;
-  MaxPower := 30;
-
-  // Initialize the player
-  Player := TArcher.Create(200,100);
 
   // Add the mouse input handlers
   GameView.OnMouseDown := MouseDownHandler;
@@ -100,6 +94,16 @@ begin
 
       DrawLoadingScreen(Canvas);
     end;
+end;
+
+procedure InitializeVariables();
+begin
+  // Initialize the variables
+  PixelToPowerRatio := 10;
+  MaxPower := 30;
+
+  // Initialize the player
+  Player := TArcher.Create(200,100);
 end;
 
 procedure DrawMouseDragLine(canvas : TW3Canvas);
@@ -206,6 +210,9 @@ begin
 
   // If the procedure has not ended the content is fully loaded
   ContentLoaded := true;
+
+  // Initialize variables now content has been loaded
+  InitializeVariables()
 end;
 
 end.
