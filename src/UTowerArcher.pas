@@ -30,19 +30,23 @@ begin
   inherited;
   // Initialize textures
   ArrowTexture := TW3Image.Create(nil);
-  ArrowTexture.LoadFromURL("res/Arrow.png");
+  ArrowTexture.LoadFromURL("res\Arrow.png");
   BowTexture := TW3Image.Create(nil);
-  BowTexture.LoadFromURL("res/Bow.png");
-  GroundUnitTexture := TW3Image.Create(nil);
-  GroundUnitTexture.LoadFromURL("res/GroundEnemy.png");
-  AirUnitTexture := TW3Image.Create(nil);
-  AirUnitTexture.LoadFromURL("res/AirEnemy.png");
+  BowTexture.LoadFromURL("res\Bow.png");
   ArcherTexture := TW3Image.Create(nil);
-  ArcherTexture.LoadFromURL("res/Archer.png");
+  ArcherTexture.LoadFromURL("res\Archer.png");
+  GroundUnitTexture := TW3Image.Create(nil);
+  GroundUnitTexture.LoadFromURL("res\GroundEnemy.png");
+  FrozenGroundUnitTexture := TW3Image.Create(nil);
+  FrozenGroundUnitTexture.LoadFromURL("res\GroundEnemyFrozen.png");
+  AirUnitTexture := TW3Image.Create(nil);
+  AirUnitTexture.LoadFromURL("res\AirEnemy.png");
+  FrozenAirUnitTexture := TW3Image.Create(nil);
+  FrozenAirUnitTexture.LoadFromURL("res\AirEnemyFrozen.png");
 
   // Tell the program the content has not loaded
   ContentLoaded := false;
-  Loaded := [ false, false, false, false, false ];
+  Loaded := [ false, false, false, false, false, false, false ];
 
   // Initialize the variables
   PixelToPowerRatio := 10;
@@ -175,9 +179,19 @@ begin
       Loaded[3] := true;
     end;
 
-  if AirUnitTexture.Ready then
+  if FrozenGroundUnitTexture.Ready then
     begin
       Loaded[4] := true;
+    end;
+
+  if AirUnitTexture.Ready then
+    begin
+      Loaded[5] := true;
+    end;
+
+  if FrozenAirUnitTexture.Ready then
+    begin
+      Loaded[6] := true;
     end;
 
   // Evaluate if everything is loaded

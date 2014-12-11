@@ -83,11 +83,23 @@ begin
     begin
       // Draw the ground unit if it is one
       canvas.DrawImageF(GroundUnitTexture.Handle, enemy.X, enemy.Y);
+
+      // Draw it frozen if its meant to be
+      if enemy.Frozen then
+        begin
+          canvas.DrawImageF(FrozenGroundUnitTexture.Handle, enemy.X, enemy.Y);
+        end;
     end
   else if (enemy is TAirUnit) then
     begin
       // Draw the air unit if it is one
       canvas.DrawImageF(AirUnitTexture.Handle, enemy.X, enemy.Y);
+
+      // Draw it frozen if its meant to be
+      if enemy.Frozen then
+        begin
+          canvas.DrawImageF(FrozenAirUnitTexture.Handle, enemy.X, enemy.Y);
+        end;
     end;
 end;
 
