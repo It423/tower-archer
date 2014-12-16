@@ -4,7 +4,7 @@ interface
 
 uses 
   W3System,
-  UArcher;
+  UArcher, UPlayer;
 
 var
-  Player : TArcher;
+  Player : TPlayer;

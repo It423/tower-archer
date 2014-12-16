@@ -4,9 +4,10 @@ interface
 
 uses 
   W3System, W3Graphics,
-  UTextures, UGameVariables, UArrow, UArcher, UEnemy, UGroundUnit, UAirUnit;
+  UTextures, UGameVariables, UArrow, UArcher, UPlayer, UEnemy, UGroundUnit, UAirUnit;
 
 procedure DrawLoadingScreen(canvas : TW3Canvas);
+procedure DrawPlayer(player : TPlayer; canvas : TW3Canvas);
 procedure DrawArcher(archer : TArcher; canvas : TW3Canvas);
 procedure DrawArrow(arrows : array of TArrow; canvas : TW3Canvas); overload;
 procedure DrawArrow(arrow : TArrow; canvas : TW3Canvas); overload;
@@ -21,6 +22,18 @@ begin
   canvas.FillStyle := "blue";
   canvas.Font := "24pt verdana";
   canvas.FillTextF("Loading Content...", GameWidth / 2 - 137.5, GameHeight / 2 - 12, 275);
+end;
+
+procedure DrawPlayer(player : TPlayer; canvas : TW3Canvas);
+begin
+  // Draw the player
+  DrawArcher(player, canvas);
+
+  // Draw the extra archers
+  for var i := 0 to High(player.ExtraArchers) do
+    begin
+      DrawArcher(player.ExtraArchers[i], canvas);
+    end;
 end;
 
 procedure DrawArcher(archer : TArcher; canvas : TW3Canvas);

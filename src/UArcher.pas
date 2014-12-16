@@ -12,8 +12,8 @@ type TArcher = class(TObject)
     XVol, YVol : float; // The predicted x and y velocities of shots
     CanShoot : boolean;
     constructor Create(newX, newY : float);
-    procedure UpdateInformation(origX, origY, currX, currY : float);
-    procedure Fire();
+    procedure UpdateInformation(origX, origY, currX, currY : float); virtual;
+    procedure Fire(); virtual;
     function ArrowSpawnPoint() : array [0 .. 1] of float;
     function Angle() : float;
     function Power() : float;
@@ -51,7 +51,7 @@ begin
 
       // Make the player unable to shoot and start the timer again
       CanShoot := false;
-      Timer := TW3EventRepeater.Create(HandleTimer, TIME_BETWEEN_SHOTS);
+      Timer := TW3EventRepeater.Create(HandleTimer, TimeBetweenShots);
     end;
 end;
 

@@ -4,7 +4,7 @@ interface
 
 uses
   W3System, W3Components, W3Application, W3Game, W3GameApp, W3Graphics, W3Image,
-  UMouseInputs, UArrow, UArcher, UDrawing, UGameVariables, UGameItems, UPlayerData, UTextures, UGroundUnit, UAirUnit;
+  UMouseInputs, UArrow, UArcher, UPlayer, UDrawing, UGameVariables, UGameItems, UPlayerData, UTextures, UGroundUnit, UAirUnit;
 
 type
   TApplication = class(TW3CustomGameApplication)
@@ -82,7 +82,7 @@ begin
       // Draw the mouse to origin line if prepearing to fire
       DrawMouseDragLine(Canvas);
 
-      DrawArcher(Player, Canvas);
+      DrawPlayer(Player, Canvas);
 
       UpdateArrows(Canvas);
 
@@ -101,9 +101,11 @@ begin
   // Initialize the variables
   PixelToPowerRatio := 10;
   MaxPower := 30;
+  ArrowDamage := 10;
+  TimeBetweenShots := 2000;
 
   // Initialize the player
-  Player := TArcher.Create(200,100);
+  Player := TPlayer.Create(200,100);
 end;
 
 procedure DrawMouseDragLine(canvas : TW3Canvas);
