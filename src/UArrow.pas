@@ -156,7 +156,7 @@ begin
               if CheckCollision(enemies[i], prevX, prevY) then
                 begin
                   // If the arrow did actually hit the enemy run the hit procedure on it and exit the loop
-                  enemies[i].Hit(ARROW_DAMAGE, XVol, YVol);
+                  enemies[i].Hit(ArrowDamage, XVol, YVol);
 
                   // Freeze the enemy if the arrows freeze enemies
                   if ArrowsFreeze then
