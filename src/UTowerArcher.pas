@@ -44,10 +44,22 @@ begin
   AirUnitTexture.LoadFromURL("res\AirEnemy.png");
   FrozenAirUnitTexture := TW3Image.Create(nil);
   FrozenAirUnitTexture.LoadFromURL("res\AirEnemyFrozen.png");
+  TowerTexture := TW3Image.Create(nil);
+  TowerTexture.LoadFromURL("res\Tower.png");
 
   // Tell the program the content has not loaded
   ContentLoaded := false;
-  Loaded := [ false, false, false, false, false, false, false ];
+  Loaded := [ false, false, false, false, false, false, false, false ];
+
+  // Add event handlers so loaded content is registered
+  ArrowTexture.OnLoad := procedure(o : TObject) begin Loaded[0] := true; end;
+  BowTexture.OnLoad := procedure(o : TObject) begin Loaded[1] := true; end;
+  ArcherTexture.OnLoad := procedure(o : TObject) begin Loaded[2] := true; end;
+  GroundUnitTexture.OnLoad := procedure(o : TObject) begin Loaded[3] := true; end;
+  FrozenGroundUnitTexture.OnLoad := procedure(o : TObject) begin Loaded[4] := true; end;
+  AirUnitTexture.OnLoad := procedure(o : TObject) begin Loaded[5] := true; end;
+  FrozenAirUnitTexture.OnLoad := procedure(o : TObject) begin Loaded[6] := true; end;
+  TowerTexture.OnLoad := procedure(o : TObject) begin Loaded[7] := true; end;
 
   // Add the mouse input handlers
   GameView.OnMouseDown := MouseDownHandler;
@@ -69,7 +81,7 @@ end;
 
 procedure TApplication.PaintView(Canvas: TW3Canvas);
 begin
-  // Update the game width and height
+  // Update the game width and height variables
   GameWidth := GameView.Width;
   GameHeight := GameView.Height;
 
@@ -79,6 +91,8 @@ begin
 
   if ContentLoaded then
     begin
+      DrawScenery(Canvas);
+
       // Draw the mouse to origin line if prepearing to fire
       DrawMouseDragLine(Canvas);
 
@@ -105,7 +119,7 @@ begin
   TimeBetweenShots := 2000;
 
   // Initialize the player
-  Player := TPlayer.Create(200,100);
+  Player := TPlayer.Create(TowerTexture.Handle.width - 15 - ArcherTexture.Handle.width, GameHeight - TowerTexture.Handle.height - ArcherTexture.Handle.height);
 end;
 
 procedure DrawMouseDragLine(canvas : TW3Canvas);
@@ -164,42 +178,6 @@ end;
 
 procedure EvaluateLoadedContent();
 begin
-  // Check which content is loaded
-  if ArrowTexture.Ready then
-    begin
-      Loaded[0] := true;
-    end;
-
-  if ArcherTexture.Ready then
-    begin
-      Loaded[1] := true;
-    end;
-
-  if BowTexture.Ready then
-    begin
-      Loaded[2] := true;
-    end;
-
-  if GroundUnitTexture.Ready then
-    begin
-      Loaded[3] := true;
-    end;
-
-  if FrozenGroundUnitTexture.Ready then
-    begin
-      Loaded[4] := true;
-    end;
-
-  if AirUnitTexture.Ready then
-    begin
-      Loaded[5] := true;
-    end;
-
-  if FrozenAirUnitTexture.Ready then
-    begin
-      Loaded[6] := true;
-    end;
-
   // Evaluate if everything is loaded
   for var i := 0 to High(Loaded) do
     begin

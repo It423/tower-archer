@@ -13,3 +13,4 @@ var
   BowTexture : TW3Image;
   ArrowTexture : TW3Image;
   ArcherTexture : TW3Image;
+  TowerTexture : TW3Image;

@@ -7,6 +7,7 @@ uses
   UTextures, UGameVariables, UArrow, UArcher, UPlayer, UEnemy, UGroundUnit, UAirUnit;
 
 procedure DrawLoadingScreen(canvas : TW3Canvas);
+procedure DrawScenery(canvas : TW3Canvas);
 procedure DrawPlayer(player : TPlayer; canvas : TW3Canvas);
 procedure DrawArcher(archer : TArcher; canvas : TW3Canvas);
 procedure DrawArrow(arrows : array of TArrow; canvas : TW3Canvas); overload;
@@ -23,6 +24,11 @@ begin
   canvas.Font := "24pt verdana";
   canvas.FillTextF("Loading Content...", GameWidth / 2 - 137.5, GameHeight / 2 - 12, 275);
 end;
+
+procedure DrawScenery(canvas : TW3Canvas);
+  begin
+    canvas.DrawImageF(TowerTexture.Handle, 0, GameHeight - TowerTexture.Handle.height);
+  end;
 
 procedure DrawPlayer(player : TPlayer; canvas : TW3Canvas);
 begin
