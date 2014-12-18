@@ -4,7 +4,7 @@ interface
 
 uses 
   W3System,
-  UGameVariables, UPlayerData, UTextures;
+  UGameVariables, UPlayerData, UArcher, UTextures;
 
 var
   Money : integer;
@@ -21,7 +21,28 @@ implementation
 
 procedure AddArcher();
 begin
-  // TODO: Spawn new archer for player
+  if Length(Player.ExtraArchers) = 0 then
+    begin
+      // Create the first extra archer for the player
+      Player.ExtraArchers[0] := TArcher.Create(Player.X - ArcherTexture.Handle.width - 30, Player.Y + 20);
+    end
+  else
+    begin
+      // Get the y change compaired to the last archer
+      var yChange := 20;
+      if Length(Player.ExtraArchers) mod 2 = 0 then
+        begin
+          // If there are an off amount of archers the next archer is above the previous
+          yChange *= -1;
+        end;
+
+      // Get the y and x position
+      var xPos := Player.ExtraArchers[High(Player.ExtraArchers)].X - ArcherTexture.Handle.width - 30;
+      var yPos := Player.ExtraArchers[High(Player.ExtraArchers)].Y + yChange;
+
+      // Create the new archer
+      Player.ExtraArchers[Length(Player.ExtraArchers)] := TArcher.Create(xPos, yPos);
+    end;
 end;
 
 procedure IncreaseDamage();
