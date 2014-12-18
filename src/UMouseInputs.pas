@@ -18,20 +18,27 @@ implementation
 
 procedure MouseDownHandler(o : TObject; b : TMouseButton; t : TShiftState; x, y : integer);
 begin
-  MouseDown := true;
-  MouseDownX := x;
-  MouseDownY := y;
+  // Only make the mouse down if the left mouse button is pressed
+  if b = TMouseButton.mbLeft then
+    begin
+      MouseDown := true;
+      MouseDownX := x;
+      MouseDownY := y;
+    end;
 end;
 
 procedure MouseUpHandler(o : TObject; b : TMouseButton; t : TShiftState; x, y : integer);
 begin
+  // Only fire if the left mouse button was clicked
+  if (MouseDown) and (b = TMouseButton.mbLeft) then
+    begin
+      Player.Fire();
+    end;
+
   MouseDown := false;
 
-  Player.Fire();
-
-  // Set the player's velocities to 0 avoid display issues from the timer
-  Player.XVol := 0;
-  Player.YVol := 0;
+  // Set the player's velocities to 0 to avoid display issues
+  Player.UpdateInformation(0, 0, 0, 0);
 end;
 
 procedure MouseMoveHandler(o : TObject; ss : TShiftState; x, y : integer);
