@@ -5,7 +5,6 @@ interface
 uses
   W3System, W3Components, W3Application, W3Game, W3GameApp, W3Graphics, W3Image,
   UMouseInputs, UArrow, UArcher, UPlayer, UDrawing, UGameVariables, UGameItems, UPlayerData, UTextures, UGroundUnit, UAirUnit;
-
 type
   TApplication = class(TW3CustomGameApplication)
   protected
@@ -16,6 +15,7 @@ type
 
 procedure InitializeVariables();
 procedure DrawMouseDragLine(canvas : TW3Canvas);
+procedure DrawCanShoot(canvas : TW3Canvas);
 procedure UpdateArrows(canvas : TW3Canvas);
 procedure UpdateEnemies(canvas : TW3Canvas);
 procedure EvaluateLoadedContent();
@@ -96,6 +96,9 @@ begin
       // Draw the mouse to origin line if prepearing to fire
       DrawMouseDragLine(Canvas);
 
+      // Draw a cirlce over the mouse showing if the player can shoot
+      DrawCanShoot(Canvas);
+
       DrawPlayer(Player, Canvas);
 
       UpdateArrows(Canvas);
@@ -126,7 +129,7 @@ procedure DrawMouseDragLine(canvas : TW3Canvas);
 begin
   if MouseDown and Player.CanShoot then
     begin
-      canvas.StrokeStyle := 'rgba(0, 0, 0, 0.5)';
+      canvas.StrokeStyle := "rgba(0, 0, 0, 0.5)";
       canvas.LineWidth := 0.3;
       canvas.BeginPath();
       canvas.MoveToF(MouseDownX, MouseDownY);
@@ -134,6 +137,23 @@ begin
       canvas.ClosePath();
       canvas.Stroke();
     end;
+end;
+
+procedure DrawCanShoot(canvas : TW3Canvas);
+begin
+  // Get red (can't shoot) or green (can shoot) fillers
+  if Player.CanShoot then
+    begin
+      canvas.FillStyle := "rgba(0, 200, 0, 0.5)";
+    end
+  else
+    begin
+      canvas.FillStyle := "rgba(200, 0, 0, 0.5)";
+    end;
+
+  // Draw a circle around the mouse
+  canvas.Ellipse(CurrentMouseX - 7, CurrentMouseY - 7, CurrentMouseX + 7, CurrentMouseY + 7);
+  canvas.Fill();
 end;
 
 procedure UpdateArrows(canvas : TW3Canvas);
