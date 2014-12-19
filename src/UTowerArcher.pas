@@ -16,8 +16,8 @@ type
 procedure InitializeVariables();
 procedure DrawMouseDragLine(canvas : TW3Canvas);
 procedure DrawCanShoot(canvas : TW3Canvas);
-procedure UpdateArrows(canvas : TW3Canvas);
-procedure UpdateEnemies(canvas : TW3Canvas);
+procedure UpdateArrows();
+procedure UpdateEnemies();
 procedure EvaluateLoadedContent();
 
 var
@@ -91,19 +91,23 @@ begin
 
   if ContentLoaded then
     begin
+      // Update the arrows and enemies
+      UpdateArrows();
+      UpdateEnemies();
+
+      // Draw player and scenery
       DrawScenery(Canvas);
+      DrawPlayer(Player, Canvas);
+
+      // Draw the arrows and enemies
+      DrawArrow(Arrows, Canvas);
+      DrawEnemy(Enemies, Canvas);
 
       // Draw the mouse to origin line if prepearing to fire
       DrawMouseDragLine(Canvas);
 
       // Draw a cirlce over the mouse showing if the player can shoot
       DrawCanShoot(Canvas);
-
-      DrawPlayer(Player, Canvas);
-
-      UpdateArrows(Canvas);
-
-      UpdateEnemies(Canvas);
     end
   else
     begin
@@ -156,7 +160,7 @@ begin
   canvas.Fill();
 end;
 
-procedure UpdateArrows(canvas : TW3Canvas);
+procedure UpdateArrows();
 begin
   for var i := 0 to High(Arrows) do
     begin
@@ -171,14 +175,11 @@ begin
 
           // Check the collisions
           Arrows[i].CheckCollisions(Enemies, prevX, prevY);
-
-          // Draw the active arrow
-          DrawArrow(Arrows[i], canvas);
         end;
     end;
 end;
 
-procedure UpdateEnemies(canvas : TW3Canvas);
+procedure UpdateEnemies();
 begin
   for var i := 0 to High(Enemies) do
     begin
@@ -189,9 +190,6 @@ begin
             begin
               Enemies[i].Move();
             end;
-
-          // Draw the enemy
-          DrawEnemy(Enemies[i], canvas);
         end;
     end;
 end;

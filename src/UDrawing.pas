@@ -72,7 +72,10 @@ procedure DrawArrow(arrows : array of TArrow; canvas : TW3Canvas);
 begin
   for var i := 0 to High(arrows) do
     begin
-      DrawArrow(arrows[i], canvas);
+      if arrows[i].Active then
+        begin
+          DrawArrow(arrows[i], canvas);
+        end;
     end;
 end;
 
@@ -92,7 +95,10 @@ procedure DrawEnemy(enemy : array of TEnemy; canvas : TW3Canvas); overload;
 begin
   for var i := 0 to High(enemy) do
     begin
-      DrawEnemy(enemy[i], canvas);
+      if enemy[i].Health > 0 then
+        begin
+          DrawEnemy(enemy[i], canvas);
+        end;
     end;
 end;
 
