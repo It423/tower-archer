@@ -3,19 +3,21 @@ unit UShopItem;
 interface
 
 uses 
-  W3System, W3Image,
+  W3System, W3Image, W3Graphics,
   UShopData;
 
 type TPurchasedEvent = procedure of object;
 
 type TShopItem = class(TObject)
   public
+    X, Y : integer;
     Price, UnitsSold, MaxUnitsSold : integer;
     PriceAfterPurchaseMultiplyer : float;
     ItemName : string;
     Thumbnail : TW3Image;
-    constructor Create(newMaxUnitsToSell, newPrice : integer; newPriceAfterPurchaseMultiplyer : float; newName : string; newThumbnail : TW3Image; purchaseHandler : procedure);
+    constructor Create(newX, newY, newMaxUnitsToSell, newPrice : integer; newPriceAfterPurchaseMultiplyer : float; newName : string; newThumbnail : TW3Image; purchaseHandler : procedure);
     procedure Purchase();
+    procedure Draw(canvas : TW3Canvas);
   private
     PurchaseEvent : TPurchasedEvent;
     property OnPurchase : TPurchasedEvent read PurchaseEvent write PurchaseEvent;
@@ -23,8 +25,10 @@ end;
 
 implementation
 
-constructor TShopItem.Create(newMaxUnitsToSell, newPrice : integer; newPriceAfterPurchaseMultiplyer : float; newName : string; newThumbnail : TW3Image; purchaseHandler : procedure);
+constructor TShopItem.Create(newX, newY, newMaxUnitsToSell, newPrice : integer; newPriceAfterPurchaseMultiplyer : float; newName : string; newThumbnail : TW3Image; purchaseHandler : procedure);
 begin
+  X := newX;
+  Y := newY;
   UnitsSold := 0;
   MaxUnitsSold := newMaxUnitsToSell;
   Price := newPrice;
@@ -65,6 +69,11 @@ begin
       // If there is no event handler the item cannot be purchased
       PurchaseMessage := "This item cannot be purchased!";
     end;
+end;
+
+procedure TShopItem.Draw(canvas : TW3Canvas);
+begin
+  // TODO: Write draw function
 end;
 
 
