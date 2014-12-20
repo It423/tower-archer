@@ -4,7 +4,7 @@ interface
 
 uses 
   W3System, W3Graphics,
-  UTextures, UMouseInputs, UGameVariables, UArrow, UArcher, UPlayer, UEnemy, UGroundUnit, UAirUnit, UShop;
+  UTextures, UMouseInputs, UGameVariables, UShopData, UArrow, UArcher, UPlayer, UEnemy, UGroundUnit, UAirUnit, UShop;
 
 procedure DrawLoadingScreen(canvas : TW3Canvas);
 procedure DrawScenery(canvas : TW3Canvas);
@@ -191,7 +191,11 @@ end;
 
 procedure DrawHUD(canvas : TW3Canvas);
 begin
-
+  canvas.Font := "15pt verdana";
+  canvas.FillStyle := "rgb(220, 220, 20)";
+  canvas.TextAlign := "right";
+  canvas.TextBaseLine := "top";
+  canvas.FillTextF("Gold: £" + IntToStr(Money), GameWidth - 20, 10, MAX_INT);
 end;
 
 procedure RotateCanvas(angle, xChange, yChange : float; canvas : TW3Canvas);
