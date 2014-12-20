@@ -18,6 +18,7 @@ type TShopItem = class(TObject)
     constructor Create(newX, newY, newMaxUnitsToSell, newPrice : integer; newPriceAfterPurchaseMultiplyer : float; newName : string; newThumbnail : TW3Image; purchaseHandler : procedure);
     procedure Purchase();
     procedure Draw(canvas : TW3Canvas);
+    function IsInButton(xPos, yPos : integer) : boolean;
   private
     PurchaseEvent : TPurchasedEvent;
     property OnPurchase : TPurchasedEvent read PurchaseEvent write PurchaseEvent;
@@ -76,5 +77,9 @@ begin
   // TODO: Write draw function
 end;
 
+function TShopItem.IsInButton(xPos, yPos : integer) : boolean;
+begin
+  // TODO: Write is in button function
+end;
 
 end.
