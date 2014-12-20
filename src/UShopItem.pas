@@ -24,6 +24,9 @@ type TShopItem = class(TObject)
     property OnPurchase : TPurchasedEvent read PurchaseEvent write PurchaseEvent;
 end;
 
+const
+  SHOP_WIDTH = 360;
+
 implementation
 
 constructor TShopItem.Create(newX, newY, newMaxUnitsToSell, newPrice : integer; newPriceAfterPurchaseMultiplyer : float; newName : string; newThumbnail : TW3Image; purchaseHandler : procedure);
@@ -74,12 +77,46 @@ end;
 
 procedure TShopItem.Draw(canvas : TW3Canvas);
 begin
-  // TODO: Write draw function
+  // Draw the background rectangle
+  canvas.FillStyle := "rgb(110, 0, 0)";
+  canvas.FillRect(X, Y, SHOP_WIDTH, Thumbnail.Handle.height + 6);
+
+  // Draw item icon
+  canvas.DrawImageF(Thumbnail.Handle, X + 3, Y + 3);
+
+  // Draw the label and price
+  canvas.FillStyle := "rgb(0, 0, 0)";
+  canvas.Font := "18pt verdana";
+  canvas.TextAlign := "left";
+  canvas.TextBaseLine := "middle";
+  canvas.FillTextF(ItemName, X + 6 + Thumbnail.Handle.width, Y + 6 + Thumbnail.Handle.height / 2, 150);
+  canvas.TextAlign := "right";
+  canvas.FillText("£" + IntToStr(Price), X + SHOP_WIDTH - 76, Y + 6 + Thumbnail.Handle.height / 2, 60);
+
+  // Draw the button
+  canvas.StrokeStyle := "rgb(0, 0, 0)";
+  canvas.LineWidth := 4;
+  canvas.FillStyle := "rgb(130, 120, 140)";
+  canvas.StrokeRectF(X + SHOP_WIDTH - 73, Y + 3, 70, Thumbnail.Handle.height);
+  canvas.FillRectF(X + SHOP_WIDTH - 73, Y + 3, 70, Thumbnail.Handle.height);
+
+  // Draw the text inside the button
+  canvas.FillStyle := "rgb(0, 0, 0)";
+  canvas.Font := "24pt verdana";
+  canvas.TextAlign := "center";
+  canvas.TextBaseLine := "middle";
+  canvas.FillTextF("Purchase", X + SHOP_WIDTH - 38, Y + 3 + Thumbnail.Handle.height / 2, 60);
 end;
 
 function TShopItem.IsInButton(xPos, yPos : integer) : boolean;
+var
+  buttonRect : TRectF;
 begin
-  // TODO: Write is in button function
+  // Make the button a TRect
+  buttonRect := TRectF.Create(X + SHOP_WIDTH - 73, Y + 3, X + SHOP_WIDTH - 3, Y + 3 + Thumbnail.Handle.height);
+
+  // Return if the point is in the button
+  exit(buttonRect.ContainsPoint(TPointF.Create(xPos, yPos)))
 end;
 
 end.

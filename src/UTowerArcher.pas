@@ -61,6 +61,9 @@ begin
   FrozenAirUnitTexture.OnLoad := procedure(o : TObject) begin Loaded[6] := true; end;
   TowerTexture.OnLoad := procedure(o : TObject) begin Loaded[7] := true; end;
 
+  // Initialize the shop
+  Shop := TShop.Create();
+
   // Add the mouse input handlers
   GameView.OnMouseDown := MouseDownHandler;
   GameView.OnMouseUp := MouseUpHandler;
@@ -133,7 +136,6 @@ begin
   ArrowDamage := 10;
   TimeBetweenShots := 2000;
   Paused := false;
-  Shop := TShop.Create();
   PauseButtonRect := TRect.Create(10, 10, 110, 50);
 
   // Initialize the player
@@ -217,11 +219,15 @@ begin
         end;
     end;
 
-  // If the procedure has not ended the content is fully loaded
-  ContentLoaded := true;
+  // If the procedure has not ended the content is loaded so check the shop
+  if Shop.Loaded then
+    begin
+      // State the content has all loaded
+      ContentLoaded := true;
 
-  // Initialize variables now content has been loaded
-  InitializeVariables()
+      // Initialize variables now content has been loaded
+      InitializeVariables();
+    end;
 end;
 
 end.
