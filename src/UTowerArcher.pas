@@ -14,8 +14,6 @@ type
   end;
 
 procedure InitializeVariables();
-procedure DrawMouseDragLine(canvas : TW3Canvas);
-procedure DrawCanShoot(canvas : TW3Canvas);
 procedure UpdateArrows();
 procedure UpdateEnemies();
 procedure EvaluateLoadedContent();
@@ -103,10 +101,13 @@ begin
       DrawEnemy(Enemies, Canvas);
 
       // Draw the mouse to origin line if prepearing to fire
-      DrawMouseDragLine(Canvas);
+      DrawMouseDragLine(Player, Canvas);
 
       // Draw a cirlce over the mouse showing if the player can shoot
-      DrawCanShoot(Canvas);
+      DrawCanShoot(Player, Canvas);
+
+      // Draw the information for the player
+      DrawHUD(Canvas);
 
       // Update the arrows and enemies if not in shop
       if not Paused then
@@ -140,37 +141,6 @@ begin
 
   // Initialize the player
   Player := TPlayer.Create(TowerTexture.Handle.width - 15 - ArcherTexture.Handle.width, GameHeight - TowerTexture.Handle.height - ArcherTexture.Handle.height);
-end;
-
-procedure DrawMouseDragLine(canvas : TW3Canvas);
-begin
-  if MouseDown and Player.CanShoot and not Paused then
-    begin
-      canvas.StrokeStyle := "rgba(0, 0, 0, 0.5)";
-      canvas.LineWidth := 0.3;
-      canvas.BeginPath();
-      canvas.MoveToF(MouseDownX, MouseDownY);
-      canvas.LineToF(CurrentMouseX, CurrentMouseY);
-      canvas.ClosePath();
-      canvas.Stroke();
-    end;
-end;
-
-procedure DrawCanShoot(canvas : TW3Canvas);
-begin
-  // Get red (can't shoot) or green (can shoot) fillers
-  if Player.CanShoot then
-    begin
-      canvas.FillStyle := "rgba(0, 200, 0, 0.5)";
-    end
-  else
-    begin
-      canvas.FillStyle := "rgba(200, 0, 0, 0.5)";
-    end;
-
-  // Draw a circle around the mouse
-  canvas.Ellipse(CurrentMouseX - 7, CurrentMouseY - 7, CurrentMouseX + 7, CurrentMouseY + 7);
-  canvas.Fill();
 end;
 
 procedure UpdateArrows();

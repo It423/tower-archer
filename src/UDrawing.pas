@@ -4,7 +4,7 @@ interface
 
 uses 
   W3System, W3Graphics,
-  UTextures, UGameVariables, UArrow, UArcher, UPlayer, UEnemy, UGroundUnit, UAirUnit, UShop;
+  UTextures, UMouseInputs, UGameVariables, UArrow, UArcher, UPlayer, UEnemy, UGroundUnit, UAirUnit, UShop;
 
 procedure DrawLoadingScreen(canvas : TW3Canvas);
 procedure DrawScenery(canvas : TW3Canvas);
@@ -14,6 +14,9 @@ procedure DrawArrow(arrows : array of TArrow; canvas : TW3Canvas); overload;
 procedure DrawArrow(arrow : TArrow; canvas : TW3Canvas); overload;
 procedure DrawEnemy(enemy : array of TEnemy; canvas : TW3Canvas); overload;
 procedure DrawEnemy(enemy : TEnemy; canvas : TW3Canvas); overload;
+procedure DrawMouseDragLine(player : TPlayer; canvas : TW3Canvas);
+procedure DrawCanShoot(player : TPlayer; canvas : TW3Canvas);
+procedure DrawHUD(canvas : TW3Canvas);
 procedure DrawPauseScreen(canvas : TW3Canvas);
 procedure RotateCanvas(angle, xChange, yChange : float; canvas : TW3Canvas);
 
@@ -150,9 +153,45 @@ begin
     end;
 end;
 
+procedure DrawMouseDragLine(player : TPlayer; canvas : TW3Canvas);
+begin
+  if MouseDown and player.CanShoot and not Paused then
+    begin
+      canvas.StrokeStyle := "rgba(0, 0, 0, 0.5)";
+      canvas.LineWidth := 0.3;
+      canvas.BeginPath();
+      canvas.MoveToF(MouseDownX, MouseDownY);
+      canvas.LineToF(CurrentMouseX, CurrentMouseY);
+      canvas.ClosePath();
+      canvas.Stroke();
+    end;
+end;
+
+procedure DrawCanShoot(player : TPlayer; canvas : TW3Canvas);
+begin
+  // Get red (can't shoot) or green (can shoot) fillers
+  if player.CanShoot then
+    begin
+      canvas.FillStyle := "rgba(0, 200, 0, 0.5)";
+    end
+  else
+    begin
+      canvas.FillStyle := "rgba(200, 0, 0, 0.5)";
+    end;
+
+  // Draw a circle around the mouse
+  canvas.Ellipse(CurrentMouseX - 7, CurrentMouseY - 7, CurrentMouseX + 7, CurrentMouseY + 7);
+  canvas.Fill();
+end;
+
 procedure DrawPauseScreen(canvas : TW3Canvas);
 begin
   Shop.Draw(canvas);
+end;
+
+procedure DrawHUD(canvas : TW3Canvas);
+begin
+
 end;
 
 procedure RotateCanvas(angle, xChange, yChange : float; canvas : TW3Canvas);
