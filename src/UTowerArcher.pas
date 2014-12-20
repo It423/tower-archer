@@ -142,7 +142,7 @@ begin
   MaxPower := 30;
   ArrowDamage := 10;
   TimeBetweenShots := 2000;
-  Paused := false;
+  Paused := true;
   PauseButtonRect := TRect.Create(10, 10, 110, 50);
 
   // Initialize the player
