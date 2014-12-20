@@ -51,10 +51,10 @@ begin
 
   // Create each shop item
   Items[0] := TShopItem.Create(150, 20, 5, 1000, 1.3, "Extra Archers", textures[0], AddArcher);
-  Items[1] := TShopItem.Create(150, 80, -1, 100, 1.3, "Increase Damage", textures[1], AddArcher);
-  Items[2] := TShopItem.Create(150, 140, 5, 700, 1.6, "Freeze Enemies", textures[2], AddArcher);
-  Items[3] := TShopItem.Create(150, 200, 10, 100, 1.2, "Increase Range", textures[3], AddArcher);
-  Items[4] := TShopItem.Create(150, 260, 8, 300, 1.5, "Decrease Reload Speed", textures[4], AddArcher);
+  Items[1] := TShopItem.Create(150, 80, -1, 100, 1.3, "Increase Damage", textures[1], IncreaseDamage);
+  Items[2] := TShopItem.Create(150, 140, 5, 700, 1.6, "Freeze Enemies", textures[2], IncreaseIce);
+  Items[3] := TShopItem.Create(150, 200, 10, 100, 1.2, "Increase Range", textures[3], IncreaseRange);
+  Items[4] := TShopItem.Create(150, 260, 8, 300, 1.4, "Decrease Reload Speed", textures[4], DecreaseReload);
 end;
 
 procedure TShop.Draw(canvas : TW3Canvas);
