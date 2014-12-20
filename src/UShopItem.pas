@@ -95,7 +95,7 @@ begin
 
   // Draw the button
   canvas.StrokeStyle := "rgb(0, 0, 0)";
-  canvas.LineWidth := 4;
+  canvas.LineWidth := 3;
   canvas.FillStyle := "rgb(130, 120, 140)";
   canvas.StrokeRectF(X + SHOP_WIDTH - 73, Y + 3, 70, Thumbnail.Handle.height);
   canvas.FillRectF(X + SHOP_WIDTH - 73, Y + 3, 70, Thumbnail.Handle.height);
@@ -106,6 +106,18 @@ begin
   canvas.TextAlign := "center";
   canvas.TextBaseLine := "middle";
   canvas.FillTextF("Purchase", X + SHOP_WIDTH - 38, Y + 3 + Thumbnail.Handle.height / 2, 60);
+
+  // Put a line throught the item if no more can be brought
+  if (not MaxUnitsSold <= -1) and (UnitsSold >= MaxUnitsSold) then
+    begin
+      canvas.StrokeStyle := "rgb(0, 0, 0)";
+      canvas.LineWidth := 10;
+      canvas.BeginPath();
+      canvas.MoveToF(X - 10, Y + 3 + Thumbnail.Handle.height / 2);
+      canvas.LineToF(X + SHOP_WIDTH + 10, Y + 3 + Thumbnail.Handle.height / 2);
+      canvas.ClosePath();
+      canvas.Stroke();
+    end;
 end;
 
 function TShopItem.IsInButton(xPos, yPos : integer) : boolean;
