@@ -14,8 +14,11 @@ type TEnemy = class(TObject)
     function GetRect() : TRectF; virtual; abstract;
     procedure Hit(damage : integer; xArrowSpeed, yArrowSpeed : float);
     procedure Freeze(minDuration, maxDuration : integer);
+    procedure PauseTimer();
+    procedure ResumeTimer();
   private
     Timer : TW3EventRepeater; // Timer for being frozen
+    DelayHolder : integer;
     function HandleTimer(sender : TObject) : boolean;
 end;
 
@@ -42,6 +45,20 @@ begin
 
   // Set the timer
   Timer := TW3EventRepeater.Create(HandleTimer, duration);
+end;
+
+procedure TEnemy.PauseTimer();
+begin
+  // Store the delay then destroy the timer
+  DelayHolder := Timer.Delay;
+  Timer.Destroy();
+end;
+
+procedure TEnemy.ResumeTimer();
+begin
+  // Start the timer then reset the delay holder
+  Timer := TW3EventRepeater.Create(HandleTimer, DelayHolder);
+  DelayHolder := 0;
 end;
 
 function TEnemy.HandleTimer(sender : TObject) : boolean;

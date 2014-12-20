@@ -4,11 +4,12 @@ interface
 
 uses 
   W3System, W3Components,
-  UPlayerData, UGameVariables, UShop;
+  UPlayerData, UGameVariables, UGameItems, UShop;
 
 procedure MouseDownHandler(o : TObject; b : TMouseButton; t : TShiftState; x, y : integer);
 procedure MouseUpHandler(o : TObject; b : TMouseButton; t : TShiftState; x, y : integer);
 procedure MouseMoveHandler(o : TObject; ss : TShiftState; x, y : integer);
+procedure ChangeTimers(pause : boolean);
 
 var
   MouseDown : boolean;
@@ -33,6 +34,11 @@ begin
   if (MouseDown) and (b = TMouseButton.mbLeft) and (PauseButtonRect.ContainsPoint(TPoint.Create(x, y))) then
     begin
       MouseDown := false;
+
+      // Pause/Resume all timers
+      ChangeTimers(Paused);
+
+      // Invert the paused variable
       Paused := not Paused;
       exit;
     end;
@@ -65,6 +71,28 @@ begin
   if MouseDown and not Paused then
     begin
       Player.UpdateInformation(MouseDownX, MouseDownY, CurrentMouseX, CurrentMouseY);
+    end;
+end;
+
+procedure ChangeTimers(pause : boolean);
+begin
+  if pause then
+    begin
+      // Resume timers if being unpaused
+      Player.ResumeTimer();
+      for var i := 0 to High(Enemies) do
+        begin
+          Enemies[i].ResumeTimer();
+        end;
+    end
+  else
+    begin
+      // Pause timers if being paused
+      Player.PauseTimer();
+      for var i := 0 to High(Enemies) do
+        begin
+          Enemies[i].PauseTimer();
+        end;
     end;
 end;
 

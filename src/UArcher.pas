@@ -17,8 +17,11 @@ type TArcher = class(TObject)
     function ArrowSpawnPoint() : array [0 .. 1] of float;
     function Angle() : float;
     function Power() : float;
+    procedure PauseTimer();
+    procedure ResumeTimer();
   private
     Timer : TW3EventRepeater; // Timer for shots
+    DelayHolder : integer;
     function HandleTimer(sender : TObject) : boolean;
 end;
 
@@ -100,6 +103,20 @@ begin
     begin
       exit(retVal);
     end;
+end;
+
+procedure TArcher.PauseTimer();
+begin
+  // Store the delay then destroy the timer
+  DelayHolder := Timer.Delay;
+  Timer.Destroy();
+end;
+
+procedure TArcher.ResumeTimer();
+begin
+  // Recreate the timer then reset the delay holder
+  Timer := TW3EventRepeater.Create(HandleTimer, DelayHolder);
+  DelayHolder := 0;
 end;
 
 function TArcher.HandleTimer(sender : TObject) : boolean;

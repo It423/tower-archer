@@ -6,7 +6,7 @@ uses
   W3System, W3Image, W3Graphics,
   UShopData;
 
-type TPurchasedEvent = procedure of object;
+type TPurchasedEvent = procedure();
 
 type TShopItem = class(TObject)
   public
