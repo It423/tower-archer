@@ -11,6 +11,7 @@ type TPlayer = class(TArcher)
     ExtraArchers : array of TArcher;
     procedure UpdateInformation(origX, origY, currX, currY : float); override;
     procedure Fire(); override;
+    procedure UpdateY(newPos : float);
 end;
 
 implementation
@@ -34,6 +35,21 @@ begin
   for var i := 0 to High(ExtraArchers) do
     begin
       ExtraArchers[i].Fire();
+    end;
+end;
+
+procedure TPlayer.UpdateY(newPos : float);
+var
+  posChange : float;
+begin
+  // Get the change in y position
+  posChange := Y - newPos;
+
+  // Update the player's and extra archer's y position
+  Y -= posChange;
+  for var i := 0 to High(ExtraArchers) do
+    begin
+      ExtraArchers[i].Y -= posChange;
     end;
 end;
 

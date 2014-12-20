@@ -120,6 +120,12 @@ begin
           // Draw shop/pause screen if it is presently open
           DrawPauseScreen(Canvas);
         end;
+
+      // Move player if its off the tower (due to window height changes)
+      if Player.X <> GameHeight - TowerTexture.Handle.height - ArcherTexture.Handle.height then
+        begin
+          Player.UpdateY(GameHeight - TowerTexture.Handle.height - ArcherTexture.Handle.height);
+        end;
     end
   else
     begin
