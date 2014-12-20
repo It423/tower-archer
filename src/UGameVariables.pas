@@ -15,10 +15,12 @@ var
   PixelToPowerRatio : float;
   MaxPower : float;
   GameWidth, GameHeight : integer;
+  Paused : boolean;
   ArrowDamage : integer;
   ArrowsFreeze : boolean;
   ArrowFreezeDuration : integer;
   TimeBetweenShots : integer;
+  PauseButtonRect : TRect;
 
 // A function to perform moding operations on floats
 function FloatMod(a, b : float) : integer;

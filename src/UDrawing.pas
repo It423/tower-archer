@@ -4,7 +4,7 @@ interface
 
 uses 
   W3System, W3Graphics,
-  UTextures, UGameVariables, UArrow, UArcher, UPlayer, UEnemy, UGroundUnit, UAirUnit;
+  UTextures, UGameVariables, UArrow, UArcher, UPlayer, UEnemy, UGroundUnit, UAirUnit, UShop;
 
 procedure DrawLoadingScreen(canvas : TW3Canvas);
 procedure DrawScenery(canvas : TW3Canvas);
@@ -14,6 +14,7 @@ procedure DrawArrow(arrows : array of TArrow; canvas : TW3Canvas); overload;
 procedure DrawArrow(arrow : TArrow; canvas : TW3Canvas); overload;
 procedure DrawEnemy(enemy : array of TEnemy; canvas : TW3Canvas); overload;
 procedure DrawEnemy(enemy : TEnemy; canvas : TW3Canvas); overload;
+procedure DrawPauseScreen(canvas : TW3Canvas);
 procedure RotateCanvas(angle, xChange, yChange : float; canvas : TW3Canvas);
 
 implementation
@@ -26,9 +27,30 @@ begin
 end;
 
 procedure DrawScenery(canvas : TW3Canvas);
-  begin
-    canvas.DrawImageF(TowerTexture.Handle, 0, GameHeight - TowerTexture.Handle.height);
-  end;
+begin
+  canvas.DrawImageF(TowerTexture.Handle, 0, GameHeight - TowerTexture.Handle.height);
+
+  // Draw the shop button
+  canvas.StrokeStyle := "rgb(0, 0, 0)";
+  canvas.LineWidth := 4;
+  canvas.FillStyle := "rgb(130, 120, 140)";
+  canvas.StrokeRect(PauseButtonRect);
+  canvas.FillRect(PauseButtonRect);
+
+  // Get the correct text
+  var text := "Shop";
+  if Paused then
+    begin
+      text := "Resume";
+    end;
+
+  // Put the text in the button
+  canvas.Font := IntToStr(Round(PauseButtonRect.Width() / 4)) + "pt verdana";
+  canvas.FillStyle := "rgb(0, 0, 0)";
+  canvas.TextAlign := "center";
+  canvas.TextBaseLine := "middle";
+  canvas.FillTextF(text, PauseButtonRect.CenterPoint().X, PauseButtonRect.CenterPoint().Y, PauseButtonRect.Width() - 10);
+end;
 
 procedure DrawPlayer(player : TPlayer; canvas : TW3Canvas);
 begin
@@ -126,6 +148,11 @@ begin
           canvas.DrawImageF(FrozenAirUnitTexture.Handle, enemy.X, enemy.Y);
         end;
     end;
+end;
+
+procedure DrawPauseScreen(canvas : TW3Canvas);
+begin
+  Shop.Draw(canvas);
 end;
 
 procedure RotateCanvas(angle, xChange, yChange : float; canvas : TW3Canvas);

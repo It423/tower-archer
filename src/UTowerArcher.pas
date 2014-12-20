@@ -4,7 +4,7 @@ interface
 
 uses
   W3System, W3Components, W3Application, W3Game, W3GameApp, W3Graphics, W3Image,
-  UMouseInputs, UArrow, UArcher, UPlayer, UDrawing, UGameVariables, UGameItems, UPlayerData, UTextures, UGroundUnit, UAirUnit;
+  UShopData, UMouseInputs, UArrow, UArcher, UPlayer, UDrawing, UGameVariables, UGameItems, UPlayerData, UTextures, UGroundUnit, UAirUnit, UShop;
 type
   TApplication = class(TW3CustomGameApplication)
   protected
@@ -91,10 +91,6 @@ begin
 
   if ContentLoaded then
     begin
-      // Update the arrows and enemies
-      UpdateArrows();
-      UpdateEnemies();
-
       // Draw player and scenery
       DrawScenery(Canvas);
       DrawPlayer(Player, Canvas);
@@ -108,6 +104,18 @@ begin
 
       // Draw a cirlce over the mouse showing if the player can shoot
       DrawCanShoot(Canvas);
+
+      // Update the arrows and enemies if not in shop
+      if not Paused then
+        begin
+          UpdateArrows();
+          UpdateEnemies();
+        end
+      else
+        begin
+          // Draw shop/pause screen if it is presently open
+          DrawPauseScreen(Canvas);
+        end;
     end
   else
     begin
@@ -124,6 +132,9 @@ begin
   MaxPower := 30;
   ArrowDamage := 10;
   TimeBetweenShots := 2000;
+  Paused := false;
+  Shop := TShop.Create();
+  PauseButtonRect := TRect.Create(10, 10, 110, 50);
 
   // Initialize the player
   Player := TPlayer.Create(TowerTexture.Handle.width - 15 - ArcherTexture.Handle.width, GameHeight - TowerTexture.Handle.height - ArcherTexture.Handle.height);
@@ -131,7 +142,7 @@ end;
 
 procedure DrawMouseDragLine(canvas : TW3Canvas);
 begin
-  if MouseDown and Player.CanShoot then
+  if MouseDown and Player.CanShoot and not Paused then
     begin
       canvas.StrokeStyle := "rgba(0, 0, 0, 0.5)";
       canvas.LineWidth := 0.3;
