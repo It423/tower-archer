@@ -4,7 +4,7 @@ interface
 
 uses 
   W3System, W3Components,
-  UPlayerData, UGameVariables, UGameItems, UShop;
+  UPlayerData, UGameVariables, UGameItems, UShop, UShopData;
 
 procedure MouseDownHandler(o : TObject; b : TMouseButton; t : TShiftState; x, y : integer);
 procedure MouseUpHandler(o : TObject; b : TMouseButton; t : TShiftState; x, y : integer);
@@ -40,10 +40,11 @@ begin
 
       // Invert the paused variable
       Paused := not Paused;
-      exit;
-    end;
 
-  if not Paused then
+      // Clear the shop message
+      PurchaseMessage := "";
+    end
+  else if not Paused then
     begin
       // Only fire if the left mouse button was clicked
       if (MouseDown) and (b = TMouseButton.mbLeft) then
