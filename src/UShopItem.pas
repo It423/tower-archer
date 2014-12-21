@@ -91,7 +91,7 @@ begin
   canvas.TextBaseLine := "middle";
   canvas.FillTextF(ItemName, X + 6 + Thumbnail.Handle.width, Y + 6 + Thumbnail.Handle.height / 2, 150);
   canvas.TextAlign := "right";
-  canvas.FillText("£" + IntToStr(Price), X + SHOP_WIDTH - 76, Y + 6 + Thumbnail.Handle.height / 2, 60);
+  canvas.FillText("$" + IntToStr(Price), X + SHOP_WIDTH - 76, Y + 6 + Thumbnail.Handle.height / 2, 60);
 
   // Draw the button
   canvas.StrokeStyle := "rgb(0, 0, 0)";

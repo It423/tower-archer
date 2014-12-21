@@ -217,7 +217,7 @@ begin
   canvas.FillStyle := "rgb(220, 220, 20)";
   canvas.TextAlign := "right";
   canvas.TextBaseLine := "top";
-  canvas.FillTextF("Gold: £" + IntToStr(Money), GameWidth - 20, 10, MAX_INT);
+  canvas.FillTextF("Gold: $" + IntToStr(Money), GameWidth - 20, 10, MAX_INT);
 end;
 
 procedure RotateCanvas(angle, xChange, yChange : float; canvas : TW3Canvas);
