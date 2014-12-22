@@ -89,9 +89,15 @@ begin
   canvas.Font := "14pt verdana";
   canvas.TextAlign := "left";
   canvas.TextBaseLine := "middle";
-  canvas.FillTextF(ItemName, X + 6 + Thumbnail.Handle.width, Y + 6 + Thumbnail.Handle.height / 2, 150);
+  canvas.FillTextF(ItemName, X + 10 + Thumbnail.Handle.width, Y + 6 + Thumbnail.Handle.height / 4, 140);
   canvas.TextAlign := "right";
   canvas.FillText("$" + IntToStr(Price), X + SHOP_WIDTH - 76, Y + 6 + Thumbnail.Handle.height / 2, 60);
+
+  // Draw the level
+  canvas.Font := "10pt verdana";
+  canvas.TextAlign := "left";
+  canvas.TextBaseLine := "bottom";
+  canvas.FillTextF("Level " + IntToStr(UnitsSold + 1), X + 10 + Thumbnail.Handle.width, Y + Thumbnail.Handle.height, 140);
 
   // Draw the button
   canvas.StrokeStyle := "rgb(0, 0, 0)";
