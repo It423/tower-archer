@@ -86,7 +86,7 @@ begin
 
   // Draw the label and price
   canvas.FillStyle := "rgb(0, 0, 0)";
-  canvas.Font := "18pt verdana";
+  canvas.Font := "14pt verdana";
   canvas.TextAlign := "left";
   canvas.TextBaseLine := "middle";
   canvas.FillTextF(ItemName, X + 6 + Thumbnail.Handle.width, Y + 6 + Thumbnail.Handle.height / 2, 150);
@@ -102,7 +102,7 @@ begin
 
   // Draw the text inside the button
   canvas.FillStyle := "rgb(0, 0, 0)";
-  canvas.Font := "24pt verdana";
+  canvas.Font := "16pt verdana";
   canvas.TextAlign := "center";
   canvas.TextBaseLine := "middle";
   canvas.FillTextF("Purchase", X + SHOP_WIDTH - 38, Y + 3 + Thumbnail.Handle.height / 2, 60);
