@@ -4,7 +4,7 @@ interface
 
 uses
   W3System, W3Components, W3Application, W3Game, W3GameApp, W3Graphics, W3Image,
-  UShopData, UMouseInputs, UArrow, UArcher, UPlayer, UDrawing, UGameVariables, UGameItems, UPlayerData, UTextures, UGroundUnit, UAirUnit, UShop;
+  UShopData, UMouseInputs, UArrow, UArcher, UPlayer, UDrawing, UScalingInfo, UGameVariables, UGameItems, UPlayerData, UTextures, UGroundUnit, UAirUnit, UShop;
 type
   TApplication = class(TW3CustomGameApplication)
   protected
@@ -83,9 +83,10 @@ end;
 procedure TApplication.PaintView(Canvas: TW3Canvas);
 begin
   // Update the game width and height variables
-  GameWidth := GameView.Width;
-  GameHeight := GameView.Height;
+  ScreenWidth := GameView.Width;
+  ScreenHeight := GameView.Height;
 
+  // Scale the canvas and clear the screen
   ClearScreen(Canvas);
 
   if ContentLoaded then
@@ -118,12 +119,6 @@ begin
 
       // Draw the information for the player
       DrawHUD(Canvas);
-
-      // Move player if its off the tower (due to window height changes)
-      if Player.X <> GameHeight - TowerTexture.Handle.height - ArcherTexture.Handle.height then
-        begin
-          Player.UpdateY(GameHeight - TowerTexture.Handle.height - ArcherTexture.Handle.height);
-        end;
     end
   else
     begin
@@ -136,7 +131,6 @@ end;
 procedure InitializeVariables();
 begin
   // Initialize the variables
-  PixelToPowerRatio := 10;
   MaxPower := 30;
   ArrowDamage := 10;
   TimeBetweenShots := 2000;
@@ -144,7 +138,7 @@ begin
   PauseButtonCoordinates := [ 10, 10, 110, 50 ];
 
   // Initialize the player
-  Player := TPlayer.Create(TowerTexture.Handle.width - 15 - ArcherTexture.Handle.width, GameHeight - TowerTexture.Handle.height - ArcherTexture.Handle.height);
+  Player := TPlayer.Create(TowerTexture.Handle.width - 15 - ArcherTexture.Handle.width, GAMEHEIGHT - TowerTexture.Handle.height - ArcherTexture.Handle.height);
 end;
 
 procedure UpdateArrows();

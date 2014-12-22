@@ -4,7 +4,7 @@ interface
 
 uses 
   W3System, W3Time,
-  UGameVariables, USpawner, UArrow, UTextures;
+  UGameVariables, UScalingInfo, USpawner, UArrow, UTextures;
 
 type TArcher = class(TObject)
   public
@@ -39,8 +39,8 @@ end;
 procedure TArcher.UpdateInformation(origX, origY, currX, currY : float);
 begin
     // Work out the x and y velocitys
-    XVol := (origX - currX) / PixelToPowerRatio;
-    YVol := (origY - currY) / PixelToPowerRatio;
+    XVol := (origX - currX) / (PIXELTOPOWERRATIO);
+    YVol := (origY - currY) / (PIXELTOPOWERRATIO);
 end;
 
 procedure TArcher.Fire();

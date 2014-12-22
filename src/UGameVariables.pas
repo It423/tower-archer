@@ -12,9 +12,7 @@ const
   ARROW_FREEZE_DURATION_RANGE = 2000;
 
 var
-  PixelToPowerRatio : float;
   MaxPower : float;
-  GameWidth, GameHeight : integer;
   Paused : boolean;
   ArrowDamage : integer;
   ArrowsFreeze : boolean;
@@ -22,8 +20,7 @@ var
   TimeBetweenShots : integer;
   PauseButtonCoordinates : array [0 .. 3] of integer;
 
-// A function to perform moding operations on floats
-function FloatMod(a, b : float) : integer;
+function FloatMod(a, b : float) : integer; // A function to perform moding operations on floats
 function PauseButtonRect() : TRect;
 
 implementation

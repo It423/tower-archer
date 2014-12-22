@@ -4,7 +4,7 @@ interface
 
 uses 
   W3System, W3Image,
-  UGameVariables, UEnemy, UTextures;
+  UGameVariables, UScalingInfo, UEnemy, UTextures;
 
 type TArrow = class(TObject)
   public
@@ -45,7 +45,7 @@ begin
   YVol += GRAVITY;
 
   // Make the bullet inactive if out off screen
-  if (MaxX() < 0) or (MinX() > GameWidth) or (MinY() > GameHeight) then
+  if (MaxX() < 0) or (MinX() > GAMEWIDTH) or (MinY() > GAMEHEIGHT) then
     begin
       Active := false;
     end;

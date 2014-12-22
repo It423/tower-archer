@@ -4,7 +4,7 @@ interface
 
 uses 
   W3System, W3Graphics,
-  UTextures, UMouseInputs, UGameVariables, UShopData, UShop, UShopItem, UArrow, UArcher, UPlayer, UEnemy, UGroundUnit, UAirUnit;
+  UScalingInfo, UTextures, UMouseInputs, UGameVariables, UShopData, UShop, UShopItem, UArrow, UArcher, UPlayer, UEnemy, UGroundUnit, UAirUnit;
 
 procedure ClearScreen(canvas : TW3Canvas);
 procedure DrawLoadingScreen(canvas : TW3Canvas);
@@ -27,12 +27,7 @@ procedure ClearScreen(canvas : TW3Canvas);
 begin
   // Clear background
   canvas.FillStyle := "rgb(255, 255, 255)";
-  canvas.FillRectF(0, 0, GameWidth, GameHeight);
-
-  // Draw boarder
-  canvas.StrokeStyle := "rgb(0, 0, 0)";
-  canvas.LineWidth := 4;
-  canvas.StrokeRectF(0, 0, GameWidth, GameHeight);
+  canvas.FillRectF(0, 0, ScreenWidth, ScreenHeight);
 end;
 
 procedure DrawLoadingScreen(canvas : TW3Canvas);
@@ -41,12 +36,12 @@ begin
   canvas.Font := "24pt verdana";
   canvas.TextAlign := "center";
   canvas.TextBaseLine := "middle";
-  canvas.FillTextF("Loading Content...", GameWidth / 2, GameHeight / 2, 275);
+  canvas.FillTextF("Loading Content...", GAMEWIDTH / 2, GAMEHEIGHT / 2, 275);
 end;
 
 procedure DrawScenery(canvas : TW3Canvas);
 begin
-  canvas.DrawImageF(TowerTexture.Handle, 0, GameHeight - TowerTexture.Handle.height);
+  canvas.DrawImageF(TowerTexture.Handle, 0, GAMEHEIGHT - TowerTexture.Handle.height);
 
   // Draw the shop button;
   canvas.StrokeStyle := "rgb(0, 0, 0)";
@@ -212,19 +207,19 @@ begin
   canvas.FillStyle := "rgb(0, 0, 0)";
   canvas.TextAlign := "center";
   canvas.TextBaseLine := "top";
-  canvas.FillTextF("Welcome to Tower archer!", xPos + (GameWidth - xPos - sidePadding) / 2, 50, GameWidth - xPos - sidePadding);
+  canvas.FillTextF("Welcome to Tower archer!", xPos + (GAMEWIDTH - xPos - sidePadding) / 2, 50, GAMEWIDTH - xPos - sidePadding);
 
   // Draw instructions
   canvas.Font := "17pt verdana";
   canvas.TextAlign := "left";
   canvas.TextBaseLine := "top";
-  canvas.FillTextF("How to play:", xPos, 90, GameWidth - xPos);
-  canvas.FillTextF("When the arrow is green, you can click.", xPos + 40, 130, GameWidth - xPos - 40 - sidePadding);
-  canvas.FillTextF("Hold down left mouse button and drag back.", xPos + 40, 170, GameWidth - xPos - 40 - sidePadding);
-  canvas.FillTextF("Release left click to fire, or use right or middle mouse click to cancel the shot.", xPos + 40, 210, GameWidth - xPos - 40 - sidePadding);
-  canvas.FillTextF("Shoot the enemies from your tower.", xPos + 40, 250, GameWidth - xPos - 40 - sidePadding);
-  canvas.FillTextF("Let an enemy past your tower and you lose a live. You have 10 lives.", xPos + 40, 290, GameWidth - xPos - 40 - sidePadding);
-  canvas.FillTextF("Make sure you go to the shop every now and then to get upgrades.", xPos + 40, 330, GameWidth - xPos - 40 - sidePadding);
+  canvas.FillTextF("How to play:", xPos, 90, GAMEWIDTH - xPos);
+  canvas.FillTextF("When the arrow is green, you can click.", xPos + 40, 130, GAMEWIDTH - xPos - 40 - sidePadding);
+  canvas.FillTextF("Hold down left mouse button and drag back.", xPos + 40, 170, GAMEWIDTH - xPos - 40 - sidePadding);
+  canvas.FillTextF("Release left click to fire, or use right or middle mouse click to cancel the shot.", xPos + 40, 210, GAMEWIDTH - xPos - 40 - sidePadding);
+  canvas.FillTextF("Shoot the enemies from your tower.", xPos + 40, 250, GAMEWIDTH - xPos - 40 - sidePadding);
+  canvas.FillTextF("Let an enemy past your tower and you lose a live. You have 10 lives.", xPos + 40, 290, GAMEWIDTH - xPos - 40 - sidePadding);
+  canvas.FillTextF("Make sure you go to the shop every now and then to get upgrades.", xPos + 40, 330, GAMEWIDTH - xPos - 40 - sidePadding);
 end;
 
 procedure DrawHUD(canvas : TW3Canvas);
@@ -233,7 +228,7 @@ begin
   canvas.FillStyle := "rgb(220, 220, 20)";
   canvas.TextAlign := "right";
   canvas.TextBaseLine := "top";
-  canvas.FillTextF("Gold: $" + IntToStr(Money), GameWidth - 20, 10, MAX_INT);
+  canvas.FillTextF("Gold: $" + IntToStr(Money), GAMEWIDTH - 20, 10, MAX_INT);
 end;
 
 procedure RotateCanvas(angle, xChange, yChange : float; canvas : TW3Canvas);
