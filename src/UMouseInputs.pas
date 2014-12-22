@@ -31,7 +31,7 @@ end;
 procedure MouseUpHandler(o : TObject; b : TMouseButton; t : TShiftState; x, y : integer);
 begin
   // Change whether the game is paused if the shop/resume button was clicked
-  if (MouseDown) and (b = TMouseButton.mbLeft) and (PauseButtonRect.ContainsPoint(TPoint.Create(x, y))) then
+  if (MouseDown) and (b = TMouseButton.mbLeft) and (PauseButtonRect().ContainsPoint(TPoint.Create(x, y))) then
     begin
       MouseDown := false;
 
