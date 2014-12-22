@@ -6,6 +6,7 @@ uses
   W3System, W3Graphics,
   UTextures, UMouseInputs, UGameVariables, UShopData, UShop, UShopItem, UArrow, UArcher, UPlayer, UEnemy, UGroundUnit, UAirUnit;
 
+procedure ClearScreen(canvas : TW3Canvas);
 procedure DrawLoadingScreen(canvas : TW3Canvas);
 procedure DrawScenery(canvas : TW3Canvas);
 procedure DrawPlayer(player : TPlayer; canvas : TW3Canvas);
@@ -22,23 +23,37 @@ procedure RotateCanvas(angle, xChange, yChange : float; canvas : TW3Canvas);
 
 implementation
 
+procedure ClearScreen(canvas : TW3Canvas);
+begin
+  // Clear background
+  canvas.FillStyle := "rgb(255, 255, 255)";
+  canvas.FillRectF(0, 0, GameWidth, GameHeight);
+
+  // Draw boarder
+  canvas.StrokeStyle := "rgb(0, 0, 0)";
+  canvas.LineWidth := 4;
+  canvas.StrokeRectF(0, 0, GameWidth, GameHeight);
+end;
+
 procedure DrawLoadingScreen(canvas : TW3Canvas);
 begin
   canvas.FillStyle := "blue";
   canvas.Font := "24pt verdana";
-  canvas.FillTextF("Loading Content...", GameWidth / 2 - 137.5, GameHeight / 2 - 12, 275);
+  canvas.TextAlign := "center";
+  canvas.TextBaseLine := "middle";
+  canvas.FillTextF("Loading Content...", GameWidth / 2, GameHeight / 2, 275);
 end;
 
 procedure DrawScenery(canvas : TW3Canvas);
 begin
   canvas.DrawImageF(TowerTexture.Handle, 0, GameHeight - TowerTexture.Handle.height);
 
-  // Draw the shop button
+  // Draw the shop button;
   canvas.StrokeStyle := "rgb(0, 0, 0)";
   canvas.LineWidth := 4;
   canvas.FillStyle := "rgb(130, 120, 140)";
-  canvas.StrokeRect(PauseButtonRect);
-  canvas.FillRect(PauseButtonRect);
+  canvas.StrokeRect(PauseButtonRect());
+  canvas.FillRect(PauseButtonRect());
 
   // Get the correct text
   var text := "Shop";
@@ -208,7 +223,8 @@ begin
   canvas.FillTextF("Hold down left mouse button and drag back.", xPos + 40, 170, GameWidth - xPos - 40 - sidePadding);
   canvas.FillTextF("Release left click to fire, or use right or middle mouse click to cancel the shot.", xPos + 40, 210, GameWidth - xPos - 40 - sidePadding);
   canvas.FillTextF("Shoot the enemies from your tower.", xPos + 40, 250, GameWidth - xPos - 40 - sidePadding);
-  canvas.FillTextF("Make sure you go to the shop every now and then to get upgrades.", xPos + 40, 290, GameWidth - xPos - 40 - sidePadding);
+  canvas.FillTextF("Let an enemy past your tower and you lose a live. You have 10 lives.", xPos + 40, 290, GameWidth - xPos - 40 - sidePadding);
+  canvas.FillTextF("Make sure you go to the shop every now and then to get upgrades.", xPos + 40, 330, GameWidth - xPos - 40 - sidePadding);
 end;
 
 procedure DrawHUD(canvas : TW3Canvas);

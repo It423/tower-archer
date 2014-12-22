@@ -86,9 +86,7 @@ begin
   GameWidth := GameView.Width;
   GameHeight := GameView.Height;
 
-  // Clear background
-  Canvas.FillStyle := "rgb(255, 255, 255)";
-  Canvas.FillRectF(0, 0, GameView.Width, GameView.Height);
+  ClearScreen(Canvas);
 
   if ContentLoaded then
     begin
@@ -103,12 +101,6 @@ begin
       // Draw the mouse to origin line if prepearing to fire
       DrawMouseDragLine(Player, Canvas);
 
-      // Draw a cirlce over the mouse showing if the player can shoot
-      DrawCanShoot(Player, Canvas);
-
-      // Draw the information for the player
-      DrawHUD(Canvas);
-
       // Update the arrows and enemies if not in shop
       if not Paused then
         begin
@@ -120,6 +112,12 @@ begin
           // Draw shop/pause screen if it is presently open
           DrawPauseScreen(Canvas);
         end;
+
+      // Draw a cirlce over the mouse showing if the player can shoot
+      DrawCanShoot(Player, Canvas);
+
+      // Draw the information for the player
+      DrawHUD(Canvas);
 
       // Move player if its off the tower (due to window height changes)
       if Player.X <> GameHeight - TowerTexture.Handle.height - ArcherTexture.Handle.height then
@@ -143,7 +141,7 @@ begin
   ArrowDamage := 10;
   TimeBetweenShots := 2000;
   Paused := true;
-  PauseButtonRect := TRect.Create(10, 10, 110, 50);
+  PauseButtonCoordinates := [ 10, 10, 110, 50 ];
 
   // Initialize the player
   Player := TPlayer.Create(TowerTexture.Handle.width - 15 - ArcherTexture.Handle.width, GameHeight - TowerTexture.Handle.height - ArcherTexture.Handle.height);
