@@ -6,22 +6,23 @@ uses
   W3System, W3Image, W3Graphics,
   UShopData;
 
-type TPurchasedEvent = procedure();
+type EPurchasedEvent = procedure();
 
 type TShopItem = class(TObject)
   public
     X, Y : integer;
-    Price, UnitsSold, MaxUnitsSold : integer;
+    Price, OrigPrice, UnitsSold, MaxUnitsSold : integer;
     PriceAfterPurchaseMultiplyer : float;
     ItemName : string;
     Thumbnail : TW3Image;
     constructor Create(newX, newY, newMaxUnitsToSell, newPrice : integer; newPriceAfterPurchaseMultiplyer : float; newName : string; newThumbnail : TW3Image; purchaseHandler : procedure);
+    procedure Reset();
     procedure Purchase();
     procedure Draw(canvas : TW3Canvas);
     function IsInButton(xPos, yPos : integer) : boolean;
   private
-    PurchaseEvent : TPurchasedEvent;
-    property OnPurchase : TPurchasedEvent read PurchaseEvent write PurchaseEvent;
+    PurchaseEvent : EPurchasedEvent;
+    property OnPurchase : EPurchasedEvent read PurchaseEvent write PurchaseEvent;
 end;
 
 const
@@ -36,6 +37,7 @@ begin
   UnitsSold := 0;
   MaxUnitsSold := newMaxUnitsToSell;
   Price := newPrice;
+  OrigPrice := Price;
   PriceAfterPurchaseMultiplyer := newPriceAfterPurchaseMultiplyer;
   ItemName := newName;
   Thumbnail := newThumbnail;
@@ -73,6 +75,13 @@ begin
       // If there is no event handler the item cannot be purchased
       PurchaseMessage := "This item cannot be purchased!";
     end;
+end;
+
+procedure TShopItem.Reset();
+begin
+  // Reset price and how many has been sold
+  Price := OrigPrice;
+  UnitsSold := 0;
 end;
 
 procedure TShopItem.Draw(canvas : TW3Canvas);
