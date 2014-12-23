@@ -60,7 +60,7 @@ begin
   else if not Paused then
     begin
       // Only fire if the left mouse button was clicked
-      if (Player.CanShoot) and (MouseDown) and (b = TMouseButton.mbLeft) then
+      if (MouseDown) and (b = TMouseButton.mbLeft) then
         begin
           Player.Fire();
         end;
@@ -70,7 +70,7 @@ begin
     end
   else
     begin
-      // Check what was clicked in the shop
+      // Check what has been clicked in the shop
       Shop.CheckClicked(x, y);
     end;
 
@@ -82,7 +82,7 @@ begin
   CurrentMouseX := x;
   CurrentMouseY := y;
 
-  if (Player.CanShoot) and (MouseDown) and (not Paused) and (Lives > 0) then
+  if (MouseDown) and (not Paused) and (Lives > 0) then
     begin
       Player.UpdateInformation(MouseDownX, MouseDownY, CurrentMouseX, CurrentMouseY);
     end;
