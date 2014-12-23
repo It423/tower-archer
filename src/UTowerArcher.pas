@@ -4,7 +4,7 @@ interface
 
 uses
   W3System, W3Components, W3Application, W3Game, W3GameApp, W3Graphics, W3Image,
-  UShopData, UMouseInputs, UArrow, UArcher, UPlayer, UDrawing, UScalingInfo, UGameVariables, UGameItems, UPlayerData, UTextures, UGroundUnit, UAirUnit, UShop;
+  UMouseInputs, UArrow, UArcher, UPlayer, UDrawing, UScalingInfo, UGameVariables, USpawner, UGameItems, UPlayerData, UTextures, UGroundUnit, UAirUnit, UShop;
 type
   TApplication = class(TW3CustomGameApplication)
   protected
@@ -154,6 +154,10 @@ begin
   Paused := true;
   Lives := 10;
   Money := 0;
+
+  // Initialize the spawner variables
+  GroundDelay := 5000;
+  AirDelay := 12000;
 
   // Reset game items and the shop
   Arrows.Clear();

@@ -4,7 +4,7 @@ interface
 
 uses 
   W3System, W3Components,
-  UPlayerData, UGameVariables, UGameItems, UShop, UShopData;
+  UPlayerData, UGameVariables, UGameItems, UShop, UShopData, USpawner;
 
 procedure MouseDownHandler(o : TObject; b : TMouseButton; t : TShiftState; x, y : integer);
 procedure MouseUpHandler(o : TObject; b : TMouseButton; t : TShiftState; x, y : integer);
@@ -94,6 +94,7 @@ begin
     begin
       // Resume timers if being unpaused
       Player.ResumeTimer();
+      StartEnemySpawners();
       for var i := 0 to High(Enemies) do
         begin
           Enemies[i].ResumeTimer();
@@ -103,6 +104,7 @@ begin
     begin
       // Pause timers if being paused
       Player.PauseTimer();
+      PauseEnemySpawners();
       for var i := 0 to High(Enemies) do
         begin
           Enemies[i].PauseTimer();

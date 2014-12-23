@@ -83,9 +83,14 @@ end;
 
 procedure TEnemy.PauseTimer();
 begin
-  // Store the delay then destroy the timer
-  DelayHolder := Timer.Delay;
-  Timer.Destroy();
+  // Try block to avoid issue with timer not being initilized before
+  try
+    // Store the delay then destroy the timer
+    DelayHolder := Timer.Delay;
+    Timer.Destroy();
+  except
+    on e: exception do;
+  end;
 end;
 
 procedure TEnemy.ResumeTimer();
