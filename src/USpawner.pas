@@ -7,10 +7,14 @@ uses
   UArrow, UGroundUnit, UAirUnit, UGameVariables, UGameItems, UScalingInfo, UTextures;
 
 procedure SpawnArrow(xVol, yVol, x, y : float);
+procedure StartGroundTimer(delay : integer);
+procedure StartAirTimer(delay : integer);
 procedure StartEnemySpawners();
 procedure PauseEnemySpawners();
-function SpawnGroundEnemy(sender : TObject) : boolean;
-function SpawnAirEnemy(sender : TObject) : boolean;
+procedure SpawnGroundUnit();
+procedure SpawnAirUnit();
+function HandleGroundTimer(sender : TObject) : boolean;
+function HandleAirTimer(sender : TObject) : boolean;
 function GetNextEnemyIndex() : integer;
 
 var
@@ -19,16 +23,6 @@ var
   Difficulty : integer; // The difficulty level
 
 implementation
-
-procedure StartGroundTimer(delay : integer);
-begin
-  GroundTimer := TW3EventRepeater.Create(SpawnGroundEnemy, delay);
-end;
-
-procedure StartAirTimer(delay : integer);
-begin
-  AirTimer := TW3EventRepeater.Create(SpawnAirEnemy, delay);
-end;
 
 procedure SpawnArrow(xVol, yVol, x, y : float);
 begin
@@ -55,6 +49,16 @@ begin
 
   // Spawn an arrow if an inactive one wasn't found
   Arrows[High(Arrows) + 1] := TArrow.Create(x, y, xVol, yVol);
+end;
+
+procedure StartGroundTimer(delay : integer);
+begin
+  GroundTimer := TW3EventRepeater.Create(HandleGroundTimer, delay);
+end;
+
+procedure StartAirTimer(delay : integer);
+begin
+  AirTimer := TW3EventRepeater.Create(HandleAirTimer, delay);
 end;
 
 procedure StartEnemySpawners();
@@ -95,9 +99,19 @@ begin
   AirTimer.Destroy();
 end;
 
-function SpawnGroundEnemy(sender : TObject) : boolean;
+procedure SpawnGroundUnit();
 begin
   Enemies[GetNextEnemyIndex()] := TGroundUnit.Create(GAMEWIDTH, GAMEHEIGHT - GroundUnitTexture.Handle.height, 1, 1000, 50);
+end;
+
+procedure SpawnAirUnit();
+begin
+  Enemies[GetNextEnemyIndex()] := TAirUnit.Create(GAMEWIDTH, GAMEHEIGHT / 2, 1, 100, 1000, 50);
+end;
+
+function HandleGroundTimer(sender : TObject) : boolean;
+begin
+  SpawnGroundUnit();
 
   // Release the timer then restart it
   TW3EventRepeater(sender).Free();
@@ -105,9 +119,9 @@ begin
   exit(true);
 end;
 
-function SpawnAirEnemy(sender : TObject) : boolean;
+function HandleAirTimer(sender : TObject) : boolean;
 begin
-  Enemies[GetNextEnemyIndex()] := TAirUnit.Create(GAMEWIDTH, GAMEHEIGHT / 2, 1, 100, 1000, 50);
+  SpawnAirUnit();
 
   // Release the timer then restart it
   TW3EventRepeater(sender).Free();
