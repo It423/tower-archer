@@ -23,10 +23,12 @@ begin
   Speed := newSpeed;
   Health := newHealth;
   MaxHealth := newHealth;
+  ApplyToEventHadler();
 end;
 
 procedure TGroundUnit.Move();
 begin
+  inherited;
   X -= Speed;
 end;
 

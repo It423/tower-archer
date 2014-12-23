@@ -30,10 +30,12 @@ begin
   MaxYChange := newYChange;
   YChanged := 0;
   MovingUp := true;
+  ApplyToEventHadler();
 end;
 
 procedure TAirUnit.Move();
 begin
+  inherited;
   X -= Speed;
   Y += YSpeed;
 

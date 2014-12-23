@@ -3,26 +3,54 @@ unit UEnemy;
 interface
 
 uses 
-  W3System, W3Time;
+  W3System, W3Time,
+  UGameVariables;
+
+type ECrossedTowerEvent = procedure();
 
 type TEnemy = class(TObject)
   public
     X, Y : float;
     Health, MaxHealth : integer;
     Frozen : boolean;
-    procedure Move(); virtual; abstract;
+    procedure Move(); virtual;
     function GetRect() : TRectF; virtual; abstract;
     procedure Hit(damage : integer; xArrowSpeed, yArrowSpeed : float);
     procedure Freeze(minDuration, maxDuration : integer);
     procedure PauseTimer();
     procedure ResumeTimer();
-  private
+  protected
     Timer : TW3EventRepeater; // Timer for being frozen
     DelayHolder : integer;
+    HasCrossedTower : boolean; // Wether the enemy has taken a life from the player by crossing the tower
+    CrossedTowerEvent : ECrossedTowerEvent; // The event
+    property OnPurchase : ECrossedTowerEvent read CrossedTowerEvent write CrossedTowerEvent; // The event handler
+    procedure CrossedTower();
+    procedure ApplyToEventHadler();
     function HandleTimer(sender : TObject) : boolean;
 end;
 
+procedure CrossedTowerEventHandler();
+
 implementation
+
+procedure TEnemy.Move();
+begin
+  if X < 0 then
+    begin
+      if not HasCrossedTower then
+        begin
+          CrossedTower();
+        end
+      else
+        begin
+          if X < -300 then
+            begin
+              Health := 0; // Kill the enemy if its gone far beyond the end of the screen
+            end;
+        end;
+    end;
+end;
 
 procedure TEnemy.Hit(damage : integer; xArrowSpeed, yArrowSpeed : float);
 begin
@@ -61,11 +89,31 @@ begin
   DelayHolder := 0;
 end;
 
+procedure TEnemy.CrossedTower();
+begin
+  // Only run the handler if the event has one
+  if Assigned(CrossedTowerEvent) then
+    begin
+      CrossedTowerEvent();
+      HasCrossedTower := true;
+    end;
+end;
+
+procedure TEnemy.ApplyToEventHadler();
+begin
+  CrossedTowerEvent := CrossedTowerEventHandler;
+end;
+
 function TEnemy.HandleTimer(sender : TObject) : boolean;
 begin
   Frozen := false;
   TW3EventRepeater(sender).Free();
   exit(true);
+end;
+
+procedure CrossedTowerEventHandler();
+begin
+  Dec(Lives)
 end;
 
 end.
