@@ -82,7 +82,7 @@ begin
   CurrentMouseX := x;
   CurrentMouseY := y;
 
-  if (not Player.CanShoot) and (MouseDown) and (not Paused) and (Lives > 0) then
+  if (Player.CanShoot) and (MouseDown) and (not Paused) and (Lives > 0) then
     begin
       Player.UpdateInformation(MouseDownX, MouseDownY, CurrentMouseX, CurrentMouseY);
     end;
