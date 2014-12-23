@@ -24,6 +24,12 @@ begin
   for var i := 0 to High(ExtraArchers) do
     begin
       ExtraArchers[i].UpdateInformation(origX, origY, currX, currY);
+
+      // Set the archer's ability to shoot to that of the player
+      if not ExtraArchers[i].CanShoot = CanShoot then
+        begin
+          ExtraArchers[i].CanShoot := CanShoot;
+        end;
     end;
 end;
 
@@ -31,10 +37,13 @@ procedure TPlayer.Fire();
 begin
   inherited();
 
-  // Make extra archers also fire
-  for var i := 0 to High(ExtraArchers) do
+  // Make extra archers also fire if the player can
+  if CanShoot then
     begin
-      ExtraArchers[i].Fire();
+      for var i := 0 to High(ExtraArchers) do
+        begin
+          ExtraArchers[i].Fire();
+        end;
     end;
 end;
 

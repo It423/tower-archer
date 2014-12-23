@@ -99,14 +99,17 @@ begin
       DrawArrow(Arrows, Canvas);
       DrawEnemy(Enemies, Canvas);
 
-      // Draw the mouse to origin line if prepearing to fire
-      DrawMouseDragLine(Player, Canvas);
-
       // Update the arrows and enemies if not in the shop
       if not Paused then
         begin
           UpdateArrows();
           UpdateEnemies();
+
+          // Draw the mouse to origin line if prepearing to fire, not paused and not dead
+          if Lives > 0 then
+            begin
+              DrawMouseDragLine(Player, Canvas);
+            end;
         end
       else
         begin
