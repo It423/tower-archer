@@ -158,9 +158,9 @@ begin
   SpawnGroundUnit();
 
   // Decrease the delay between spawning
-  if GroundDelay > 2000 then
+  if GroundDelay > 4000 then
     begin
-      GroundDelay -= 100;
+      GroundDelay -= 50;
     end;
 
   // Release the timer then restart it
@@ -174,9 +174,9 @@ begin
   SpawnAirUnit();
 
   // Decrease the delay between spawning
-  if GroundDelay > 4500 then
+  if GroundDelay > 6000 then
     begin
-      GroundDelay -= 100;
+      GroundDelay -= 50;
     end;
 
   // Release the timer then restart it
