@@ -22,6 +22,7 @@ var
   RestartClicked : boolean;
   Paused : boolean;
   Lives : integer;
+  Money : integer;
 
 function FloatMod(a, b : float) : integer; // A function to perform moding operations on floats
 function PauseButtonRect() : TRect;

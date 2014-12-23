@@ -7,7 +7,6 @@ uses
   UGameVariables, UPlayerData, UArcher, UTextures;
 
 var
-  Money : integer;
   PurchaseMessage : string;
 
 // Purchase event handlers for shop items

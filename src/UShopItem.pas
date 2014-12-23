@@ -4,7 +4,7 @@ interface
 
 uses 
   W3System, W3Image, W3Graphics,
-  UShopData;
+  UShopData, UGameVariables;
 
 type EPurchasedEvent = procedure();
 
