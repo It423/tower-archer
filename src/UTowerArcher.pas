@@ -153,6 +153,7 @@ begin
   RestartClicked := false;
   Paused := true;
   Lives := 10;
+  Money := 0;
 
   // Reset game items and the shop
   Arrows.Clear();
@@ -186,7 +187,7 @@ procedure UpdateEnemies();
 begin
   for var i := 0 to High(Enemies) do
     begin
-      if (Enemies[i].Health > 0) then
+      if not Enemies[i].Dead then
         begin
           // Only move the enemy if its not frozen
           if not Enemies[i].Frozen then
