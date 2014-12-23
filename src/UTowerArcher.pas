@@ -82,7 +82,7 @@ end;
 
 procedure TApplication.PaintView(Canvas: TW3Canvas);
 begin
-  // Update the game width and height variables
+  // Update screen width and height
   ScreenWidth := GameView.Width;
   ScreenHeight := GameView.Height;
 
@@ -102,7 +102,7 @@ begin
       // Draw the mouse to origin line if prepearing to fire
       DrawMouseDragLine(Player, Canvas);
 
-      // Update the arrows and enemies if not in shop
+      // Update the arrows and enemies if not in the shop
       if not Paused then
         begin
           UpdateArrows();
@@ -119,12 +119,24 @@ begin
 
       // Draw the information for the player
       DrawHUD(Canvas);
+
+      // Draw the game over screen if dead
+      if Lives <= 0 then
+        begin
+          DrawGameOver(Canvas);
+        end;
     end
   else
     begin
       EvaluateLoadedContent();
 
       DrawLoadingScreen(Canvas);
+    end;
+
+  // If the game is over and the restart button has been clicked then restart the game
+  if (Lives <= 0) and (RestartClicked) then
+    begin
+      InitializeVariables();
     end;
 end;
 
@@ -133,9 +145,19 @@ begin
   // Initialize the variables
   MaxPower := 30;
   ArrowDamage := 10;
+  ArrowsFreeze := false;
+  ArrowFreezeDuration := 0;
   TimeBetweenShots := 2000;
-  Paused := true;
   PauseButtonCoordinates := [ 10, 10, 110, 50 ];
+  RestartButtonCoordinates := [ Round(GAMEWIDTH / 2 - 50), 200, Round(GAMEWIDTH / 2 + 50), 250 ];
+  RestartClicked := false;
+  Paused := true;
+  Lives := 10;
+
+  // Reset game items and the shop
+  Arrows.Clear();
+  Enemies.Clear();
+  Shop.ResetItems();
 
   // Initialize the player
   Player := TPlayer.Create(TowerTexture.Handle.width - 15 - ArcherTexture.Handle.width, GAMEHEIGHT - TowerTexture.Handle.height - ArcherTexture.Handle.height);

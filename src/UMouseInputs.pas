@@ -20,7 +20,7 @@ implementation
 procedure MouseDownHandler(o : TObject; b : TMouseButton; t : TShiftState; x, y : integer);
 begin
   // Only make the mouse down if the left mouse button is pressed
-  if b = TMouseButton.mbLeft then
+  if (b = TMouseButton.mbLeft) and (Lives > 0) then
     begin
       MouseDown := true;
       MouseDownX := x;
@@ -30,6 +30,19 @@ end;
 
 procedure MouseUpHandler(o : TObject; b : TMouseButton; t : TShiftState; x, y : integer);
 begin
+  // Only check the restart button if the player has lost
+  if Lives <= 0 then
+    begin
+      if RestartButtonRect().ContainsPoint(TPoint.Create(x, y)) then
+        begin
+          // Tell the main program that the restart button was clicked
+          RestartClicked := true;
+        end;
+
+      // Stop other mouse input checks
+      exit;
+    end;
+
   // Change whether the game is paused if the shop/resume button was clicked
   if (MouseDown) and (b = TMouseButton.mbLeft) and (PauseButtonRect().ContainsPoint(TPoint.Create(x, y))) then
     begin
@@ -69,7 +82,7 @@ begin
   CurrentMouseX := x;
   CurrentMouseY := y;
 
-  if MouseDown and not Paused then
+  if (MouseDown) and (not Paused) and (Lives > 0) then
     begin
       Player.UpdateInformation(MouseDownX, MouseDownY, CurrentMouseX, CurrentMouseY);
     end;
