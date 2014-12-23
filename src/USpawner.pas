@@ -13,6 +13,7 @@ procedure StartEnemySpawners();
 procedure PauseEnemySpawners();
 procedure SpawnGroundUnit();
 procedure SpawnAirUnit();
+procedure IncreaseDifficulty();
 function HandleGroundTimer(sender : TObject) : boolean;
 function HandleAirTimer(sender : TObject) : boolean;
 function GetNextEnemyIndex() : integer;
@@ -100,22 +101,71 @@ begin
 end;
 
 procedure SpawnGroundUnit();
+var
+  speed : float;
+  health : integer;
+  moneyVal : integer;
 begin
-  Enemies[GetNextEnemyIndex()] := TGroundUnit.Create(GAMEWIDTH, GAMEHEIGHT - GroundUnitTexture.Handle.height, 1, 1000, 50);
+  // Get a random speed
+  speed := RandomInt(3500) / 1000; // Max speed is 3.5
+
+  // Make the health multiplied by the speed equal the difficulty
+  health := Round(Difficulty / speed);
+
+  // Generate a money value
+  moneyVal := (Difficulty div 25 + RandomInt(Difficulty div 25)) div 2;
+
+  // Spawn the enemy
+  Enemies[GetNextEnemyIndex()] := TGroundUnit.Create(GAMEWIDTH, GAMEHEIGHT - GroundUnitTexture.Handle.height, speed, health, moneyVal);
+
+  // Increase the diffiuclty
+  IncreaseDifficulty();
 end;
 
 procedure SpawnAirUnit();
+var
+  speed : float;
+  yChange, y, health : integer;
+  moneyVal : integer;
 begin
-  Enemies[GetNextEnemyIndex()] := TAirUnit.Create(GAMEWIDTH, GAMEHEIGHT / 2, 1, 100, 1000, 50);
+  // Get the y change
+  yChange := RandomInt(GAMEHEIGHT div 3);
+
+  // Generate a starting y position from the y change
+  y := RandomInt(GAMEHEIGHT - (2 * yChange)) + yChange;
+
+  // Get speed and make health indirectly propotinate to the speed
+  speed := RandomInt(3500) / 1000; // Max speed is 3.5
+  health := Round((Difficulty - yChange) / speed);
+
+  // Generate a money value
+  moneyVal := (Difficulty div 33 + RandomInt(Difficulty div 33)) div 2;
+
+  // Spawn the flying enemy
+  Enemies[GetNextEnemyIndex()] := TAirUnit.Create(GAMEWIDTH, y, speed, yChange, health, moneyVal);
+
+  // Increase the difficulty
+  IncreaseDifficulty();
+end;
+
+procedure IncreaseDifficulty();
+begin
+  Difficulty += 150;
 end;
 
 function HandleGroundTimer(sender : TObject) : boolean;
 begin
   SpawnGroundUnit();
 
+  // Decrease the delay between spawning
+  if GroundDelay > 2000 then
+    begin
+      GroundDelay -= 100;
+    end;
+
   // Release the timer then restart it
   TW3EventRepeater(sender).Free();
-  StartGroundTimer(GroundDelay);
+  StartGroundTimer(RandomInt(GroundDelay) + GroundDelay);
   exit(true);
 end;
 
@@ -123,9 +173,15 @@ function HandleAirTimer(sender : TObject) : boolean;
 begin
   SpawnAirUnit();
 
+  // Decrease the delay between spawning
+  if GroundDelay > 4500 then
+    begin
+      GroundDelay -= 100;
+    end;
+
   // Release the timer then restart it
   TW3EventRepeater(sender).Free();
-  StartAirTimer(AirDelay);
+  StartAirTimer(RandomInt(AirDelay) + AirDelay);
   exit(true);
 end;
 

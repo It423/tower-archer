@@ -156,8 +156,8 @@ begin
   Money := 0;
 
   // Initialize the spawner variables
-  GroundDelay := 5000;
-  AirDelay := 12000;
+  GroundDelay := 7000;
+  AirDelay := 14000;
   Difficulty := 1000;
 
   // Reset game items and the shop
