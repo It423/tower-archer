@@ -158,6 +158,7 @@ begin
   // Initialize the spawner variables
   GroundDelay := 5000;
   AirDelay := 12000;
+  Difficulty := 1000;
 
   // Reset game items and the shop
   Arrows.Clear();
