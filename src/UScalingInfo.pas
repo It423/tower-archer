@@ -6,8 +6,8 @@ uses
   W3System;
 
 const
-  GAMEWIDTH = 1366;
-  GAMEHEIGHT = 633;
+  GAMEWIDTH = 1350;
+  GAMEHEIGHT = 500;
   PIXELTOPOWERRATIO = 12;
 
 var
