@@ -144,6 +144,9 @@ begin
 end;
 
 procedure DrawEnemy(enemy : TEnemy; canvas : TW3Canvas); overload;
+var
+  textureWidth : integer;
+  greenWidth : float;
 begin
   if (enemy is TGroundUnit) then
     begin
@@ -155,6 +158,9 @@ begin
         begin
           canvas.DrawImageF(FrozenGroundUnitTexture.Handle, enemy.X, enemy.Y);
         end;
+
+      // Store the texture's width
+      textureWidth := GroundUnitTexture.Handle.width;
     end
   else if (enemy is TAirUnit) then
     begin
@@ -166,7 +172,19 @@ begin
         begin
           canvas.DrawImageF(FrozenAirUnitTexture.Handle, enemy.X, enemy.Y);
         end;
+
+      // Store the texture's width
+      textureWidth := AirUnitTexture.Handle.width;
     end;
+
+  // Draw the health bar's red underlay above enemy
+  canvas.FillStyle := "rgb(200, 0, 0)";
+  canvas.FillRectF(enemy.X, enemy.Y - 13, textureWidth, 5);
+
+  // Draw the health bar's green overlay above the enemy
+  greenWidth := (enemy.Health / enemy.MaxHealth) * textureWidth; // Get the percentage of health and multiply by the bar's width
+  canvas.FillStyle := "rgb(0, 200, 0)";
+  canvas.FillRectF(enemy.X, enemy.Y - 13, greenWidth, 5);
 end;
 
 procedure DrawMouseDragLine(player : TPlayer; canvas : TW3Canvas);
