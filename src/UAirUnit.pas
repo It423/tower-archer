@@ -11,14 +11,14 @@ type TAirUnit = class(TEnemy)
     Speed, MaxSpeed : float;
     YSpeed, YChanged, MaxYChange : float;
     MovingUp : boolean;
-    constructor Create(newX, newY, newSpeed, newYChange : float; newHealth : integer);
+    constructor Create(newX, newY, newSpeed, newYChange : float; newHealth, newMoneyValue : integer);
     procedure Move(); override;
     function GetRect() : TRectF; override;
 end;
 
 implementation
 
-constructor TAirUnit.Create(newX, newY, newSpeed, newYChange : float; newHealth : integer);
+constructor TAirUnit.Create(newX, newY, newSpeed, newYChange : float; newHealth, newMoneyValue : integer);
 begin
   X := newX;
   Y := newY - newYChange / 2; // Makes the middle of bobbing at the y specified
@@ -26,6 +26,7 @@ begin
   MaxSpeed := newSpeed;
   MaxHealth := newHealth;
   Health := newHealth;
+  MoneyValue := newMoneyValue;
   YSpeed := 0;
   MaxYChange := newYChange;
   YChanged := 0;

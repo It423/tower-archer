@@ -9,20 +9,21 @@ uses
 type TGroundUnit = class(TEnemy)
   public
     Speed : float;
-    constructor Create(newX, newY, newSpeed : float; newHealth : integer);
+    constructor Create(newX, newY, newSpeed : float; newHealth, newMoneyValue : integer);
     procedure Move(); override;
     function GetRect() : TRectF; override;
 end;
 
 implementation
 
-constructor TGroundUnit.Create(newX, newY, newSpeed : float; newHealth : integer);
+constructor TGroundUnit.Create(newX, newY, newSpeed : float; newHealth, newMoneyValue : integer);
 begin
   X := newX;
   Y := newY;
   Speed := newSpeed;
   Health := newHealth;
   MaxHealth := newHealth;
+  MoneyValue := newMoneyValue;
   ApplyToEventHadler();
 end;
 

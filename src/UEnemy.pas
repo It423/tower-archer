@@ -11,8 +11,8 @@ type ECrossedTowerEvent = procedure();
 type TEnemy = class(TObject)
   public
     X, Y : float;
-    Health, MaxHealth : integer;
-    Frozen : boolean;
+    Health, MaxHealth, MoneyValue : integer;
+    Frozen, Dead : boolean;
     procedure Move(); virtual;
     function GetRect() : TRectF; virtual; abstract;
     procedure Hit(damage : integer; xArrowSpeed, yArrowSpeed : float);
@@ -59,6 +59,12 @@ begin
 
   // Take the damage from the health
   Health -= Round(damageWithSpeed);
+
+  if Health < 0 then
+    begin
+      Dead := true;
+      Money += MoneyValue;
+    end;
 end;
 
 procedure TEnemy.Freeze(minDuration, maxDuration : integer);
