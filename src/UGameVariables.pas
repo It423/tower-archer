@@ -13,15 +13,19 @@ const
 
 var
   MaxPower : float;
-  Paused : boolean;
   ArrowDamage : integer;
   ArrowsFreeze : boolean;
   ArrowFreezeDuration : integer;
   TimeBetweenShots : integer;
   PauseButtonCoordinates : array [0 .. 3] of integer;
+  RestartButtonCoordinates : array [0 .. 3] of integer;
+  RestartClicked : boolean;
+  Paused : boolean;
+  Lives : integer;
 
 function FloatMod(a, b : float) : integer; // A function to perform moding operations on floats
 function PauseButtonRect() : TRect;
+function RestartButtonRect() : TRect;
 
 implementation
 
@@ -33,6 +37,11 @@ end;
 function PauseButtonRect() : TRect;
 begin
   exit(TRect.Create(PauseButtonCoordinates[0], PauseButtonCoordinates[1], PauseButtonCoordinates[2], PauseButtonCoordinates[3]));
+end;
+
+function RestartButtonRect() : TRect;
+begin
+  exit(TRect.Create(RestartButtonCoordinates[0], RestartButtonCoordinates[1], RestartButtonCoordinates[2], RestartButtonCoordinates[3]));
 end;
 
 end.
