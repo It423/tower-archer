@@ -136,7 +136,7 @@ procedure DrawEnemy(enemy : array of TEnemy; canvas : TW3Canvas); overload;
 begin
   for var i := 0 to High(enemy) do
     begin
-      if enemy[i].Health > 0 then
+      if not enemy[i].Dead then
         begin
           DrawEnemy(enemy[i], canvas);
         end;
