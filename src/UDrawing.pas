@@ -19,6 +19,7 @@ procedure DrawMouseDragLine(player : TPlayer; canvas : TW3Canvas);
 procedure DrawCanShoot(player : TPlayer; canvas : TW3Canvas);
 procedure DrawHUD(canvas : TW3Canvas);
 procedure DrawPauseScreen(canvas : TW3Canvas);
+procedure DrawGameOver(canvas : TW3Canvas);
 procedure RotateCanvas(angle, xChange, yChange : float; canvas : TW3Canvas);
 
 implementation
@@ -28,6 +29,11 @@ begin
   // Clear background
   canvas.FillStyle := "rgb(255, 255, 255)";
   canvas.FillRectF(0, 0, ScreenWidth, ScreenHeight);
+
+  // Draw border
+  canvas.StrokeStyle := "rgb(0, 0, 0)";
+  canvas.LineWidth := 4;
+  canvas.StrokeRectF(0, 0, GAMEWIDTH, GAMEHEIGHT);
 end;
 
 procedure DrawLoadingScreen(canvas : TW3Canvas);
@@ -43,7 +49,7 @@ procedure DrawScenery(canvas : TW3Canvas);
 begin
   canvas.DrawImageF(TowerTexture.Handle, 0, GAMEHEIGHT - TowerTexture.Handle.height);
 
-  // Draw the shop button;
+  // Draw the shop button
   canvas.StrokeStyle := "rgb(0, 0, 0)";
   canvas.LineWidth := 4;
   canvas.FillStyle := "rgb(130, 120, 140)";
@@ -58,11 +64,11 @@ begin
     end;
 
   // Put the text in the button
-  canvas.Font := IntToStr(Round(PauseButtonRect.Width() / 4)) + "pt verdana";
+  canvas.Font := IntToStr(Round(PauseButtonRect().Width() / 4)) + "pt verdana";
   canvas.FillStyle := "rgb(0, 0, 0)";
   canvas.TextAlign := "center";
   canvas.TextBaseLine := "middle";
-  canvas.FillTextF(text, PauseButtonRect.CenterPoint().X, PauseButtonRect.CenterPoint().Y, PauseButtonRect.Width() - 10);
+  canvas.FillTextF(text, PauseButtonRect().CenterPoint().X, PauseButtonRect().CenterPoint().Y, PauseButtonRect().Width() - 10);
 end;
 
 procedure DrawPlayer(player : TPlayer; canvas : TW3Canvas);
@@ -225,10 +231,36 @@ end;
 procedure DrawHUD(canvas : TW3Canvas);
 begin
   canvas.Font := "15pt verdana";
-  canvas.FillStyle := "rgb(220, 220, 20)";
+  canvas.FillStyle := "rgb(220, 20, 50)";
   canvas.TextAlign := "right";
   canvas.TextBaseLine := "top";
-  canvas.FillTextF("Gold: $" + IntToStr(Money), GAMEWIDTH - 20, 10, MAX_INT);
+  canvas.FillTextF("Lives: " + IntToStr(Lives), GAMEWIDTH - 20, 10, MAX_INT);
+  canvas.FillStyle := "rgb(220, 220, 20)";
+  canvas.FillTextF("Gold: $" + IntToStr(Money), GAMEWIDTH - 20, 40, MAX_INT);
+end;
+
+procedure DrawGameOver(canvas : TW3Canvas);
+begin
+  // Draw the text
+  canvas.Font := "70pt verdana";
+  canvas.FillStyle := "rgb(0, 0, 0)";
+  canvas.TextAlign := "center";
+  canvas.TextBaseLine := "top";
+  canvas.FillTextF("Game Over!", GAMEWIDTH / 2, 50, MAX_INT);
+
+  // Draw the button
+  canvas.StrokeStyle := "rgb(0, 0, 0)";
+  canvas.LineWidth := 4;
+  canvas.FillStyle := "rgb(130, 120, 140)";
+  canvas.StrokeRect(RestartButtonRect());
+  canvas.FillRect(RestartButtonRect());
+
+  // Put the text in the button
+  canvas.Font := IntToStr(Round(RestartButtonRect().Width() / 4)) + "pt verdana";
+  canvas.FillStyle := "rgb(0, 0, 0)";
+  canvas.TextAlign := "center";
+  canvas.TextBaseLine := "middle";
+  canvas.FillTextF("Restart", RestartButtonRect().CenterPoint().X, RestartButtonRect().CenterPoint().Y, RestartButtonRect().Width() - 10);
 end;
 
 procedure RotateCanvas(angle, xChange, yChange : float; canvas : TW3Canvas);
