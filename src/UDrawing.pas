@@ -298,7 +298,7 @@ begin
   // Clear around the edge of the border
   canvas.FillStyle := "rgb(255, 255, 255)";
   canvas.FillRectF(GAMEWIDTH + 2, 0, GAMEWIDTH * (1 / Scale) - GAMEWIDTH, GAMEHEIGHT);
-  canvas.FillRectF(0, GAMEHEIGHT + 2, GAMEWIDTH * (1 / Scale), GAMEWIDTH * (1 / Scale) - GAMEHEIGHT);
+  canvas.FillRectF(0, GAMEHEIGHT + 2, GAMEWIDTH * (1 / Scale), GAMEHEIGHT * (1 / Scale) - GAMEHEIGHT);
 end;
 
 procedure RotateCanvas(angle, xChange, yChange : float; canvas : TW3Canvas);
