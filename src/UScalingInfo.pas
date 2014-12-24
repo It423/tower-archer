@@ -3,7 +3,7 @@ unit UScalingInfo;
 interface
 
 uses 
-  W3System, W3Graphics;
+  W3Graphics;
 
 procedure ScaleCanvas(newScreenWidth, newScreenHeight : integer; canvas : TW3Canvas);
 

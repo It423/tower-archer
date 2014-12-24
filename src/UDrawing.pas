@@ -4,7 +4,7 @@ interface
 
 uses 
   W3System, W3Graphics,
-  UScalingInfo, UTextures, UMouseInputs, UGameVariables, UShopData, UShop, UShopItem, UArrow, UArcher, UPlayer, UEnemy, UGroundUnit, UAirUnit;
+  UMouseInputs, UArrow, UArcher, UPlayer, UEnemy, UGroundUnit, UAirUnit, UGameVariables, UShop, UShopItem, UTextures, UScalingInfo;
 
 procedure ClearScreen(canvas : TW3Canvas);
 procedure DrawLoadingScreen(canvas : TW3Canvas);

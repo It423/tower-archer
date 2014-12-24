@@ -3,8 +3,7 @@ unit UShopData;
 interface
 
 uses 
-  W3System,
-  UGameVariables, UPlayerData, UArcher, UTextures;
+  UArcher, UGameVariables, UPlayerData, UTextures;
 
 var
   PurchaseMessage : string;

@@ -3,8 +3,7 @@ unit UPlayerData;
 interface
 
 uses 
-  W3System,
-  UArcher, UPlayer;
+  UPlayer;
 
 var
   Player : TPlayer;

@@ -3,7 +3,7 @@ unit USpawner;
 interface
 
 uses 
-  W3System, W3Time,
+  W3Time,
   UArrow, UGroundUnit, UAirUnit, UGameVariables, UGameItems, UScalingInfo, UTextures;
 
 procedure SpawnArrow(xVol, yVol, x, y : float);

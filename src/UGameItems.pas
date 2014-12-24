@@ -3,7 +3,6 @@ unit UGameItems;
 interface
 
 uses 
-  W3System,
   UArrow, UEnemy;
 
 var

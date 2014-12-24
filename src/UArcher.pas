@@ -3,8 +3,8 @@ unit UArcher;
 interface
 
 uses 
-  W3System, W3Time,
-  UGameVariables, UScalingInfo, USpawner, UArrow, UTextures;
+  W3Time,
+  USpawner, UGameVariables, UTextures, UScalingInfo;
 
 type TArcher = class(TObject)
   public

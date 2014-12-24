@@ -3,8 +3,8 @@ unit UArrow;
 interface
 
 uses 
-  W3System, W3Image,
-  UGameVariables, UScalingInfo, UEnemy, UTextures;
+  W3System,
+  UEnemy, UGameVariables, UTextures, UScalingInfo;
 
 type TArrow = class(TObject)
   public

@@ -3,8 +3,9 @@ unit UTowerArcher;
 interface
 
 uses
-  W3System, W3Components, W3Application, W3Game, W3GameApp, W3Graphics, W3Image,
-  UMouseInputs, UArrow, UArcher, UPlayer, UDrawing, UScalingInfo, UGameVariables, USpawner, UGameItems, UPlayerData, UTextures, UGroundUnit, UAirUnit, UShop;
+  W3GameApp, W3Graphics, W3Image,
+  UDrawing, UMouseInputs, UPlayer, USpawner, UGameVariables, UGameItems, UPlayerData, UShop, UTextures, UScalingInfo;
+
 type
   TApplication = class(TW3CustomGameApplication)
   protected

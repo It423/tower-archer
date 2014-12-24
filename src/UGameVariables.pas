@@ -2,7 +2,7 @@ unit UGameVariables;
 
 interface
 
-uses 
+uses
   W3System;
 
 const

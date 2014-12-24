@@ -3,7 +3,7 @@ unit UTextures;
 interface
 
 uses 
-  W3System, W3Image;
+  W3Image;
 
 var
   GroundUnitTexture : TW3Image;

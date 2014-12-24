@@ -3,7 +3,7 @@ unit UShop;
 interface
 
 uses 
-  W3System, W3Image, W3Graphics,
+  W3Image, W3Graphics,
   UShopItem, UShopData;
 
 type TShop = class(TObject)

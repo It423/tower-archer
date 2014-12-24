@@ -3,8 +3,8 @@ unit UShopItem;
 interface
 
 uses 
-  W3System, W3Image, W3Graphics,
-  UShopData, UGameVariables;
+  W3System, W3Graphics, W3Image,
+  UGameVariables, UShopData;
 
 type EPurchasedEvent = procedure();
 

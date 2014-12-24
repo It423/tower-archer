@@ -4,7 +4,7 @@ interface
 
 uses 
   W3System, W3Components,
-  UScalingInfo, UPlayerData, UGameVariables, UGameItems, UShop, UShopData, USpawner;
+  USpawner, UGameVariables, UGameItems, UPlayerData, UShop, UShopData, UScalingInfo;
 
 procedure MouseDownHandler(o : TObject; b : TMouseButton; t : TShiftState; x, y : integer);
 procedure MouseUpHandler(o : TObject; b : TMouseButton; t : TShiftState; x, y : integer);

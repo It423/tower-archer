@@ -3,7 +3,6 @@ unit UPlayer;
 interface
 
 uses 
-  W3System,
   UArcher;
 
 type TPlayer = class(TArcher)

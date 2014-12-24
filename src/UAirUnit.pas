@@ -4,7 +4,7 @@ interface
 
 uses
   W3System,
-  UEnemy, UTextures, UGameVariables;
+  UEnemy, UGameVariables, UTextures;
 
 type TAirUnit = class(TEnemy)
   public
