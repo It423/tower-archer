@@ -139,31 +139,10 @@ end;
 
 procedure TArrow.CheckCollisions(enemies : array of TEnemy; prevX, prevY : float);
 var
-  left, right, top, bottom : float; // The path's dimensions
   pathRect : TRectF; // The rectangle of which the arrow has moved
 begin
-  // Assign the dimensions
-  left := prevX;
-  top := prevY;
-  right := MaxX();
-  bottom := MaxY();
-
-  // Adjust the x sides if left is on right
-  if prevX > MaxX() then
-    begin
-      left := MaxX();
-      right := prevX;
-    end;
-
-  // Adjust the y sides if left is on right
-  if prevY > MaxY() then
-    begin
-      top := MaxY();
-      bottom := prevY;
-    end;
-
   // Create the path rect
-  pathRect := TRectF.Create(left, top, right, bottom);
+  pathRect := TRectF.Create(prevX, prevY, MaxX(), MaxY());
 
   // Check over each enemy
   for var i := 0 to High(enemies) do
