@@ -129,10 +129,10 @@ var
   moneyVal : integer;
 begin
   // Get the y change
-  yChange := RandomInt(GAMEHEIGHT div 3);
+  yChange := RandomInt(GAMEHEIGHT div 4);
 
   // Generate a starting y position from the y change
-  y := RandomInt(GAMEHEIGHT - (2 * yChange)) + yChange;
+  y := RandomInt(GAMEHEIGHT - yChange * 2 - AirUnitTexture.Handle.height * 2) + yChange;
 
   // Get speed and make health indirectly proportionate to the speed
   speed := RandomInt(3500) / 1000; // Max speed is 3.5
