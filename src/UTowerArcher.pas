@@ -63,7 +63,7 @@ begin
   // Initialize the shop
   Shop := TShop.Create();
 
-  // Add the mouse input handlers
+  // Add the mouse and touch input handlers
   GameView.OnMouseDown := MouseDownHandler;
   GameView.OnMouseUp := MouseUpHandler;
   GameView.OnMouseMove := MouseMoveHandler;
