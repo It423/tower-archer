@@ -19,9 +19,10 @@ type TArrow = class(TObject)
     function MinY() : float;
     function GetRect() : TRectF;
     procedure CheckCollisions(enemies : array of TEnemy; prevX, prevY : float);
-
   private
     function CheckCollision(enemy : TEnemy; prevX, prevY : float) : boolean; overload;
+    function RectsIntersect(rect1, rect2 : TRectF) : boolean;
+    function SidesOverlap(sides1, sides2 : array [0 .. 1] of float) : boolean;
 end;
 
 implementation
@@ -138,11 +139,31 @@ end;
 
 procedure TArrow.CheckCollisions(enemies : array of TEnemy; prevX, prevY : float);
 var
+  left, right, top, bottom : float; // The path's dimensions
   pathRect : TRectF; // The rectangle of which the arrow has moved
-  intersection : TRectF; // The intersection between objects
 begin
-  // Get the path rectangle
-  pathRect := TRectF.Create(prevX, prevY, MaxX(), MaxY());
+  // Assign the dimensions
+  left := prevX;
+  top := prevY;
+  right := MaxX();
+  bottom := MaxY();
+
+  // Adjust the x sides if left is on right
+  if prevX > MaxX() then
+    begin
+      left := MaxX();
+      right := prevX;
+    end;
+
+  // Adjust the y sides if left is on right
+  if prevY > MaxY() then
+    begin
+      top := MaxY();
+      bottom := prevY;
+    end;
+
+  // Create the path rect
+  pathRect := TRectF.Create(left, top, right, bottom);
 
   // Check over each enemy
   for var i := 0 to High(enemies) do
@@ -151,7 +172,7 @@ begin
       if enemies[i].Health > 0 then
         begin
           // If the enemy was in the flight path of the arrow perform more detailed analysis
-          if pathRect.Intersect(enemies[i].GetRect(), intersection) then
+          if RectsIntersect(pathRect, enemies[i].GetRect()) then
             begin
               if CheckCollision(enemies[i], prevX, prevY) then
                 begin
@@ -179,7 +200,6 @@ var
   arrowsInDistance : integer;
   xChangePerLoop, yChangePerLoop : float;
   testArrow : TArrow;
-  intersection : TRectF; // The intersection between objects
 begin
   // Get the distance the arrow has traveled
   distance := Ceil(Sqrt(Sqr(MaxX() - prevX) + Sqr(MaxY - prevY)));
@@ -198,7 +218,7 @@ begin
   for var i := 0 to arrowsInDistance do
     begin
       // Test to see if it has collided
-      if testArrow.GetRect().Intersect(enemy.GetRect(), intersection) then
+      if RectsIntersect(testArrow.GetRect(), enemy.GetRect()) then
         begin
           exit(true);
         end
@@ -212,6 +232,36 @@ begin
 
   // If the arrow did not in fact hit return false
   exit(false);
+end;
+
+function TArrow.RectsIntersect(rect1, rect2 : TRectF) : boolean;
+var
+  xSides1, xSides2, ySides1, ySides2 : array [0 .. 1] of float;
+begin
+  // Get rect1's sides
+  xSides1 := [rect1.Left, rect1.Right];
+  ySides1 := [rect1.Top, rect1.Bottom];
+
+  // Get rect2's sides
+  xSides2 := [rect2.Left, rect2.Right];
+  ySides2 := [rect2.Top, rect2.Bottom];
+
+  // Return if the x sides and the y sides both overlap
+  exit(SidesOverlap(xSides1, xSides2) and SidesOverlap(ySides1, ySides2));
+end;
+
+function TArrow.SidesOverlap(sides1, sides2 : array [0 .. 1] of float) : boolean;
+var
+  leftDoesntOverlap, rightDoesntOverlap : boolean;
+begin
+  // Work out if the left doesn't overlap
+  leftDoesntOverlap := (sides2[0] < sides1[0]) and (sides2[1] < sides1[0]);
+
+  // Work out if the left doesn't overlap
+  rightDoesntOverlap := (sides2[0] > sides1[1]) and (sides2[1] > sides1[1]);
+
+  // Return if the sides did overlap
+  exit(not (leftDoesntOverlap or rightDoesntOverlap));
 end;
 
 end.
