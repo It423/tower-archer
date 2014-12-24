@@ -13,7 +13,6 @@ const
   PIXELTOPOWERRATIO = 12;
 
 var
-  ScreenWidth, ScreenHeight : integer;
   Scale : float;
 
 implementation
@@ -22,10 +21,6 @@ procedure ScaleCanvas(newScreenWidth, newScreenHeight : integer; canvas : TW3Can
 var
   gameLength, gameDepth : float;
 begin
-  // Update screen width and height
-  ScreenWidth := newScreenWidth;
-  ScreenHeight := newScreenHeight;
-
   // Put canvas back to normal scale
   if Scale <> 0 then
     begin
