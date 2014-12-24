@@ -29,7 +29,7 @@ procedure ClearScreen(canvas : TW3Canvas);
 begin
   // Clear background
   canvas.FillStyle := "rgb(255, 255, 255)";
-  canvas.FillRectF(0, 0, MAX_INT, MAX_INT);
+  canvas.FillRectF(0, 0, GAMEWIDTH, GAMEHEIGHT);
 
   // Draw border
   canvas.StrokeStyle := "rgb(0, 0, 0)";
@@ -190,7 +190,7 @@ end;
 
 procedure DrawMouseDragLine(player : TPlayer; canvas : TW3Canvas);
 begin
-  if MouseDown and player.CanShoot and not Paused then
+  if MouseDown and not Paused then
     begin
       canvas.StrokeStyle := "rgba(0, 0, 0, 0.5)";
       canvas.LineWidth := 0.3;
@@ -219,7 +219,9 @@ begin
     end;
 
   // Draw a circle around the mouse
+  canvas.BeginPath();
   canvas.Ellipse(CurrentMouseX - 7, CurrentMouseY - 7, CurrentMouseX + 7, CurrentMouseY + 7);
+  canvas.ClosePath();
   canvas.Fill();
 
   // Draw a message saying "can/can't shoot" for the colour blind
@@ -295,8 +297,8 @@ procedure ClearEdge(canvas : TW3Canvas);
 begin
   // Clear around the edge of the border
   canvas.FillStyle := "rgb(255, 255, 255)";
-  canvas.FillRectF(GAMEWIDTH + 2, 0, MAX_INT, MAX_INT);
-  canvas.FillRectF(0, GAMEHEIGHT + 2, MAX_INT, MAX_INT);
+  canvas.FillRectF(GAMEWIDTH + 2, 0, GAMEWIDTH * (1 / Scale) - GAMEWIDTH, GAMEHEIGHT);
+  canvas.FillRectF(0, GAMEHEIGHT + 2, GAMEWIDTH * (1 / Scale), GAMEWIDTH * (1 / Scale) - GAMEHEIGHT);
 end;
 
 procedure RotateCanvas(angle, xChange, yChange : float; canvas : TW3Canvas);
