@@ -39,8 +39,8 @@ end;
 procedure TArcher.UpdateInformation(origX, origY, currX, currY : float);
 begin
     // Work out the x and y velocitys
-    XVol := (origX - currX) / (PIXELTOPOWERRATIO);
-    YVol := (origY - currY) / (PIXELTOPOWERRATIO);
+    XVol := (origX - currX) / (PIXELTOPOWERRATIO * (1 / Scale));
+    YVol := (origY - currY) / (PIXELTOPOWERRATIO * (1 / Scale));
 end;
 
 procedure TArcher.Fire();

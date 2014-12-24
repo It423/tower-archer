@@ -4,7 +4,7 @@ interface
 
 uses 
   W3System, W3Components,
-  UPlayerData, UGameVariables, UGameItems, UShop, UShopData, USpawner;
+  UScalingInfo, UPlayerData, UGameVariables, UGameItems, UShop, UShopData, USpawner;
 
 procedure MouseDownHandler(o : TObject; b : TMouseButton; t : TShiftState; x, y : integer);
 procedure MouseUpHandler(o : TObject; b : TMouseButton; t : TShiftState; x, y : integer);
@@ -19,6 +19,10 @@ implementation
 
 procedure MouseDownHandler(o : TObject; b : TMouseButton; t : TShiftState; x, y : integer);
 begin
+  // Make the x and y values correct due to scaling
+  x := Round(x * (1 / Scale));
+  y := Round(y * (1 / Scale));
+
   // Only make the mouse down if the left mouse button is pressed
   if (b = TMouseButton.mbLeft) and (Lives > 0) then
     begin
@@ -30,6 +34,10 @@ end;
 
 procedure MouseUpHandler(o : TObject; b : TMouseButton; t : TShiftState; x, y : integer);
 begin
+  // Make the x and y values correct due to scaling
+  x := Round(x * (1 / Scale));
+  y := Round(y * (1 / Scale));
+
   // Only check the restart button if the player has lost
   if Lives <= 0 then
     begin
@@ -79,6 +87,11 @@ end;
 
 procedure MouseMoveHandler(o : TObject; ss : TShiftState; x, y : integer);
 begin
+  // Make the x and y values correct due to scaling
+  x := Round(x * (1 / Scale));
+  y := Round(y * (1 / Scale));
+
+  // Store mouse position
   CurrentMouseX := x;
   CurrentMouseY := y;
 

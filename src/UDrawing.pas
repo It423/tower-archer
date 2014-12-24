@@ -20,6 +20,7 @@ procedure DrawCanShoot(player : TPlayer; canvas : TW3Canvas);
 procedure DrawHUD(canvas : TW3Canvas);
 procedure DrawPauseScreen(canvas : TW3Canvas);
 procedure DrawGameOver(canvas : TW3Canvas);
+procedure ClearEdge(canvas : TW3Canvas);
 procedure RotateCanvas(angle, xChange, yChange : float; canvas : TW3Canvas);
 
 implementation
@@ -28,7 +29,7 @@ procedure ClearScreen(canvas : TW3Canvas);
 begin
   // Clear background
   canvas.FillStyle := "rgb(255, 255, 255)";
-  canvas.FillRectF(0, 0, ScreenWidth, ScreenHeight);
+  canvas.FillRectF(0, 0, MAX_INT, MAX_INT);
 
   // Draw border
   canvas.StrokeStyle := "rgb(0, 0, 0)";
@@ -234,27 +235,39 @@ begin
   canvas.FillTextF("Welcome to Tower archer!", xPos + (GAMEWIDTH - xPos - sidePadding) / 2, 50, GAMEWIDTH - xPos - sidePadding);
 
   // Draw instructions
-  canvas.Font := "17pt verdana";
+  canvas.Font := "16pt verdana";
   canvas.TextAlign := "left";
   canvas.TextBaseLine := "top";
   canvas.FillTextF("How to play:", xPos, 90, GAMEWIDTH - xPos);
-  canvas.FillTextF("When the arrow is green, you can click.", xPos + 40, 130, GAMEWIDTH - xPos - 40 - sidePadding);
-  canvas.FillTextF("Hold down left mouse button and drag back.", xPos + 40, 170, GAMEWIDTH - xPos - 40 - sidePadding);
-  canvas.FillTextF("Release left click to fire, or use right or middle mouse click to cancel the shot.", xPos + 40, 210, GAMEWIDTH - xPos - 40 - sidePadding);
-  canvas.FillTextF("Shoot the enemies from your tower.", xPos + 40, 250, GAMEWIDTH - xPos - 40 - sidePadding);
-  canvas.FillTextF("Let an enemy past your tower and you lose a live. You have 10 lives.", xPos + 40, 290, GAMEWIDTH - xPos - 40 - sidePadding);
-  canvas.FillTextF("Make sure you go to the shop every now and then to get upgrades.", xPos + 40, 330, GAMEWIDTH - xPos - 40 - sidePadding);
+  canvas.FillTextF("To aim, hold down the left mouse button and drag backwards.", xPos + 40, 130, GAMEWIDTH - xPos - 40 - sidePadding);
+  canvas.FillTextF("Release the left mouse button to then fire your shot.", xPos + 40, 170, GAMEWIDTH - xPos - 40 - sidePadding);
+  canvas.FillTextF("You can cancel the shot by clicking any other mouse button.", xPos + 40, 210, GAMEWIDTH - xPos - 40 - sidePadding);
+  canvas.FillTextF("You may only shoot when the arrow is green.", xPos + 40, 250, GAMEWIDTH - xPos - 40 - sidePadding);
+  canvas.FillTextF("The aim of the game is to stop enemies entering your castle. Once 10 get in, you lose.", xPos + 40, 290, GAMEWIDTH - xPos - 40 - sidePadding);
+  canvas.FillTextF("Don't forget to check the shop regularly for upgrades!", xPos + 40, 330, GAMEWIDTH - xPos - 40 - sidePadding);
 end;
 
 procedure DrawHUD(canvas : TW3Canvas);
+var
+  xPos : integer;
 begin
+  // Determin the position of the information
+  if GAMEWIDTH > ScreenWidth then
+    begin
+      xPos := ScreenWidth
+    end
+  else
+    begin
+      xPos := GAMEWIDTH;
+    end;
+
   canvas.Font := "15pt verdana";
   canvas.FillStyle := "rgb(220, 20, 50)";
   canvas.TextAlign := "right";
   canvas.TextBaseLine := "top";
-  canvas.FillTextF("Lives: " + IntToStr(Lives), GAMEWIDTH - 20, 10, MAX_INT);
+  canvas.FillTextF("Lives: " + IntToStr(Lives), xPos - 20, 10, MAX_INT);
   canvas.FillStyle := "rgb(220, 220, 20)";
-  canvas.FillTextF("Gold: $" + IntToStr(Money), GAMEWIDTH - 20, 40, MAX_INT);
+  canvas.FillTextF("Gold: $" + IntToStr(Money), xPos - 20, 40, MAX_INT);
 end;
 
 procedure DrawGameOver(canvas : TW3Canvas);
@@ -279,6 +292,14 @@ begin
   canvas.TextAlign := "center";
   canvas.TextBaseLine := "middle";
   canvas.FillTextF("Restart", RestartButtonRect().CenterPoint().X, RestartButtonRect().CenterPoint().Y, RestartButtonRect().Width() - 10);
+end;
+
+procedure ClearEdge(canvas : TW3Canvas);
+begin
+  // Clear around the edge of the border
+  canvas.FillStyle := "rgb(255, 255, 255)";
+  canvas.FillRectF(GAMEWIDTH + 2, 0, MAX_INT, MAX_INT);
+  canvas.FillRectF(0, GAMEHEIGHT + 2, MAX_INT, MAX_INT);
 end;
 
 procedure RotateCanvas(angle, xChange, yChange : float; canvas : TW3Canvas);
