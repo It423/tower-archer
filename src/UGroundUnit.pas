@@ -8,9 +8,7 @@ uses
 
 type TGroundUnit = class(TEnemy)
   public
-    Speed : float;
     constructor Create(newX, newY, newSpeed : float; newHealth, newMoneyValue : integer);
-    procedure Move(); override;
     function GetRect() : TRectF; override;
 end;
 
@@ -25,12 +23,6 @@ begin
   MaxHealth := newHealth;
   MoneyValue := newMoneyValue;
   ApplyToEventHadler();
-end;
-
-procedure TGroundUnit.Move();
-begin
-  inherited;
-  X -= Speed;
 end;
 
 function TGroundUnit.GetRect() : TRectF;

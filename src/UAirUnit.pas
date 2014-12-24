@@ -8,7 +8,7 @@ uses
 
 type TAirUnit = class(TEnemy)
   public
-    Speed, MaxSpeed : float;
+    MaxSpeed : float;
     YSpeed, YChanged, MaxYChange : float;
     MovingUp : boolean;
     constructor Create(newX, newY, newSpeed, newYChange : float; newHealth, newMoneyValue : integer);
@@ -21,7 +21,7 @@ implementation
 constructor TAirUnit.Create(newX, newY, newSpeed, newYChange : float; newHealth, newMoneyValue : integer);
 begin
   X := newX;
-  Y := newY - newYChange / 2; // Makes the middle of bobbing at the y specified
+  Y := newY + newYChange / 2; // Makes the middle of bobbing at the y specified
   Speed := newSpeed;
   MaxSpeed := newSpeed;
   MaxHealth := newHealth;
@@ -36,8 +36,7 @@ end;
 
 procedure TAirUnit.Move();
 begin
-  inherited;
-  X -= Speed;
+  inherited();
   Y += YSpeed;
 
   // Increase the speed if it is not moving at its max speed

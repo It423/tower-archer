@@ -10,7 +10,7 @@ type ECrossedTowerEvent = procedure();
 
 type TEnemy = class(TObject)
   public
-    X, Y : float;
+    X, Y, Speed : float;
     Health, MaxHealth, MoneyValue : integer;
     Frozen, Dead : boolean;
     procedure Move(); virtual;
@@ -36,17 +36,23 @@ implementation
 
 procedure TEnemy.Move();
 begin
+  // Move the enemy closer to the tower
+  X -= Speed;
+
+  // After the enemy has crossed the tower
   if X < 0 then
     begin
+      // Take a life if it has not already done so
       if not HasCrossedTower then
         begin
           CrossedTower();
         end
       else
         begin
+          // Kill the enemy if it's gone far beyond the end of the screen
           if X < -300 then
             begin
-              Health := 0; // Kill the enemy if it's gone far beyond the end of the screen
+              Health := 0;
             end;
         end;
     end;
