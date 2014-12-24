@@ -85,7 +85,7 @@ procedure TShop.CheckClicked(xPos, yPos : integer);
 begin
   for var i := 0 to High(Items) do
     begin
-      // Perchase the item if it was clicked
+      // Purchase the item if it was clicked
       if Items[i].IsInButton(xPos, yPos) then
         begin
           Items[i].Purchase();

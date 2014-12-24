@@ -24,7 +24,7 @@ var
   Lives : integer;
   Money : integer;
 
-function FloatMod(a, b : float) : integer; // A function to perform moding operations on floats
+function FloatMod(a, b : float) : integer; // A function to perform modulus operations on floats
 function PauseButtonRect() : TRect;
 function RestartButtonRect() : TRect;
 

@@ -33,7 +33,7 @@ begin
       // Work out the angle
       var ang := ArcTan2(yVol, xVol);
 
-      // Change the velocites to match the angle at max power
+      // Change the velocities to match the angle at max power
       xVol := Cos(ang) * MaxPower;
       yVol := Sin(ang) * MaxPower;
     end;
@@ -134,7 +134,7 @@ begin
   // Generate a starting y position from the y change
   y := RandomInt(GAMEHEIGHT - (2 * yChange)) + yChange;
 
-  // Get speed and make health indirectly propotinate to the speed
+  // Get speed and make health indirectly proportionate to the speed
   speed := RandomInt(3500) / 1000; // Max speed is 3.5
   health := Round((Difficulty - yChange) / speed);
 

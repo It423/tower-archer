@@ -22,7 +22,7 @@ type TEnemy = class(TObject)
   protected
     Timer : TW3EventRepeater; // Timer for being frozen
     DelayHolder : integer;
-    HasCrossedTower : boolean; // Wether the enemy has taken a life from the player by crossing the tower
+    HasCrossedTower : boolean; // Whether the enemy has taken a life from the player by crossing the tower
     CrossedTowerEvent : ECrossedTowerEvent; // The event
     property OnPurchase : ECrossedTowerEvent read CrossedTowerEvent write CrossedTowerEvent; // The event handler
     procedure CrossedTower();
@@ -46,7 +46,7 @@ begin
         begin
           if X < -300 then
             begin
-              Health := 0; // Kill the enemy if its gone far beyond the end of the screen
+              Health := 0; // Kill the enemy if it's gone far beyond the end of the screen
             end;
         end;
     end;
@@ -54,7 +54,7 @@ end;
 
 procedure TEnemy.Hit(damage : integer; xArrowSpeed, yArrowSpeed : float);
 begin
-  // Times the speed of the arrow by the damage multiplyer
+  // Times the speed of the arrow by the damage multiplier
   var damageWithSpeed := damage * Sqrt(Sqr(xArrowSpeed) + Sqr(yArrowSpeed));
 
   // Take the damage from the health
@@ -83,7 +83,7 @@ end;
 
 procedure TEnemy.PauseTimer();
 begin
-  // Try block to avoid issue with timer not being initilized before
+  // Try block to avoid issue with timer not being initialized before
   try
     // Store the delay then destroy the timer
     DelayHolder := Timer.Delay;

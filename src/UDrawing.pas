@@ -106,7 +106,7 @@ begin
   canvas.ClosePath();
   canvas.Stroke();
 
-  // Unrotate the canvas
+  // Un-rotate the canvas
   RotateCanvas(-archer.Angle(), archer.X + ArcherTexture.Handle.width / 2, archer.Y + ArcherTexture.Handle.height / 3, canvas);
 end;
 
@@ -154,7 +154,7 @@ begin
       // Draw the ground unit if it is one
       canvas.DrawImageF(GroundUnitTexture.Handle, enemy.X, enemy.Y);
 
-      // Draw it frozen if its meant to be
+      // Draw it frozen if it's meant to be
       if enemy.Frozen then
         begin
           canvas.DrawImageF(FrozenGroundUnitTexture.Handle, enemy.X, enemy.Y);
@@ -168,7 +168,7 @@ begin
       // Draw the air unit if it is one
       canvas.DrawImageF(AirUnitTexture.Handle, enemy.X, enemy.Y);
 
-      // Draw it frozen if its meant to be
+      // Draw it frozen if it's meant to be
       if enemy.Frozen then
         begin
           canvas.DrawImageF(FrozenAirUnitTexture.Handle, enemy.X, enemy.Y);
@@ -248,26 +248,14 @@ begin
 end;
 
 procedure DrawHUD(canvas : TW3Canvas);
-var
-  xPos : integer;
 begin
-  // Determin the position of the information
-  if GAMEWIDTH > ScreenWidth then
-    begin
-      xPos := ScreenWidth
-    end
-  else
-    begin
-      xPos := GAMEWIDTH;
-    end;
-
   canvas.Font := "15pt verdana";
   canvas.FillStyle := "rgb(220, 20, 50)";
   canvas.TextAlign := "right";
   canvas.TextBaseLine := "top";
-  canvas.FillTextF("Lives: " + IntToStr(Lives), xPos - 20, 10, MAX_INT);
+  canvas.FillTextF("Lives: " + IntToStr(Lives), GAMEWIDTH - 20, 10, MAX_INT);
   canvas.FillStyle := "rgb(220, 220, 20)";
-  canvas.FillTextF("Gold: $" + IntToStr(Money), xPos - 20, 40, MAX_INT);
+  canvas.FillTextF("Gold: $" + IntToStr(Money), GAMEWIDTH - 20, 40, MAX_INT);
 end;
 
 procedure DrawGameOver(canvas : TW3Canvas);

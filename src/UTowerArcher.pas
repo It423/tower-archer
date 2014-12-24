@@ -71,7 +71,7 @@ begin
   // Initialize refresh interval
   GameView.Delay := 20;
 
-  // Start the redraw-cycle with framecounter inactive
+  // Start the redraw-cycle with frame counter disabled
   GameView.StartSession(True);
 end;
 
@@ -105,7 +105,7 @@ begin
           UpdateArrows();
           UpdateEnemies();
 
-          // Draw the mouse to origin line if prepearing to fire, not paused and not dead
+          // Draw the mouse to origin line if preparing to fire, not paused and not dead
           if Lives > 0 then
             begin
               DrawMouseDragLine(Player, Canvas);
@@ -117,7 +117,7 @@ begin
           DrawPauseScreen(Canvas);
         end;
 
-      // Draw a cirlce over the mouse showing if the player can shoot
+      // Draw a circle over the mouse showing if the player can shoot
       DrawCanShoot(Player, Canvas);
 
       // Draw the information for the player
@@ -200,7 +200,7 @@ begin
     begin
       if not Enemies[i].Dead then
         begin
-          // Only move the enemy if its not frozen
+          // Only move the enemy if it's not frozen
           if not Enemies[i].Frozen then
             begin
               Enemies[i].Move();

@@ -27,7 +27,7 @@ begin
     end
   else
     begin
-      // Get the y change compaired to the last archer
+      // Get the y change compared to the last archer
       var yChange := 20;
       if Length(Player.ExtraArchers) mod 2 = 0 then
         begin

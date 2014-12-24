@@ -66,7 +66,7 @@ begin
           PurchaseEvent(); // Run the event handler
           PurchaseMessage := "Item purchased!"; // Tell the player the item has been brought
 
-          // Increase the price by the price multiplyer
+          // Increase the price by the price multiplier
           Price := Round(Price * PriceAfterPurchaseMultiplyer);
         end;
     end
@@ -122,7 +122,7 @@ begin
   canvas.TextBaseLine := "middle";
   canvas.FillTextF("Purchase", X + SHOP_WIDTH - 38, Y + 3 + Thumbnail.Handle.height / 2, 60);
 
-  // Put a line throught the item if no more can be brought
+  // Put a line through the item if no more can be brought
   if (not MaxUnitsSold <= -1) and (UnitsSold >= MaxUnitsSold) then
     begin
       canvas.StrokeStyle := "rgb(0, 0, 0)";

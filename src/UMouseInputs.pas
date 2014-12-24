@@ -105,7 +105,7 @@ procedure ChangeTimers(pause : boolean);
 begin
   if pause then
     begin
-      // Resume timers if being unpaused
+      // Resume timers if being un-paused
       Player.ResumeTimer();
       StartEnemySpawners();
       for var i := 0 to High(Enemies) do

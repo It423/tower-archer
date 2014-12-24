@@ -44,7 +44,7 @@ begin
   // Add gravity affect
   YVol += GRAVITY;
 
-  // Make the bullet inactive if out off screen
+  // Make the bullet inactive if off screen
   if (MaxX() < 0) or (MinX() > GAMEWIDTH) or (MinY() > GAMEHEIGHT) then
     begin
       Active := false;
@@ -69,7 +69,7 @@ end;
 
 function TArrow.MaxX() : float;
 begin
-  // Get the current angle (stops us running the same method over and over angin
+  // Get the current angle (stops us running the same method over and over again)
   var currAng := FloatMod(GetAngle(true), 360);
 
   // Work out the max x value
@@ -85,7 +85,7 @@ end;
 
 function TArrow.MinX() : float;
 begin
-  // Get the current angle (stops us running the same method over and over angin
+  // Get the current angle (stops us running the same method over and over again)
   var currAng := FloatMod(GetAngle(true), 360);
 
   // Work out the min x value
@@ -101,7 +101,7 @@ end;
 
 function TArrow.MaxY() : float;
 begin
-  // Get the current angle (stops us running the same method over and over angin
+  // Get the current angle (stops us running the same method over and over again)
   var currAng := FloatMod(GetAngle(true), 360);
 
   // Work out the max y value
@@ -117,7 +117,7 @@ end;
 
 function TArrow.MinY() : float;
 begin
-  // Get the current angle (stops us running the same method over and over angin
+  // Get the current angle (stops us running the same method over and over again)
   var currAng := FloatMod(GetAngle(true), 360);
 
   // Work out the min y value
