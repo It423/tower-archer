@@ -71,13 +71,7 @@ end;
 
 function TArcher.Angle() : float;
 begin
-  // Return nothing if the archer cannot shoot
-  if not CanShoot then
-    begin
-      exit(0);
-    end;
-
-  // Otherwise return the angle
+  // Return the angle
   exit(ArcTan2(YVol, XVol));
 end;
 
