@@ -240,11 +240,10 @@ begin
   canvas.TextBaseLine := "top";
   canvas.FillTextF("How to play:", xPos, 90, GAMEWIDTH - xPos);
   canvas.FillTextF("To aim, hold down the left mouse button and drag backwards.", xPos + 40, 130, GAMEWIDTH - xPos - 40 - sidePadding);
-  canvas.FillTextF("Release the left mouse button to then fire your shot.", xPos + 40, 170, GAMEWIDTH - xPos - 40 - sidePadding);
-  canvas.FillTextF("You can cancel the shot by clicking any other mouse button.", xPos + 40, 210, GAMEWIDTH - xPos - 40 - sidePadding);
-  canvas.FillTextF("You may only shoot when the arrow is green.", xPos + 40, 250, GAMEWIDTH - xPos - 40 - sidePadding);
-  canvas.FillTextF("The aim of the game is to stop enemies entering your castle. Once 10 get in, you lose.", xPos + 40, 290, GAMEWIDTH - xPos - 40 - sidePadding);
-  canvas.FillTextF("Don't forget to check the shop regularly for upgrades!", xPos + 40, 330, GAMEWIDTH - xPos - 40 - sidePadding);
+  canvas.FillTextF("Release the left mouse button to fire.", xPos + 40, 170, GAMEWIDTH - xPos - 40 - sidePadding);
+  canvas.FillTextF("You can cancel the shot by right-clicking.", xPos + 40, 210, GAMEWIDTH - xPos - 40 - sidePadding);
+  canvas.FillTextF("If 10 enemies reach your castle, you lose!", xPos + 40, 250, GAMEWIDTH - xPos - 40 - sidePadding);
+  canvas.FillTextF("Don't forget to check the shop regularly for upgrades!", xPos + 40, 290, GAMEWIDTH - xPos - 40 - sidePadding);
 end;
 
 procedure DrawHUD(canvas : TW3Canvas);
