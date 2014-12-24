@@ -22,10 +22,7 @@ var
   gameLength, gameDepth : float;
 begin
   // Put canvas back to normal scale
-  if Scale <> 0 then
-    begin
-      canvas.Scale(1 / Scale, 1 / Scale);
-    end;
+  canvas.Scale(1 / Scale, 1 / Scale);
 
   // Get the new x and y lengths
   gameLength := newScreenWidth;
