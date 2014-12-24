@@ -21,6 +21,7 @@ procedure EvaluateLoadedContent();
 var
   ContentLoaded : boolean;
   Loaded : array of boolean;
+  FirstLoop : boolean;
 
 implementation
 
@@ -82,11 +83,10 @@ end;
 
 procedure TApplication.PaintView(Canvas: TW3Canvas);
 begin
-  // Update screen width and height
-  ScreenWidth := GameView.Width;
-  ScreenHeight := GameView.Height;
+  // Scale the canvas
+  ScaleCanvas(GameView.Width, GameView.Height, Canvas);
 
-  // Scale the canvas and clear the screen
+  // Canvas and clear the screen
   ClearScreen(Canvas);
 
   if ContentLoaded then
@@ -135,6 +135,9 @@ begin
 
       DrawLoadingScreen(Canvas);
     end;
+
+  // Clear the edge around the border
+  ClearEdge(Canvas);
 
   // If the game is over and the restart button has been clicked then restart the game
   if (Lives <= 0) and (RestartClicked) then
