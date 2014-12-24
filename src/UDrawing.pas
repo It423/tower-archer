@@ -203,20 +203,30 @@ begin
 end;
 
 procedure DrawCanShoot(player : TPlayer; canvas : TW3Canvas);
+var
+  text : string; // Text to go in message for the colour blind
 begin
   // Get red (can't shoot) or green (can shoot) fillers
   if player.CanShoot then
     begin
       canvas.FillStyle := "rgba(0, 200, 0, 0.5)";
+      text := "Can shoot";
     end
   else
     begin
       canvas.FillStyle := "rgba(200, 0, 0, 0.5)";
+      text := "Can't shoot";
     end;
 
   // Draw a circle around the mouse
   canvas.Ellipse(CurrentMouseX - 7, CurrentMouseY - 7, CurrentMouseX + 7, CurrentMouseY + 7);
   canvas.Fill();
+
+  // Draw a message saying "can/can't shoot" for the colour blind
+  canvas.Font := "10pt verdana";
+  canvas.TextAlign := "center";
+  canvas.TextBaseLine := "bottom";
+  canvas.FillTextF(text, CurrentMouseX, CurrentMouseY - 12, MAX_INT);
 end;
 
 procedure DrawPauseScreen(canvas : TW3Canvas);
@@ -248,8 +258,8 @@ end;
 
 procedure DrawHUD(canvas : TW3Canvas);
 begin
-  canvas.Font := "15pt verdana";
   canvas.FillStyle := "rgb(220, 20, 50)";
+  canvas.Font := "15pt verdana";
   canvas.TextAlign := "right";
   canvas.TextBaseLine := "top";
   canvas.FillTextF("Lives: " + IntToStr(Lives), GAMEWIDTH - 20, 10, MAX_INT);
