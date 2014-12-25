@@ -5,7 +5,7 @@ interface
 uses 
   W3Graphics;
 
-procedure ScaleCanvas(newScreenWidth, newScreenHeight : integer; canvas : TW3Canvas);
+procedure ScaleCanvas(newScreenWidth, newScreenHeight : integer);
 
 const
   GAMEWIDTH = 1366;
@@ -17,13 +17,10 @@ var
 
 implementation
 
-procedure ScaleCanvas(newScreenWidth, newScreenHeight : integer; canvas : TW3Canvas);
+procedure ScaleCanvas(newScreenWidth, newScreenHeight : integer);
 var
   gameLength, gameDepth : float;
 begin
-  // Put canvas back to normal scale
-  canvas.Scale(1 / Scale, 1 / Scale);
-
   // Get the new x and y lengths
   gameLength := newScreenWidth;
   gameDepth := (gameLength / 16) * 7; // Using 16:7 aspect ratio
@@ -37,9 +34,6 @@ begin
 
   // Get the new scale
   Scale := gameLength / GAMEWIDTH;
-
-  // Scale the canvas
-  canvas.Scale(Scale, Scale);
 end;
 
 

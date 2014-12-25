@@ -85,7 +85,8 @@ end;
 procedure TApplication.PaintView(Canvas: TW3Canvas);
 begin
   // Scale the canvas
-  ScaleCanvas(GameView.Width, GameView.Height, Canvas);
+  ScaleCanvas(GameView.Width, GameView.Height);
+  Canvas.Scale(Scale, Scale);
 
   // Canvas and clear the screen
   ClearScreen(Canvas);
@@ -145,6 +146,9 @@ begin
     begin
       InitializeVariables();
     end;
+
+  // Scale the canvas back to normal
+  Canvas.Scale(1 / Scale, 1 / Scale);
 end;
 
 procedure InitializeVariables();
