@@ -229,6 +229,9 @@ begin
   canvas.TextAlign := "center";
   canvas.TextBaseLine := "bottom";
   canvas.FillTextF(text, CurrentMouseX, CurrentMouseY - 12, MAX_INT);
+
+  // Also draw this message again above the player for those on a mobile as they can't see through their thumbs
+  canvas.FillTextF(text, player.X + ArcherTexture.Handle.width / 2, player.Y - 12, MAX_INT)
 end;
 
 procedure DrawPauseScreen(canvas : TW3Canvas);
@@ -296,9 +299,9 @@ end;
 procedure ClearEdge(canvas : TW3Canvas);
 begin
   // Clear around the edge of the border
-  canvas.FillStyle := "rgb(255, 255, 255)";
-  canvas.FillRectF(GAMEWIDTH + 2, 0, MAX_INT, MAX_INT);
-  canvas.FillRectF(0, GAMEHEIGHT + 2, MAX_INT, MAX_INT);
+  canvas.FillStyle := "rgb(0, 0, 0)";
+  canvas.FillRectF(GAMEWIDTH + 2, 0, AirUnitTexture.Handle.width, GAMEHEIGHT);
+  canvas.FillRectF(0, GAMEHEIGHT + 2, GAMEWIDTH + AirUnitTexture.Handle.width, AirUnitTexture.Handle.height);
 end;
 
 procedure RotateCanvas(angle, xChange, yChange : float; canvas : TW3Canvas);
