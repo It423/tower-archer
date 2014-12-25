@@ -3,12 +3,18 @@ unit UMouseInputs;
 interface
 
 uses 
-  W3System, W3Components,
+  W3System, W3Components, W3Touch,
   USpawner, UGameVariables, UGameItems, UPlayerData, UShop, UShopData, UScalingInfo;
 
-procedure MouseDownHandler(o : TObject; b : TMouseButton; t : TShiftState; x, y : integer);
-procedure MouseUpHandler(o : TObject; b : TMouseButton; t : TShiftState; x, y : integer);
-procedure MouseMoveHandler(o : TObject; ss : TShiftState; x, y : integer);
+procedure DownHandler(b : TMouseButton; x, y : integer);
+procedure UpHandler(b : TMouseButton; x, y : integer);
+procedure MoveHandler(x, y : integer);
+procedure MouseDownHandler(sender : TObject; b : TMouseButton; t : TShiftState; x, y : integer);
+procedure MouseUpHandler(sender : TObject; b : TMouseButton; t : TShiftState; x, y : integer);
+procedure MouseMoveHandler(sender : TObject; ss : TShiftState; x, y : integer);
+procedure TouchDownHandler(sender : TObject; td : TW3TouchData);
+procedure TouchUpHandler(sender : TObject; td : TW3TouchData);
+procedure TouchMoveHandler(sender : TObject; td : TW3TouchData);
 procedure ChangeTimers(pause : boolean);
 
 var
@@ -17,7 +23,7 @@ var
 
 implementation
 
-procedure MouseDownHandler(o : TObject; b : TMouseButton; t : TShiftState; x, y : integer);
+procedure DownHandler(b : TMouseButton; x, y : integer);
 begin
   // Make the x and y values correct due to scaling
   x := Round(x * (1 / Scale));
@@ -29,10 +35,12 @@ begin
       MouseDown := true;
       MouseDownX := x;
       MouseDownY := y;
+      CurrentMouseX := x;
+      CurrentMouseY := y;
     end;
 end;
 
-procedure MouseUpHandler(o : TObject; b : TMouseButton; t : TShiftState; x, y : integer);
+procedure UpHandler(b : TMouseButton; x, y : integer);
 begin
   // Make the x and y values correct due to scaling
   x := Round(x * (1 / Scale));
@@ -85,7 +93,7 @@ begin
   MouseDown := false;
 end;
 
-procedure MouseMoveHandler(o : TObject; ss : TShiftState; x, y : integer);
+procedure MoveHandler(x, y : integer);
 begin
   // Make the x and y values correct due to scaling
   x := Round(x * (1 / Scale));
@@ -99,6 +107,37 @@ begin
     begin
       Player.UpdateInformation(MouseDownX, MouseDownY, CurrentMouseX, CurrentMouseY);
     end;
+end;
+
+procedure MouseDownHandler(sender : TObject; b : TMouseButton; t : TShiftState; x, y : integer);
+begin
+  DownHandler(b, x, y);
+end;
+
+procedure MouseUpHandler(sender : TObject; b : TMouseButton; t : TShiftState; x, y : integer);
+begin
+  UpHandler(b, x, y);
+end;
+
+procedure MouseMoveHandler(sender : TObject; ss : TShiftState; x, y : integer);
+begin
+  MoveHandler(x, y);
+end;
+
+procedure TouchDownHandler(sender : TObject; td : TW3TouchData);
+begin
+  DownHandler(TMouseButton.mbLeft, td.Touches.Touches[0].PageX, td.Touches.Touches[0].PageY);
+end;
+
+procedure TouchUpHandler(sender : TObject; td : TW3TouchData);
+begin
+  // Use previous x and y positions as the Touch has been removed
+  UpHandler(TMouseButton.mbLeft, Round(CurrentMouseX * Scale), Round(CurrentMouseY * Scale));
+end;
+
+procedure TouchMoveHandler(sender : TObject; td : TW3TouchData);
+begin
+  MoveHandler(td.Touches.Touches[0].PageX, td.Touches.Touches[0].PageY);
 end;
 
 procedure ChangeTimers(pause : boolean);

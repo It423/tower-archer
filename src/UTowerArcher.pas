@@ -68,6 +68,9 @@ begin
   GameView.OnMouseDown := MouseDownHandler;
   GameView.OnMouseUp := MouseUpHandler;
   GameView.OnMouseMove := MouseMoveHandler;
+  GameView.OnTouchBegin := TouchDownHandler;
+  GameView.OnTouchEnd := TouchUpHandler;
+  GameView.OnTouchMove := TouchMoveHandler;
 
   // Initialize refresh interval
   GameView.Delay := 20;
