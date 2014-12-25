@@ -157,12 +157,6 @@ function HandleGroundTimer(sender : TObject) : boolean;
 begin
   SpawnGroundUnit();
 
-  // Decrease the delay between spawning
-  if GroundDelay > 4000 then
-    begin
-      GroundDelay -= 50;
-    end;
-
   // Release the timer then restart it
   TW3EventRepeater(sender).Free();
   StartGroundTimer(RandomInt(GroundDelay) + GroundDelay);
@@ -172,12 +166,6 @@ end;
 function HandleAirTimer(sender : TObject) : boolean;
 begin
   SpawnAirUnit();
-
-  // Decrease the delay between spawning
-  if GroundDelay > 6000 then
-    begin
-      GroundDelay -= 50;
-    end;
 
   // Release the timer then restart it
   TW3EventRepeater(sender).Free();
