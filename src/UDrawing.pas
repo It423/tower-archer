@@ -299,9 +299,9 @@ end;
 procedure ClearEdge(canvas : TW3Canvas);
 begin
   // Clear around the edge of the border
-  canvas.FillStyle := "rgb(0, 0, 0)";
-  canvas.FillRectF(GAMEWIDTH + 2, 0, AirUnitTexture.Handle.width, GAMEHEIGHT);
-  canvas.FillRectF(0, GAMEHEIGHT + 2, GAMEWIDTH + AirUnitTexture.Handle.width, AirUnitTexture.Handle.height);
+  canvas.FillStyle := "rgb(255, 255, 255)";
+  canvas.FillRectF(GAMEWIDTH + 2, 0, (GAMEWIDTH * (1 / Scale)) - GAMEWIDTH, GAMEHEIGHT);
+  canvas.FillRectF(0, GAMEHEIGHT + 2, GAMEWIDTH * (1 / Scale), (GAMEHEIGHT * (1 / Scale)) - GAMEHEIGHT);
 end;
 
 procedure RotateCanvas(angle, xChange, yChange : float; canvas : TW3Canvas);
