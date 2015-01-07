@@ -29,7 +29,7 @@ procedure ClearScreen(canvas : TW3Canvas);
 begin
   // Clear background
   canvas.FillStyle := "rgb(255, 255, 255)";
-  canvas.FillRectF(0, 0, GAMEWIDTH, GAMEHEIGHT);
+  canvas.FillRectF(0, 0, MAXINT, MAXINT);
 
   // Draw border
   canvas.StrokeStyle := "rgb(0, 0, 0)";
