@@ -115,15 +115,15 @@ begin
             begin
               DrawMouseDragLine(Player, Canvas);
             end;
+            
+          // Draw a circle over the mouse showing if the player can shoot
+          DrawCanShoot(Player, Canvas);
         end
       else
         begin
           // Draw shop/pause screen if it is presently open
           DrawPauseScreen(Canvas);
         end;
-
-      // Draw a circle over the mouse showing if the player can shoot
-      DrawCanShoot(Player, Canvas);
 
       // Draw the information for the player
       DrawHUD(Canvas);
