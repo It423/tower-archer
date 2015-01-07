@@ -20,7 +20,6 @@ procedure DrawCanShoot(player : TPlayer; canvas : TW3Canvas);
 procedure DrawHUD(canvas : TW3Canvas);
 procedure DrawPauseScreen(canvas : TW3Canvas);
 procedure DrawGameOver(canvas : TW3Canvas);
-procedure ClearEdge(canvas : TW3Canvas);
 procedure RotateCanvas(angle, xChange, yChange : float; canvas : TW3Canvas);
 
 implementation
@@ -29,7 +28,7 @@ procedure ClearScreen(canvas : TW3Canvas);
 begin
   // Clear background
   canvas.FillStyle := "rgb(255, 255, 255)";
-  canvas.FillRectF(0, 0, MAXINT, MAXINT);
+  canvas.FillRectF(0, 0, GAMEWIDTH * 2, GAMEHEIGHT * 2);
 
   // Draw border
   canvas.StrokeStyle := "rgb(0, 0, 0)";
@@ -294,14 +293,6 @@ begin
   canvas.TextAlign := "center";
   canvas.TextBaseLine := "middle";
   canvas.FillTextF("Restart", RestartButtonRect().CenterPoint().X, RestartButtonRect().CenterPoint().Y, RestartButtonRect().Width() - 10);
-end;
-
-procedure ClearEdge(canvas : TW3Canvas);
-begin
-  // Clear around the edge of the border
-  canvas.FillStyle := "rgb(255, 255, 255)";
-  canvas.FillRectF(GAMEWIDTH + 2, 0, (GAMEWIDTH * (1 / Scale)) - GAMEWIDTH, GAMEHEIGHT);
-  canvas.FillRectF(0, GAMEHEIGHT + 2, GAMEWIDTH * (1 / Scale), (GAMEHEIGHT * (1 / Scale)) - GAMEHEIGHT);
 end;
 
 procedure RotateCanvas(angle, xChange, yChange : float; canvas : TW3Canvas);
