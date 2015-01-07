@@ -141,9 +141,6 @@ begin
       DrawLoadingScreen(Canvas);
     end;
 
-  // Clear the edge around the border
-  ClearEdge(Canvas);
-
   // If the game is over and the restart button has been clicked then restart the game
   if (Lives <= 0) and (RestartClicked) then
     begin
@@ -170,14 +167,17 @@ begin
   Money := 0;
 
   // Initialize the spawner variables
-  GroundDelay := 12000;
-  AirDelay := 20000;
+  GroundDelay := 9000;
+  AirDelay := 15000;
   Difficulty := 1000;
 
   // Reset game items and the shop
   Arrows.Clear();
   Enemies.Clear();
   Shop.ResetItems();
+
+  // Spawn a ground unit
+  SpawnGroundUnit();
 
   // Initialize the player
   Player := TPlayer.Create(TowerTexture.Handle.width - 15 - ArcherTexture.Handle.width, GAMEHEIGHT - TowerTexture.Handle.height - ArcherTexture.Handle.height);
