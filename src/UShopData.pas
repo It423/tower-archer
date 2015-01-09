@@ -30,7 +30,7 @@ begin
       var yChange := 20;
       if Length(Player.ExtraArchers) mod 2 = 0 then
         begin
-          // If there are an off amount of archers the next archer is above the previous
+          // If there is an odd amount of archers the next archer is above the previous
           yChange *= -1;
         end;
 
