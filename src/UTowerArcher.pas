@@ -144,6 +144,7 @@ begin
   // If the game is over and the restart button has been clicked then restart the game
   if (Lives <= 0) and (RestartClicked) then
     begin
+      PauseEnemySpawners();
       InitializeVariables();
     end;
 
